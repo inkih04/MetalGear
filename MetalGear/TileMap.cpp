@@ -47,6 +47,7 @@ void TileMap::free()
 
 bool TileMap::loadLevel(const string &levelFile)
 {
+	cout << "Loading level " << levelFile << "...";
 	ifstream fin;
 	string line, tilesheetFile;
 	stringstream sstream;
