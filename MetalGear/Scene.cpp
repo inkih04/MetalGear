@@ -33,8 +33,6 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 
-	// CAMBIO CLAVE: Proyección basada en el tamaño del mapa en píxeles lógicos
-	// En lugar de SCREEN_WIDTH/SCREEN_HEIGHT, usamos el tamaño real del mapa
 	float mapWidthPixels = map->getMapSize().x * map->getTileSize();
 	float mapHeightPixels = map->getMapSize().y * map->getTileSize();
 
