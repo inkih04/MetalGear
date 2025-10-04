@@ -19,7 +19,6 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
 	loadLevel(levelFile);
-	debugTestUV();
 	prepareArrays(minCoords, program);
 }
 

@@ -72,7 +72,10 @@ int main(void)
 			/* Update & render steps of the game loop */
 			if(!Game::instance().update(int(1000.0f * (currentTime - timePreviousFrame))))
 				glfwSetWindowShouldClose(window, GLFW_TRUE);
-			Game::instance().render();
+
+			int width, height;
+			glfwGetWindowSize(window, &width, &height);
+			Game::instance().render(width, height);
 			timePreviousFrame = currentTime;
 
 			/* Swap front and back buffers */
