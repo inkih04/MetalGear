@@ -188,6 +188,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	return false;
 }
 
+
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
 {
 	int x0, x1, y;
@@ -208,6 +209,28 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	}
 	
 	return false;
+}
+
+bool TileMap::isOutLeft(const glm::ivec2& pos) const
+{
+	return pos.x < 0;
+}
+
+bool TileMap::isOutRight(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int mapWidthPixels = mapSize.x * tileSize;
+	return pos.x + size.x > mapWidthPixels;
+}
+
+bool TileMap::isOutTop(const glm::ivec2& pos) const
+{
+	return pos.y < 0;
+}
+
+bool TileMap::isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int mapHeightPixels = mapSize.y * tileSize;
+	return pos.y + size.y > mapHeightPixels;
 }
 
 

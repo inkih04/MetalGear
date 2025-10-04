@@ -95,6 +95,11 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		}
 		*/
+		if (map->isOutLeft(posPlayer))
+		{
+			posPlayer.x += 2;
+			sprite->changeAnimation(STAND_LEFT);
+		}
 	}
 	else if(Game::instance().getKey(GLFW_KEY_RIGHT) || Game::instance().getKey(GLFW_KEY_D))
 	{
@@ -108,16 +113,34 @@ void Player::update(int deltaTime)
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		}*/
+		if (map->isOutRight(posPlayer, glm::ivec2(16, 32)))
+		{
+			posPlayer.x -= 2;
+			sprite->changeAnimation(STAND_RIGHT);
+		}
 	}
-	else if (Game::instance().getKey(GLFW_KEY_UP) || Game::instance().getKey(GLFW_KEY_W)) {
+	else if (Game::instance().getKey(GLFW_KEY_UP) || Game::instance().getKey(GLFW_KEY_W)) 
+	{
 		if (sprite->animation() != MOVE_UP)
 			sprite->changeAnimation(MOVE_UP);
 		posPlayer.y -= 2;
+
+		if (map->isOutTop(posPlayer))
+		{
+			posPlayer.y += 2;
+			sprite->changeAnimation(STAND_UP);
+		}
 	}
 	else if (Game::instance().getKey(GLFW_KEY_DOWN) || Game::instance().getKey(GLFW_KEY_S)) {
 		if (sprite->animation() != MOVE_DOWN)
 			sprite->changeAnimation(MOVE_DOWN);
 		posPlayer.y += 2;
+
+		if (map->isOutBottom(posPlayer, glm::ivec2(32, 32)))
+		{
+			posPlayer.y -= 2;
+			sprite->changeAnimation(STAND_DOWN);
+		}
 	}
 	else
 	{
