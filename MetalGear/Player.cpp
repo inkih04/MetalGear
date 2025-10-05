@@ -19,7 +19,7 @@ enum PlayerAnims
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	spritesheet.loadFromFile("images/metal.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(16, 32), glm::vec2(0.0556f, 0.5f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(13.6, 27.2), glm::vec2(0.0556f, 0.5f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
 
 		sprite->setAnimationSpeed(STAND_DOWN, 6);
@@ -89,13 +89,12 @@ void Player::update(int deltaTime)
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= 2;
-		/*if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
 		{
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
-		*/
-		if (map->isOutLeft(posPlayer))
+		else if (map->isOutLeft(posPlayer))
 		{
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
@@ -107,13 +106,13 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(MOVE_RIGHT);
 
 		posPlayer.x += 2;
-		/*
-		if(map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
+		
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
 		{
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
-		}*/
-		if (map->isOutRight(posPlayer, glm::ivec2(16, 32)))
+		}
+		else if (map->isOutRight(posPlayer, glm::ivec2(16, 32)))
 		{
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
@@ -125,22 +124,43 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(MOVE_UP);
 		posPlayer.y -= 2;
 
-		if (map->isOutTop(posPlayer))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
+		{
+			posPlayer.y += 2;
+			sprite->changeAnimation(STAND_UP);
+		}
+		else if (map->isOutTop(posPlayer))
 		{
 			posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
 		}
 	}
 	else if (Game::instance().getKey(GLFW_KEY_DOWN) || Game::instance().getKey(GLFW_KEY_S)) {
+
 		if (sprite->animation() != MOVE_DOWN)
 			sprite->changeAnimation(MOVE_DOWN);
 		posPlayer.y += 2;
 
-		if (map->isOutBottom(posPlayer, glm::ivec2(32, 32)))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
 		{
 			posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
 		}
+		else if (map->isOutBottom(posPlayer, glm::ivec2(32, 32)))
+		{
+			posPlayer.y -= 2;
+			sprite->changeAnimation(STAND_DOWN);
+		}
+	}
+	else if (Game::instance().getKey(GLFW_KEY_Z)) {
+		if (sprite->animation() == STAND_LEFT || sprite->animation() == MOVE_LEFT)
+			sprite->changeAnimation(PUNCH_LEFT);
+		else if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
+			sprite->changeAnimation(PUNCH_RIGHT);
+		else if (sprite->animation() == STAND_UP || sprite->animation() == MOVE_UP)
+			sprite->changeAnimation(PUNCH_UP);
+		else if (sprite->animation() == STAND_DOWN || sprite->animation() == MOVE_DOWN)
+			sprite->changeAnimation(PUNCH_DOWN);
 	}
 	else
 	{
@@ -154,16 +174,6 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_DOWN);
 	}
 
-	if (Game::instance().getKey(GLFW_KEY_Z)) {
-		if (sprite->animation() == STAND_LEFT || sprite->animation() == MOVE_LEFT)
-			sprite->changeAnimation(PUNCH_LEFT);
-		else if (sprite->animation() == STAND_RIGHT || sprite->animation() == MOVE_RIGHT)
-			sprite->changeAnimation(PUNCH_RIGHT);
-		else if (sprite->animation() == STAND_UP || sprite->animation() == MOVE_UP)
-			sprite->changeAnimation(PUNCH_UP);
-		else if (sprite->animation() == STAND_DOWN || sprite->animation() == MOVE_DOWN)
-			sprite->changeAnimation(PUNCH_DOWN);
-	}
 
 
 		

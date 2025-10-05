@@ -18,6 +18,19 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
+	tileIds = {3,4,5,6,7,9,10,11,12,13,14,17,18,20,21,22,24,25,26,27,28,29,
+			  33,34,37,39,40,41,42,44,45,46,47,51,52,54,55,56,57,59,
+			  63,64,67,69,70,71,72,74,75,76,81,82,83,84,85,86,87,88,89,
+			  90,91,92,93,99,101,102,103,104,105,106,107,108,109,110,111,116,
+			  124,125,126,132,133,134,135,136,137,141,142,
+			  154,155,156,162,164,165,166,168,169,170,
+			  184,185,186,187,189,198,199,200,201,202,203,204,205,206,207,208,209,
+			  217,219,228,229,230,231,232,233,234,235,236,237,238,239,
+			  256,258,259,260,261,262,263,264,265,266,267,268,269,
+			  293,294,295,296,297,298,299,
+			  316,318,319,320,321,322,325,327
+	};
+
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
 }
@@ -233,7 +246,28 @@ bool TileMap::isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const
 	return pos.y + size.y > mapHeightPixels;
 }
 
+bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int x0 = pos.x / tileSize;
+	int x1 = (pos.x + size.x - 1) / tileSize;
+	int y = (pos.y + size.y - 1) / tileSize;  
 
+	if (x0 < 0 || x1 >= mapSize.x || y < 0 || y >= mapSize.y)
+		return false;
+
+	for (int x = x0; x <= x1; x++)
+	{
+		int currentTile = map[y * mapSize.x + x];
+
+		for (int i = 0; i < tileIds.size(); i++)
+		{
+			if (currentTile == tileIds[i])
+				return true;
+		}
+	}
+
+	return false;
+}
 
 
 
