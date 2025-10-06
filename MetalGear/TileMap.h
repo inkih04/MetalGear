@@ -35,6 +35,7 @@ public:
 	bool isOutTop(const glm::ivec2& pos) const;
 	bool isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const;
+	bool checkChangeMap(const glm::ivec2& pos, const glm::ivec2& size, vector<int> tile) const;
 	int getId() const { return id; }
 
 

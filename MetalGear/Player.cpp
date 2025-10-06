@@ -190,9 +190,89 @@ int Player::checkMap(glm::ivec2 &newPos)
 			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
 			newPos = glm::ivec2(posPlayer.x, mapHeightPixels - 30);
 			return 2;
-		}	
+		}
+		else if (map->isOutBottom(posPlayer, glm::ivec2(13.6, 27.2))) {
+			cout << "Cambio a mapa 4" << endl;
+			newPos = glm::ivec2(posPlayer.x, 0);
+			return 4;
+		}
 	}
-
+	else if (idMap == 4) {
+		if (map->isOutTop(posPlayer)) {
+			cout << "Cambio a mapa 3" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(posPlayer.x, mapHeightPixels - 30);
+			return 3;
+		}
+		else if (map->isOutRight(posPlayer, glm::ivec2(13.6, 27.2))) {
+			cout << "Cambio a mapa 6" << endl;
+			newPos = glm::ivec2(0, posPlayer.y);
+			return 6;
+		}
+		else if (map->isOutLeft(posPlayer)) {
+			cout << "Cambio a mapa 5" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels - 20, posPlayer.y);
+			return 5;
+		}
+	}
+	else if (idMap == 5) {
+		if (map->isOutRight(posPlayer, glm::ivec2(13.6, 27.2))) {
+			cout << "Cambio a mapa 4" << endl;
+			newPos = glm::ivec2(0, posPlayer.y);
+			return 4;
+		}
+	}
+	else if (idMap == 6) {
+		if (map->isOutLeft(posPlayer)) {
+			cout << "Cambio a mapa 4" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels - 20, posPlayer.y);
+			return 4;
+		}
+		else if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 100, 70 })) {
+			cout << "Cambio a mapa 7" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(posPlayer.x, mapHeightPixels - 50);
+			return 7;
+		}
+	}
+	else if (idMap == 7) {
+		if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 19 })) {
+			cout << "Cambio a mapa 6" << endl;
+			newPos = glm::ivec2(posPlayer.x, 50);
+			return 6;
+		}
+		else if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 112})) {
+			cout << "Cambio a mapa 8" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(25, mapHeightPixels - 50);
+			return 8;
+		}
+	}
+	else if (idMap == 8) {
+		if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 172 })) {
+			cout << "Cambio a mapa 7" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels - 30, 20);
+			return 7;
+		}
+		else if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), {19, 18, 20})) {
+			cout << "Cambio a mapa 9" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(30, mapHeightPixels - 50);
+			return 9;
+		}
+	}
+	else if (idMap == 9) {
+		if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 163, 164, 162})) {
+			cout << "Cambio a mapa 8" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels - 55,  40);
+			return 8;
+		}
+	
+	}
 
 	return idMap;
 }
