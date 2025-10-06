@@ -94,11 +94,7 @@ void Player::update(int deltaTime)
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
-		else if (map->isOutLeft(posPlayer))
-		{
-			posPlayer.x += 2;
-			sprite->changeAnimation(STAND_LEFT);
-		}
+
 	}
 	else if(Game::instance().getKey(GLFW_KEY_RIGHT) || Game::instance().getKey(GLFW_KEY_D))
 	{
@@ -112,11 +108,7 @@ void Player::update(int deltaTime)
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		}
-		else if (map->isOutRight(posPlayer, glm::ivec2(16, 32)))
-		{
-			posPlayer.x -= 2;
-			sprite->changeAnimation(STAND_RIGHT);
-		}
+
 	}
 	else if (Game::instance().getKey(GLFW_KEY_UP) || Game::instance().getKey(GLFW_KEY_W)) 
 	{
@@ -129,11 +121,7 @@ void Player::update(int deltaTime)
 			posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
 		}
-		else if (map->isOutTop(posPlayer))
-		{
-			posPlayer.y += 2;
-			sprite->changeAnimation(STAND_UP);
-		}
+
 	}
 	else if (Game::instance().getKey(GLFW_KEY_DOWN) || Game::instance().getKey(GLFW_KEY_S)) {
 
@@ -146,11 +134,7 @@ void Player::update(int deltaTime)
 			posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);
 		}
-		else if (map->isOutBottom(posPlayer, glm::ivec2(32, 32)))
-		{
-			posPlayer.y -= 2;
-			sprite->changeAnimation(STAND_DOWN);
-		}
+
 	}
 	else if (Game::instance().getKey(GLFW_KEY_Z)) {
 		if (sprite->animation() == STAND_LEFT || sprite->animation() == MOVE_LEFT)
@@ -174,10 +158,43 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_DOWN);
 	}
 
-
-
-		
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+int Player::checkMap(glm::ivec2 &newPos)
+{
+	int idMap = map->getId();
+	if (idMap == 1) {
+		if (map->isOutRight(posPlayer, glm::ivec2(13.6, 27.2))) {
+			cout << "Cambio a mapa 2" << endl;
+			newPos = glm::ivec2(0, posPlayer.y);
+			return 2;
+		}
+	}
+	else if (idMap == 2) {
+		if (map->isOutLeft(posPlayer)) {
+			cout << "Cambio a mapa 1" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels -20, posPlayer.y);
+			return 1;
+		}
+		else if (map->isOutBottom(posPlayer, glm::ivec2(13.6, 27.2))) {
+			cout << "Cambio a mapa 3" << endl;
+			newPos = glm::ivec2(posPlayer.x, 0);
+			return 3;
+		}
+	}
+	else if (idMap == 3) {
+		if (map->isOutTop(posPlayer)) {
+			cout << "Cambio a mapa 2" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(posPlayer.x, mapHeightPixels - 30);
+			return 2;
+		}	
+	}
+
+
+	return idMap;
 }
 
 void Player::render()

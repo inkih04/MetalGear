@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Game.h"
 
+
 #define SCREEN_X 0
 #define SCREEN_Y 0
 
@@ -12,29 +13,41 @@
 
 Scene::Scene()
 {
-	map = NULL;
+	currentMapId = 1;
 	player = NULL;
 }
 
 Scene::~Scene()
 {
-	if (map != NULL)
-		delete map;
+
 	if (player != NULL)
 		delete player;
 }
 
+void Scene::createMaps()
+{
+	currentMapId = 1;
+	maps[1] = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1);
+	maps[2] = TileMap::createTileMap("levels/mapa2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 2);
+	maps[3] = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3);
+	maps[4] = TileMap::createTileMap("levels/mapa4.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 4);
+	maps[5] = TileMap::createTileMap("levels/mapa5.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 5);
+	maps[6] = TileMap::createTileMap("levels/mapa6.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 6);
+}
+
+
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/mapa2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	createMaps();
+
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	player->setTileMap(map);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(), INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
+	player->setTileMap(maps[currentMapId]);
 
-	float mapWidthPixels = map->getMapSize().x * map->getTileSize();
-	float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+	float mapWidthPixels = maps[currentMapId]->getMapSize().x * maps[currentMapId]->getTileSize();
+	float mapHeightPixels = maps[currentMapId]->getMapSize().y * maps[currentMapId]->getTileSize();
 
 	projection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
 	currentTime = 0.0f;
@@ -44,6 +57,18 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	checkMapChange();
+}
+
+void Scene::checkMapChange()
+{
+	glm::ivec2 newPos;
+	int mapId = player->checkMap(newPos);
+	if (mapId != currentMapId) {
+		currentMapId = mapId;
+		player->setTileMap(maps[currentMapId]);
+		player->setPosition(glm::vec2(float(newPos.x), float(newPos.y)));
+	}
 }
 
 void Scene::render()
@@ -55,7 +80,7 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
+	maps[currentMapId]->render();
 	player->render();
 }
 

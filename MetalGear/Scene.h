@@ -6,6 +6,7 @@
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
+#include <map>
 
 
 // Scene contains all the entities of our game.
@@ -25,9 +26,12 @@ public:
 
 private:
 	void initShaders();
+	void createMaps();
+	void checkMapChange();
 
 private:
-	TileMap *map;
+	map<int, TileMap*>maps;
+	int currentMapId;
 	Player *player;
 	ShaderProgram texProgram;
 	float currentTime;

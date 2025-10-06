@@ -8,15 +8,15 @@
 using namespace std;
 
 
-TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
+TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, int id)
 {
-	TileMap *map = new TileMap(levelFile, minCoords, program);
+	TileMap *map = new TileMap(levelFile, minCoords, program, id);
 	
 	return map;
 }
 
 
-TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
+TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, int id)
 {
 	tileIds = {3,4,5,6,7,9,10,11,12,13,14,17,18,20,21,22,24,25,26,27,28,29,
 			  33,34,37,39,40,41,42,44,45,46,47,51,52,54,55,56,57,59,
@@ -30,7 +30,7 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 			  293,294,295,296,297,298,299,
 			  316,318,319,320,321,322,325,327
 	};
-
+	this->id = id;
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
 }
@@ -231,6 +231,7 @@ bool TileMap::isOutLeft(const glm::ivec2& pos) const
 
 bool TileMap::isOutRight(const glm::ivec2& pos, const glm::ivec2& size) const
 {
+	//cout << "is Out right" << endl;
 	int mapWidthPixels = mapSize.x * tileSize;
 	return pos.x + size.x > mapWidthPixels;
 }

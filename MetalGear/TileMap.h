@@ -14,18 +14,18 @@
 class TileMap
 {
 private:
-	TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program);
+	TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program, int id);
 
 public:
 	// Tile maps can only be created inside an OpenGL context
-	static TileMap* createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program);
+	static TileMap* createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program, int id);
 	~TileMap();
 
 	void render() const;
 	void free();
 
 	int getTileSize() const { return tileSize; }
-	glm::ivec2 getMapSize() const { return mapSize; }  // AÑADIDO
+	glm::ivec2 getMapSize() const { return mapSize; }  
 
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
@@ -35,6 +35,7 @@ public:
 	bool isOutTop(const glm::ivec2& pos) const;
 	bool isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const;
+	int getId() const { return id; }
 
 
 private:
@@ -42,6 +43,7 @@ private:
 	void prepareArrays(const glm::vec2& minCoords, ShaderProgram& program);
 
 private:
+	int id;
 	vector<int> tileIds;
 	GLuint vao;
 	GLuint vbo;

@@ -20,6 +20,7 @@ public:
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	int checkMap(glm::ivec2 &newPos);
 	
 private:
 	glm::ivec2 tileMapDispl, posPlayer;
