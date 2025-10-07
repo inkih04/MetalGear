@@ -271,6 +271,19 @@ int Player::checkMap(glm::ivec2 &newPos)
 			newPos = glm::ivec2(mapWidthPixels - 55,  40);
 			return 8;
 		}
+		else if (map->checkChangeMap(posPlayer, glm::ivec2(13.5, 27.2), { 296,326})) {
+			cout << "Cambio a mapa 10" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(posPlayer.x -40, mapHeightPixels -40);
+			return 10;
+		}
+	}
+	else if (idMap == 10) {
+		if (map->isOutBottom(posPlayer, glm::ivec2(13.6, 27.2))) {
+			cout << "Cambio mapa a 9" << endl;
+			newPos = glm::ivec2(posPlayer.x + 48, 60);
+			return 9;
+		}
 	
 	}
 
