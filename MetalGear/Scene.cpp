@@ -26,7 +26,7 @@ Scene::~Scene()
 
 void Scene::createMaps()
 {
-	currentMapId = 1;
+	currentMapId = 11;
 	maps[1] = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1);
 	maps[2] = TileMap::createTileMap("levels/mapa2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 2);
 	maps[3] = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3);
