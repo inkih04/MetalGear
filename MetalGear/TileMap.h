@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "ShaderProgram.h"
 #include <vector>
+#include "ChangeMap.h"
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
 // simple format (see level01.txt for an example). With this information
@@ -14,13 +15,16 @@
 class TileMap
 {
 private:
-	TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program, int id);
+	TileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program, int id, vector<ChangeMap> changeMap, vector<int> changeBorders);
 
 public:
 	// Tile maps can only be created inside an OpenGL context
-	static TileMap* createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program, int id);
+	static TileMap* createTileMap(const string& levelFile, const glm::vec2& minCoords, ShaderProgram& program, int id, vector<ChangeMap> changeMap, vector<int>changeBorders);
 	~TileMap();
 
+	enum Border {
+		LEFT, RIGHT, TOP, BOTTOM
+	};
 	void render() const;
 	void free();
 
@@ -35,8 +39,9 @@ public:
 	bool isOutTop(const glm::ivec2& pos) const;
 	bool isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const;
-	bool checkChangeMap(const glm::ivec2& pos, const glm::ivec2& size, vector<int> tile) const;
+	bool checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const;
 	int getId() const { return id; }
+	int changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const;
 
 
 private:
@@ -45,6 +50,8 @@ private:
 
 private:
 	int id;
+	vector<int> changeMapBorders; //index is border enum, vlaue is the new map id
+	vector<ChangeMap> changeMapTile; //idTile, position to place the player in the new map, idMap to be positioned
 	vector<int> tileIds;
 	GLuint vao;
 	GLuint vbo;

@@ -8,15 +8,15 @@
 using namespace std;
 
 
-TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, int id)
+TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, int id, vector<ChangeMap> changeMap, vector<int> changeBorders)
 {
-	TileMap *map = new TileMap(levelFile, minCoords, program, id);
+	TileMap *map = new TileMap(levelFile, minCoords, program, id, changeMap, changeBorders);
 	
 	return map;
 }
 
 
-TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, int id)
+TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program, int id, vector<ChangeMap> changeMap,vector<int>changeBorders)
 {
 	tileIds = {3,4,5,6,7,9,10,11,12,13,14,17,21,22,24,25,26,27,28,29,
 			  33,34,37,39,40,41,42,44,45,46,47,51,52,54,55,56,57,59,
@@ -30,6 +30,15 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 			  280,282,283,284,285,286,287,288,289,290,291,293,294,295,296,297,298,299,301,302,310,311,312,313,314,315,
 			  316,317,318,319,320,321,322,325,327,334,335,336,348,349,351,352,360,361,362,363,364,365,366,378,379,380,381,382,390,391,392,394,396,420,421,422,
 	};
+
+	changeMapBorders.resize(4, 0);
+	for (int i = 0; i < changeMapBorders.size() && i < changeBorders.size(); ++i) {
+		changeMapBorders[i] = changeBorders[i];
+	}
+
+	changeMapTile = changeMap;
+
+
 	this->id = id;
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
@@ -231,7 +240,6 @@ bool TileMap::isOutLeft(const glm::ivec2& pos) const
 
 bool TileMap::isOutRight(const glm::ivec2& pos, const glm::ivec2& size) const
 {
-	//cout << "is Out right" << endl;
 	int mapWidthPixels = mapSize.x * tileSize;
 	return pos.x + size.x > mapWidthPixels;
 }
@@ -270,7 +278,7 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) 
 	return false;
 }
 
-bool TileMap::checkChangeMap(const glm::ivec2& pos, const glm::ivec2& size, vector<int> tile) const
+bool TileMap::checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const
 {
 	int x0 = pos.x / tileSize;
 	int x1 = (pos.x + size.x - 1) / tileSize;
@@ -281,13 +289,50 @@ bool TileMap::checkChangeMap(const glm::ivec2& pos, const glm::ivec2& size, vect
 	for (int x = x0; x <= x1; x++)
 	{
 		int currentTile = map[y * mapSize.x + x];
-		for (int i = 0; i < tile.size(); i++)
-		{
-			if (currentTile == tile[i])
+			if (currentTile == tile)
 				return true;
-		}
 	}
 	return false;
+}
+
+int TileMap::changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const
+{
+	if (changeMapBorders[LEFT] != 0 && this->isOutLeft(pos)) {
+		float mapWidthPixels = this->getMapSize().x * this->getTileSize();
+		newPos = glm::ivec2(mapWidthPixels - 20.f, pos.y);
+		cout << "Changing map to the TOP, new MAP: " << changeMapBorders[LEFT] << endl;
+		return changeMapBorders[LEFT];
+	}
+	else if (changeMapBorders[RIGHT] != 0 && this->isOutRight(pos, size)) {
+		newPos = glm::ivec2(20, pos.y);
+		cout << "Changing map to the RIGHT, new MAP: " << changeMapBorders[RIGHT] << endl;
+		return changeMapBorders[RIGHT];
+	}
+	else if (changeMapBorders[TOP] != 0 && this->isOutTop(pos)) {
+		float mapHeightPixels = this->getMapSize().y * this->getTileSize();
+		cout << "Changing map to the LEFT, new MAP: " << changeMapBorders[TOP] << endl;
+		newPos = glm::ivec2(pos.x, mapHeightPixels - 30);
+		return changeMapBorders[TOP];
+	}
+	else if (changeMapBorders[BOTTOM] != 0 && this->isOutBottom(pos, size)) {
+		cout << "Changing map to the BOTTOM, new MAP: " << changeMapBorders[BOTTOM] << endl;
+		newPos = glm::ivec2(pos.x, 20);
+		return changeMapBorders[BOTTOM];
+	}
+
+	for (int i = 0; i < changeMapTile.size(); ++i) {
+		for (int j = 0; j < changeMapTile[i].idTiles.size(); ++j) {
+			if (this->checkCollisionWithATile(pos, size, changeMapTile[i].idTiles[j])) {
+				newPos = changeMapTile[i].newPosition;
+				if (newPos.x == -1) newPos.x = pos.x;
+				if (newPos.y == -1) newPos.y = pos.y;
+				cout << "Changing map to the TILE, new MAP: " << changeMapTile[i].idMap << endl;
+				return changeMapTile[i].idMap;
+			}
+		}
+	}
+
+	return id;
 }
 
 
