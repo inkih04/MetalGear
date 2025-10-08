@@ -28,6 +28,21 @@ private:
 	void initShaders();
 	void createMaps();
 	void checkMapChange();
+	TileMap* loadMap1();
+	TileMap* loadMap2();
+	TileMap* loadMap3();
+	TileMap* loadMap4();
+	TileMap* loadMap5();
+	TileMap* loadMap6();
+	TileMap* loadMap7();
+	TileMap* loadMap8();
+	TileMap* loadMap9();
+	TileMap* loadMap10();
+	TileMap* loadMap11();
+	TileMap* loadMap12();
+	TileMap* loadMap13();
+	TileMap* loadMap14();
+	
 
 private:
 	map<int, TileMap*>maps;

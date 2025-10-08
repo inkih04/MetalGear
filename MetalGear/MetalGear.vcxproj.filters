@@ -45,6 +45,9 @@
     <ClInclude Include="ChangeMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -72,6 +75,15 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicEnemy.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicEnemy.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

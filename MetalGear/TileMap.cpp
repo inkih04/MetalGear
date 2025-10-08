@@ -60,6 +60,10 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
 	glDisable(GL_TEXTURE_2D);
+
+	for (Enemy* enemy : enemies)
+		enemy->render();
+
 }
 
 void TileMap::free()
@@ -246,7 +250,7 @@ bool TileMap::isOutRight(const glm::ivec2& pos, const glm::ivec2& size) const
 
 bool TileMap::isOutTop(const glm::ivec2& pos) const
 {
-	return pos.y < 0;
+	return pos.y < -16;
 }
 
 bool TileMap::isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const
@@ -300,17 +304,19 @@ int TileMap::changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, gl
 	if (changeMapBorders[LEFT] != 0 && this->isOutLeft(pos)) {
 		float mapWidthPixels = this->getMapSize().x * this->getTileSize();
 		newPos = glm::ivec2(mapWidthPixels - 20.f, pos.y);
-		cout << "Changing map to the TOP, new MAP: " << changeMapBorders[LEFT] << endl;
+		cout << "Changing map to the LEFT new MAP: " << changeMapBorders[LEFT] << endl;
+		cout << "POS" << pos.x << pos.y << endl;
 		return changeMapBorders[LEFT];
 	}
 	else if (changeMapBorders[RIGHT] != 0 && this->isOutRight(pos, size)) {
-		newPos = glm::ivec2(20, pos.y);
+		newPos = glm::ivec2(32, pos.y);
 		cout << "Changing map to the RIGHT, new MAP: " << changeMapBorders[RIGHT] << endl;
 		return changeMapBorders[RIGHT];
 	}
 	else if (changeMapBorders[TOP] != 0 && this->isOutTop(pos)) {
 		float mapHeightPixels = this->getMapSize().y * this->getTileSize();
-		cout << "Changing map to the LEFT, new MAP: " << changeMapBorders[TOP] << endl;
+		cout << "Changing map to the TOP, new MAP: " << changeMapBorders[TOP] << endl;
+			cout << "POS " << pos.x <<"," << pos.y << endl;
 		newPos = glm::ivec2(pos.x, mapHeightPixels - 30);
 		return changeMapBorders[TOP];
 	}

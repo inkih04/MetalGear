@@ -6,6 +6,8 @@
 #include "ShaderProgram.h"
 #include <vector>
 #include "ChangeMap.h"
+#include "Enemy.h"
+#include <iostream>
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
 // simple format (see level01.txt for an example). With this information
@@ -42,6 +44,11 @@ public:
 	bool checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const;
 	int getId() const { return id; }
 	int changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const;
+	void addEnemy(Enemy *enemy) { 
+		cout << "Adding enemy at position: (" << enemy->getPosition().x << ", " << enemy->getPosition().y << ")" << endl;
+		enemies.push_back(enemy); 
+	}
+
 
 
 private:
@@ -49,6 +56,7 @@ private:
 	void prepareArrays(const glm::vec2& minCoords, ShaderProgram& program);
 
 private:
+	vector<Enemy*> enemies;
 	int id;
 	vector<int> changeMapBorders; //index is border enum, vlaue is the new map id
 	vector<ChangeMap> changeMapTile; //idTile, position to place the player in the new map, idMap to be positioned
