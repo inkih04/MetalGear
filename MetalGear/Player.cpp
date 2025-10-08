@@ -238,7 +238,7 @@ int Player::checkMap(glm::ivec2 &newPos)
 		}
 	}
 	else if (idMap == 7) {
-		if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 19 })) {
+		if (map->checkChangeMap(posPlayer, glm::ivec2(13.6, 27.2), { 19,18,20 })) {
 			cout << "Cambio a mapa 6" << endl;
 			newPos = glm::ivec2(posPlayer.x, 50);
 			return 6;
@@ -283,6 +283,43 @@ int Player::checkMap(glm::ivec2 &newPos)
 			cout << "Cambio mapa a 9" << endl;
 			newPos = glm::ivec2(posPlayer.x + 48, 60);
 			return 9;
+		}
+		else if (map->isOutLeft(posPlayer)) {
+			cout << "Cambio mapa 11" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels - 20.f, posPlayer.y);
+			return 11;
+		}
+		else if (map->isOutRight(posPlayer, glm::ivec2(13.6, 27.2))) {
+			newPos = glm::ivec2(20, posPlayer.y);
+			return 12;
+		}
+	}
+	else if (idMap == 11) {
+		if (map->isOutRight(posPlayer, glm::ivec2(13.6, 27.2))) {
+			newPos = glm::ivec2(15.f, posPlayer.y);
+			return 10;
+		}
+	}
+	else if (idMap == 12) {
+		if (map->isOutLeft(posPlayer)) {
+			cout << "Cambio mapa 10" << endl;
+			float mapWidthPixels = map->getMapSize().x * map->getTileSize();
+			newPos = glm::ivec2(mapWidthPixels - 20.f, posPlayer.y);
+			return 10;
+		}
+		else if (map->isOutTop(posPlayer)) {
+			cout << "Cambio mapa 13" << endl;
+			float mapHeightPixels = map->getMapSize().y * map->getTileSize();
+			newPos = glm::ivec2(posPlayer.x, mapHeightPixels - 30);
+			return 13;
+		}
+	}
+	else if (idMap == 13) {
+		if (map->isOutBottom(posPlayer, glm::ivec2(13.6, 27.2))) {
+		cout << "Cambio a mapa 12" << endl;
+		newPos = glm::ivec2(posPlayer.x, 0);
+		return 12;
 		}
 	
 	}
