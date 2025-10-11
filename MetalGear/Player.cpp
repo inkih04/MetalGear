@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "Player.h"
 #include "Game.h"
+#include <GLFW/glfw3.h>
 
 
 #define JUMP_ANGLE_STEP 4
