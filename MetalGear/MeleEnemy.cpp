@@ -152,7 +152,7 @@ void MeleEnemy::update(int deltaTime, const glm::ivec2& playerPos)
     else {
         if (this->seePlayer(playerPos)) {
             playerHasBeenDetected = true; 
-            if (!this->checkCollisionWithPlayer(playerPos, glm::ivec2(13.6, 27.2))) {
+            if (!this->checkCollisionWithPlayer(playerPos, glm::ivec2(16, 32))) {
                 this->move(playerPos);
             }
             else {
@@ -281,11 +281,12 @@ void MeleEnemy::move(const glm::ivec2& playerPos) {
     int tileSize = map->getTileSize();
     int enemyTileX = (posEnemy.x + size.x / 2) / tileSize;
     int enemyTileY = (posEnemy.y + size.y / 2) / tileSize;
-    int playerTileX = (playerPos.x + 7) / tileSize;
-    int playerTileY = (playerPos.y + 13) / tileSize;
+    int playerTileX = (playerPos.x + 8) / tileSize;
+    int playerTileY = (playerPos.y + 24) / tileSize;
 
     int dx = playerTileX - enemyTileX;
     int dy = playerTileY - enemyTileY;
+
 
     bool moved = false;
 
@@ -345,11 +346,14 @@ void MeleEnemy::move(const glm::ivec2& playerPos) {
         }
     }
 
+
     sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
 }
 
 bool MeleEnemy::tryMove(int dir) {
     glm::ivec2 oldPos = posEnemy;
+
+    const char* dirName[] = { "DOWN", "UP", "LEFT", "RIGHT" };
 
     lookingDirection = dir;
     switch (dir) {
@@ -375,6 +379,7 @@ bool MeleEnemy::tryMove(int dir) {
         break;
     }
 
+
     if (map->checkTileCollision(posEnemy, size)) {
         posEnemy = oldPos;
 
@@ -395,6 +400,5 @@ bool MeleEnemy::tryMove(int dir) {
 
         return false;
     }
-
-    return true;  
+    return true;
 }
