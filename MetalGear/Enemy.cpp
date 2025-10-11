@@ -24,3 +24,8 @@ bool Enemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ive
 	return true;
 
 }
+
+bool Enemy::seePlayer(const glm::ivec2& playerPos) const
+{
+	return true;
+}

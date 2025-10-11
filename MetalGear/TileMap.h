@@ -14,6 +14,7 @@
 // it builds a single VBO that contains all tiles. As a result the render
 // method draws the whole map independently of what is visible.
 
+
 class TileMap
 {
 private:

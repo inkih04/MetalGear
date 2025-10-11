@@ -32,8 +32,8 @@
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicEnemy.cpp" />
-    <ClCompile Include="BasicEnemy.h" />
+    <ClCompile Include="MeleEnemy.cpp" />
+    <ClCompile Include="MeleEnemy.h" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />

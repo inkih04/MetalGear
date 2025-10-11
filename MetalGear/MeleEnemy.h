@@ -3,10 +3,10 @@
 
 #include "Enemy.h"
 
-class BasicEnemy : public Enemy
+class MeleEnemy : public Enemy
 {
 public:
-	BasicEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram);;
+	MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram);;
 	void init(ShaderProgram& shaderProgram) override;
 	void update(int deltaTime) override;
 

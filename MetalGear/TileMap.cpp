@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include "TileMap.h"
+#include "Enemy.h"
 
 
 using namespace std;
@@ -340,6 +341,7 @@ int TileMap::changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, gl
 
 	return id;
 }
+
 
 
 

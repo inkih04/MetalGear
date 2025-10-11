@@ -80,10 +80,10 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="BasicEnemy.h">
+    <ClCompile Include="MeleEnemy.h">
       <Filter>Archivos de encabezado</Filter>
     </ClCompile>
-    <ClCompile Include="BasicEnemy.cpp">
+    <ClCompile Include="MeleEnemy.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
