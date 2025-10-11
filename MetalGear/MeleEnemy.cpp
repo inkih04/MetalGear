@@ -2,18 +2,21 @@
 #include <GL/glew.h>
 #include <iostream>
 
+
+
 enum EnemyAnims
 {
 	STAND_DOWN, STAND_UP, STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN,
 };
 
-MeleEnemy::MeleEnemy(const glm::ivec2& pos, ShaderProgram& shaderProgram)
+MeleEnemy::MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map)
 {
 	//this->map = map;
-	posEnemy = pos;
+	posEnemy = position;
 	health = 3;
 	damage = 1;
 	size = glm::ivec2(16, 16);
+	this->map = map;
 	this->init(shaderProgram);
 	
 }
@@ -58,11 +61,15 @@ void MeleEnemy::init(ShaderProgram& shaderProgram)
 
 
 	sprite->changeAnimation(0);
+	lookingDirection = DOWN;
 	sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
 }
 
-void MeleEnemy::update(int deltaTime)
+void MeleEnemy::update(int deltaTime, const glm::ivec2& playerPos)
 {
 	sprite->update(deltaTime);
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+	//sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
+	if (this->seePlayer(playerPos)) {
+		cout << "Veo al jugador" << endl;
+	}
 }

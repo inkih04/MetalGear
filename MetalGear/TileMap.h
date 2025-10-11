@@ -6,7 +6,6 @@
 #include "ShaderProgram.h"
 #include <vector>
 #include "ChangeMap.h"
-#include "Enemy.h"
 #include <iostream>
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -14,6 +13,7 @@
 // it builds a single VBO that contains all tiles. As a result the render
 // method draws the whole map independently of what is visible.
 
+class Enemy;
 
 class TileMap
 {
@@ -43,12 +43,11 @@ public:
 	bool isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const;
+	int getTileAt(int x, int y);
 	int getId() const { return id; }
 	int changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const;
-	void addEnemy(Enemy *enemy) { 
-		cout << "Adding enemy at position: (" << enemy->getPosition().x << ", " << enemy->getPosition().y << ")" << endl;
-		enemies.push_back(enemy); 
-	}
+	void addEnemy(Enemy* enemy);
+	void updateEnemies(int deltaTime, const glm::ivec2& playerPos);
 
 
 

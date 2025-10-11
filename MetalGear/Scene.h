@@ -28,6 +28,7 @@ private:
 	void initShaders();
 	void createMaps();
 	void checkMapChange();
+	void checkEnemies(int deltaTime);
 	TileMap* loadMap1();
 	TileMap* loadMap2();
 	TileMap* loadMap3();

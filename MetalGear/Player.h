@@ -21,6 +21,7 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	int checkMap(glm::ivec2 &newPos);
+	void checkEnemies(int deltaTime);
 	
 private:
 	glm::ivec2 tileMapDispl, posPlayer;

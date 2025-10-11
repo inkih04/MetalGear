@@ -167,6 +167,12 @@ int Player::checkMap(glm::ivec2 &newPos)
 	return map->changeMapIfNeeded(posPlayer, glm::ivec2(13.6, 27.2), newPos);
 }
 
+void Player::checkEnemies(int deltaTime)
+{
+	// Implement enemy collision check and health reduction if needed
+	map->updateEnemies(deltaTime, posPlayer);
+}
+
 void Player::render()
 {
 	sprite->render();

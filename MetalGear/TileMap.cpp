@@ -342,6 +342,25 @@ int TileMap::changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, gl
 	return id;
 }
 
+void TileMap::addEnemy(Enemy* enemy)
+{
+	cout << "Adding enemy at position: (" << enemy->getPosition().x << ", " << enemy->getPosition().y << ")" << endl;
+	enemies.push_back(enemy);
+}
+
+int TileMap::getTileAt(int x, int y)
+{
+	if (x < 0 || x >= mapSize.x || y < 0 || y >= mapSize.y)
+		return 0; 
+	return map[y * mapSize.x + x];
+}
+
+void TileMap::updateEnemies(int deltaTime, const glm::ivec2& playerPos)
+{
+	for (Enemy* enemy : enemies)
+		enemy->update(deltaTime, playerPos);
+}
+
 
 
 

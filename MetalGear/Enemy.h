@@ -1,6 +1,8 @@
-#pragma once
+#ifndef _ENEMY_INCLUDE
+#define _ENEMY_INCLUDE
 
 #include "Sprite.h"
+class TileMap;
 
 
 class Enemy{
@@ -9,7 +11,11 @@ public:
 
 	// Métodos abstractos
 	virtual void init(ShaderProgram& shaderProgram) = 0;
-	virtual void update(int deltaTime) = 0;
+	virtual void update(int deltaTime, const glm::ivec2& playerPos) = 0;
+	enum LookingDirection
+	{
+		DOWN, UP, LEFT, RIGHT
+	};
 
 	//comunes
 	void render();
@@ -34,5 +40,7 @@ protected:
 
 	Texture spritesheet;
 	Sprite* sprite;
+	TileMap* map;
+	int lookingDirection;
 };
-
+#endif 
