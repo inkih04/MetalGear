@@ -52,7 +52,7 @@ void Scene::createMaps()
 TileMap* Scene::loadMap1()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(120, 120), texProgram, map));
+	map->addEnemy(new MeleEnemy(glm::ivec2(120, 64), texProgram, map));
 	return map;
 }
 

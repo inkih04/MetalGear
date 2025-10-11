@@ -39,7 +39,6 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 
 	changeMapTile = changeMap;
 
-
 	this->id = id;
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
@@ -272,14 +271,9 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) 
 	for (int x = x0; x <= x1; x++)
 	{
 		int currentTile = map[y * mapSize.x + x];
-
-		for (int i = 0; i < tileIds.size(); i++)
-		{
-			if (currentTile == tileIds[i])
+		if (tileIds.count(currentTile))
 				return true;
-		}
 	}
-
 	return false;
 }
 

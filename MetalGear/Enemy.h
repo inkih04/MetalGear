@@ -2,6 +2,7 @@
 #define _ENEMY_INCLUDE
 
 #include "Sprite.h"
+#include <unordered_set>
 class TileMap;
 
 

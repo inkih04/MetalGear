@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "ShaderProgram.h"
 #include <vector>
+#include <unordered_set>
 #include "ChangeMap.h"
 #include <iostream>
 
@@ -48,6 +49,7 @@ public:
 	int changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const;
 	void addEnemy(Enemy* enemy);
 	void updateEnemies(int deltaTime, const glm::ivec2& playerPos);
+	std::unordered_set<int> getBlockTileIds() const { return tileIds;}
 
 
 
@@ -60,7 +62,7 @@ private:
 	int id;
 	vector<int> changeMapBorders; //index is border enum, vlaue is the new map id
 	vector<ChangeMap> changeMapTile; //idTile, position to place the player in the new map, idMap to be positioned
-	vector<int> tileIds;
+	std::unordered_set<int> tileIds;
 	GLuint vao;
 	GLuint vbo;
 	GLint posLocation, texCoordLocation;
