@@ -22,14 +22,21 @@ void Enemy::takeDamage(int dmg)
 
 bool Enemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
 {
-	return true;
+	bool collisionX = posEnemy.x < playerPos.x + playerSize.x &&
+		posEnemy.x + size.x > playerPos.x;
 
+	bool collisionY = posEnemy.y < playerPos.y + playerSize.y &&
+		posEnemy.y + size.y > playerPos.y + 16;
+
+	return collisionX && collisionY;
 }
 
 bool Enemy::seePlayer(const glm::ivec2& playerPos) const
 {
 	if (map == nullptr)
 		return false;
+
+	if (playerHasBeenDetected) return true;
 
 	int tileSize = map->getTileSize();
 

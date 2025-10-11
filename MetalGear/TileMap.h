@@ -35,6 +35,7 @@ public:
 	int getTileSize() const { return tileSize; }
 	glm::ivec2 getMapSize() const { return mapSize; }  
 
+	bool checkCollisionEnemyPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
@@ -50,6 +51,7 @@ public:
 	void addEnemy(Enemy* enemy);
 	void updateEnemies(int deltaTime, const glm::ivec2& playerPos);
 	std::unordered_set<int> getBlockTileIds() const { return tileIds;}
+
 
 
 

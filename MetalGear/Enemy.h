@@ -23,14 +23,12 @@ public:
 	void setPosition(const glm::vec2& pos);
 	glm::ivec2 getPosition() const { return posEnemy; }
 	glm::ivec2 getSize() const { return size; }
-
+	bool checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
 	void takeDamage(int dmg);
 	bool isDead() const { return health <= 0; }
 	int getHealth() const { return health; }
 	int getDamage() const { return damage; }
 	bool seePlayer(const glm::ivec2& playerPos) const;
-
-	bool checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
 
 protected:
 	glm::ivec2 posEnemy;
@@ -38,6 +36,8 @@ protected:
 	glm::ivec2 size;
 	int health;
 	int damage;
+	int speed;
+	bool playerHasBeenDetected;
 
 	Texture spritesheet;
 	Sprite* sprite;

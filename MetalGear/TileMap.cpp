@@ -259,11 +259,22 @@ bool TileMap::isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const
 	return pos.y + size.y > mapHeightPixels;
 }
 
+bool TileMap::checkCollisionEnemyPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
+{
+	for (Enemy* enemy : enemies) {
+		if (enemy->checkCollisionWithPlayer(playerPos, playerSize)) {
+			cout << "Collision with enemy at position: (" << enemy->getPosition().x << ", " << enemy->getPosition().y << ")" << endl;
+			return true;
+		}
+	}
+	return false;
+}
+
 bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const
 {
 	int x0 = pos.x / tileSize;
 	int x1 = (pos.x + size.x - 1) / tileSize;
-	int y = (pos.y + size.y - 1) / tileSize;  
+	int y = (pos.y + size.y - 1) / tileSize;
 
 	if (x0 < 0 || x1 >= mapSize.x || y < 0 || y >= mapSize.y)
 		return false;
@@ -274,6 +285,10 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) 
 		if (tileIds.count(currentTile))
 				return true;
 	}
+	if (this->checkCollisionEnemyPlayer(pos, size)) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -354,6 +369,7 @@ void TileMap::updateEnemies(int deltaTime, const glm::ivec2& playerPos)
 	for (Enemy* enemy : enemies)
 		enemy->update(deltaTime, playerPos);
 }
+
 
 
 
