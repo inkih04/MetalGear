@@ -34,6 +34,7 @@ protected:
 	glm::ivec2 posEnemy;
 	glm::ivec2 tileMapDispl;
 	glm::ivec2 size;
+	vector<int> patrolSquare; 
 	int health;
 	int damage;
 	int speed;

@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "ChangeMap.h"
 #include "MeleEnemy.h"
+#include "Guard.h"
 
 
 #define SCREEN_X 0
@@ -12,6 +13,11 @@
 
 #define INIT_PLAYER_X_TILES 5 
 #define INIT_PLAYER_Y_TILES 4 
+
+enum LookingDirection
+{
+	DOWN, UP, LEFT, RIGHT
+};
 
 Scene::Scene()
 {
@@ -52,19 +58,21 @@ void Scene::createMaps()
 TileMap* Scene::loadMap1()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(120, 64), texProgram, map));
+	map->addEnemy(new MeleEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN));
 	return map;
 }
 
 TileMap* Scene::loadMap2()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 2, {}, { 1, 0, 0, 3 });
+	map->addEnemy(new MeleEnemy(glm::ivec2(64, 4), texProgram, map, {}, Guard({ RIGHT, DOWN }, 2000), RIGHT));
 	return map;
 }
 
 TileMap* Scene::loadMap3()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3, {}, { 0, 0, 2, 4 });
+	map->addEnemy(new MeleEnemy(glm::ivec2(120, 32), texProgram, map, { 16, 16 }, Guard(), DOWN));
 	return map;
 }
 

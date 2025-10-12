@@ -8,13 +8,22 @@
 
 
 
-MeleEnemy::MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map)
+MeleEnemy::MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction)
 {
-	//this->map = map;
 	posEnemy = position;
 	health = 3;
 	damage = 1;
 	speed = 1;
+
+    if (patrolSquare.size() > 0) this->patrolSquare = patrolSquare;
+    else if (guard.guardPosition.size() > 0) {
+        this->guardPosition = guard;
+        this->currentGuardIndex = 0;
+        this->guardTimer = guard.time;  
+    }
+
+	this->direction = direction;
+
 	size = glm::ivec2(16, 16);
     playerHasBeenDetected = false;
     playerHasBeenDetected = false;
@@ -74,8 +83,8 @@ void MeleEnemy::init(ShaderProgram& shaderProgram)
     sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25 * 3.f, 0.f));
 
 
-	sprite->changeAnimation(0);
-	lookingDirection = DOWN;
+	sprite->changeAnimation(direction);
+	lookingDirection = direction;
 	sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
 }
 
@@ -91,78 +100,35 @@ void MeleEnemy::update(int deltaTime, const glm::ivec2& playerPos)
         return;  
     }
 
-	bool debug = false;
-    if (debug) {
-
-        if (Game::instance().getKey(GLFW_KEY_LEFT) || Game::instance().getKey(GLFW_KEY_A))
-        {
-            if (sprite->animation() != MOVE_LEFT)
-                sprite->changeAnimation(MOVE_LEFT);
-            posEnemy.x -= speed;
-            if (map->checkTileCollision(posEnemy, glm::ivec2(13.6, 27.2)))
-            {
-                posEnemy.x += speed;
-                sprite->changeAnimation(STAND_LEFT);
-            }
-
+    if (this->seePlayer(playerPos)) {
+        playerHasBeenDetected = true; 
+        if (!this->checkCollisionWithPlayer(playerPos, glm::ivec2(16, 32))) {
+            this->move(playerPos);
         }
-        else if (Game::instance().getKey(GLFW_KEY_RIGHT) || Game::instance().getKey(GLFW_KEY_D))
-        {
-            if (sprite->animation() != MOVE_RIGHT)
-                sprite->changeAnimation(MOVE_RIGHT);
-
-            posEnemy.x += speed;
-
-            if (map->checkTileCollision(posEnemy, glm::ivec2(13.6, 27.2)))
-            {
-                posEnemy.x -= speed;
-                sprite->changeAnimation(STAND_RIGHT);
-            }
-
+        else {
+			retreat();
+            isRetreating = true;
+            retreatCooldown = RETREAT_COOLDOWN_TIME;
         }
-        else if (Game::instance().getKey(GLFW_KEY_UP) || Game::instance().getKey(GLFW_KEY_W))
-        {
-            if (sprite->animation() != MOVE_UP)
-                sprite->changeAnimation(MOVE_UP);
-            posEnemy.y -= speed;
-
-            if (map->checkTileCollision(posEnemy, glm::ivec2(13.6, 27.2)))
-            {
-                posEnemy.y += speed;
-                sprite->changeAnimation(STAND_UP);
-            }
-
-        }
-        else if (Game::instance().getKey(GLFW_KEY_DOWN) || Game::instance().getKey(GLFW_KEY_S)) {
-
-            if (sprite->animation() != MOVE_DOWN)
-                sprite->changeAnimation(MOVE_DOWN);
-            posEnemy.y += speed;;
-
-            if (map->checkTileCollision(posEnemy, glm::ivec2(13.6, 27.2)))
-            {
-                posEnemy.y -= speed;;
-                sprite->changeAnimation(STAND_DOWN);
-            }
-
-        }
-
-        sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
     }
     else {
-        if (this->seePlayer(playerPos)) {
-            playerHasBeenDetected = true; 
-            if (!this->checkCollisionWithPlayer(playerPos, glm::ivec2(16, 32))) {
-                this->move(playerPos);
+        if (patrolSquare.size() > 0)
+            this->patrol();
+        else if (guardPosition.guardPosition.size() > 0) {
+            guardTimer -= deltaTime;
+
+            if (guardTimer <= 0) {
+                currentGuardIndex = (currentGuardIndex + 1) % guardPosition.guardPosition.size();
+                guardTimer = guardPosition.time;  
             }
-            else {
-				retreat();
-                isRetreating = true;
-                retreatCooldown = RETREAT_COOLDOWN_TIME;
-            }
+
+            this->guard();
         }
-    }
+	}
+
 }
+
+
 void MeleEnemy::retreat() {
     int tileSize = map->getTileSize();
     glm::ivec2 retreatPos = posEnemy;
@@ -401,4 +367,103 @@ bool MeleEnemy::tryMove(int dir) {
         return false;
     }
     return true;
+}
+
+void MeleEnemy::patrol() {
+    if (map == nullptr)
+        return;
+
+    glm::ivec2 oldPos = posEnemy;
+    bool moved = false;
+
+    switch (patrolState) {
+    case 0: 
+        if (sprite->animation() != MOVE_RIGHT)
+            sprite->changeAnimation(MOVE_RIGHT);
+        lookingDirection = RIGHT;
+        posEnemy.x += speed;
+        patrolProgress += speed;
+
+        if (patrolProgress >= patrolSquare[0]) {
+            patrolState = 1;  
+            patrolProgress = 0;
+        }
+        break;
+
+    case 1: 
+        if (sprite->animation() != MOVE_DOWN)
+            sprite->changeAnimation(MOVE_DOWN);
+        lookingDirection = DOWN;
+        posEnemy.y += speed;
+        patrolProgress += speed;
+
+        if (patrolProgress >= patrolSquare[1]) {
+            patrolState = 2; 
+            patrolProgress = 0;
+        }
+        break;
+
+    case 2: 
+        if (sprite->animation() != MOVE_LEFT)
+            sprite->changeAnimation(MOVE_LEFT);
+        lookingDirection = LEFT;
+        posEnemy.x -= speed;
+        patrolProgress += speed;
+
+        if (patrolProgress >= patrolSquare[0]) {
+            patrolState = 3;  
+            patrolProgress = 0;
+        }
+        break;
+
+    case 3: 
+        if (sprite->animation() != MOVE_UP)
+            sprite->changeAnimation(MOVE_UP);
+        lookingDirection = UP;
+        posEnemy.y -= speed;
+        patrolProgress += speed;
+
+        if (patrolProgress >= patrolSquare[1]) {
+            patrolState = 0;  
+            patrolProgress = 0;
+        }
+        break;
+    }
+
+    if (map->checkTileCollision(posEnemy, size)) {
+        posEnemy = oldPos;
+        patrolState = (patrolState + 1) % 4;
+        patrolProgress = 0;
+    }
+
+    sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
+}
+
+void MeleEnemy::guard() {
+    if (guardPosition.guardPosition.empty())
+        return;
+
+    int currentDirection = guardPosition.guardPosition[currentGuardIndex];
+
+    static int lastDirection = -1;
+    if (lastDirection != currentDirection) {
+        lookingDirection = currentDirection;
+        switch (currentDirection) {
+        case DOWN:
+            sprite->changeAnimation(STAND_DOWN);
+            break;
+        case UP:
+            sprite->changeAnimation(STAND_UP);
+            break;
+        case LEFT:
+            sprite->changeAnimation(STAND_LEFT);
+            break;
+        case RIGHT:
+            sprite->changeAnimation(STAND_RIGHT);
+            break;
+        }
+        lastDirection = currentDirection;
+    }
+
+    sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
 }

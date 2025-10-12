@@ -158,7 +158,7 @@ void Player::update(int deltaTime)
 		else if (sprite->animation() == MOVE_DOWN || sprite->animation() == PUNCH_DOWN)
 			sprite->changeAnimation(STAND_DOWN);
 	}
-	//cout << posPlayer.x << " , " << posPlayer.y << endl;
+	cout << posPlayer.x << " , " << posPlayer.y << endl;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }

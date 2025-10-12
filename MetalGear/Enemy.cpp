@@ -35,11 +35,9 @@ bool Enemy::seePlayer(const glm::ivec2& playerPos) const
 {
 	if (map == nullptr)
 		return false;
-
 	if (playerHasBeenDetected) return true;
 
 	int tileSize = map->getTileSize();
-
 	int enemyTileX = (posEnemy.x + size.x / 2) / tileSize;
 	int enemyTileY = (posEnemy.y + size.y / 2) / tileSize;
 	int playerTileX = (playerPos.x + 7) / tileSize;
@@ -48,43 +46,21 @@ bool Enemy::seePlayer(const glm::ivec2& playerPos) const
 	int dx = playerTileX - enemyTileX;
 	int dy = playerTileY - enemyTileY;
 
-	int distance = 0;  
-	int perpendicular = 0;  
-
 	switch (lookingDirection)
 	{
 	case LEFT:
-		if (dx > 0) return false;  
-		distance = -dx;
-		perpendicular = abs(dy);
+		if (dx >= 0 || dy != 0) return false;  
 		break;
 	case RIGHT:
-		if (dx < 0) return false;  
-		distance = dx;
-		perpendicular = abs(dy);
+		if (dx <= 0 || dy != 0) return false;  
 		break;
 	case UP:
-		if (dy > 0) return false;  
-		distance = -dy;
-		perpendicular = abs(dx);
+		if (dy >= 0 || dx != 0) return false;  
 		break;
 	case DOWN:
-		if (dy < 0) return false;  
-		distance = dy;
-		perpendicular = abs(dx);
+		if (dy <= 0 || dx != 0) return false;  
 		break;
 	}
-
-	int maxWidth;
-	if (distance == 0)
-		maxWidth = 1; 
-	else if (distance <= 3)
-		maxWidth = distance;  
-	else
-		maxWidth = 3; 
-
-	if (perpendicular > maxWidth)
-		return false;
 
 	float x0 = float(enemyTileX);
 	float y0 = float(enemyTileY);
