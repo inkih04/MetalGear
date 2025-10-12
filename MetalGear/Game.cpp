@@ -8,6 +8,8 @@ void Game::init()
 	sceneInitialized = false;
 	mouseX = 0;
 	mouseY = 0;
+	windowWidth = SCREEN_WIDTH;
+	windowHeight = SCREEN_HEIGHT;
 
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
@@ -37,6 +39,10 @@ bool Game::update(int deltaTime)
 
 void Game::render(int width, int height)
 {
+	// Update window size for mouse coordinate conversion
+	windowWidth = width;
+	windowHeight = height;
+
 	glViewport(0, 0, width, height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -71,8 +77,12 @@ void Game::keyReleased(int key)
 
 void Game::mouseMove(int x, int y)
 {
-	mouseX = x;
-	mouseY = y;
+	// Convert window coordinates to game coordinates
+	float scaleX = float(SCREEN_WIDTH) / float(windowWidth);
+	float scaleY = float(SCREEN_HEIGHT) / float(windowHeight);
+
+	mouseX = int(x * scaleX);
+	mouseY = int(y * scaleY);
 }
 
 void Game::mousePress(int button)
@@ -100,4 +110,10 @@ void Game::mouseRelease(int button)
 bool Game::getKey(int key) const
 {
 	return keys[key];
+}
+
+void Game::setWindowSize(int width, int height)
+{
+	windowWidth = width;
+	windowHeight = height;
 }
