@@ -29,6 +29,7 @@ public:
 	void mouseRelease(int button);
 
 	bool getKey(int key) const;
+	void setWindowSize(int width, int height);
 
 private:
 	bool bPlay;
@@ -37,6 +38,7 @@ private:
 	bool keys[1024];
 	int mouseX, mouseY;
 	bool sceneInitialized;
+	int windowWidth, windowHeight;
 };
 
 #endif // _GAME_INCLUDE
