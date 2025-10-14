@@ -130,7 +130,7 @@ TileMap* Scene::loadMap10()
 	float mapHeightPixels = 10 * 16;
 	float mapWidthPixels = 15 * 16;
 	TileMap* map = TileMap::createTileMap("levels/mapa10-puerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
-		{ ChangeMap({274,213},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 0, 0 });
+		{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 0, 0 });
 	return map;
 }
 
