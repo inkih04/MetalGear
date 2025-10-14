@@ -250,7 +250,7 @@ bool TileMap::isOutRight(const glm::ivec2& pos, const glm::ivec2& size) const
 
 bool TileMap::isOutTop(const glm::ivec2& pos) const
 {
-	return pos.y < -16;
+	return pos.y < 0;
 }
 
 bool TileMap::isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const
@@ -319,7 +319,7 @@ int TileMap::changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, gl
 		return changeMapBorders[LEFT];
 	}
 	else if (changeMapBorders[RIGHT] != 0 && this->isOutRight(pos, size)) {
-		newPos = glm::ivec2(32, pos.y);
+		newPos = glm::ivec2(16, pos.y);
 		cout << "Changing map to the RIGHT, new MAP: " << changeMapBorders[RIGHT] << endl;
 		return changeMapBorders[RIGHT];
 	}
