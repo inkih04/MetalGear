@@ -63,6 +63,8 @@ void TileMap::render() const
 
 	for (Enemy* enemy : enemies)
 		enemy->render();
+	for (Item* item : items)
+		item->render();
 
 }
 
@@ -289,8 +291,39 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, 
 		return true;
 	}
 
+	if (isPlayer) {
+		for (Item* item : items) {
+			if (item->collisionWithPlayer(pos, size)) {
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
+
+bool TileMap::checkItemCollision(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
+{
+	for (Item* item : items) {
+		if (item->canGrabItem(playerPos, playerSize)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+Item* TileMap::getItemAt(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
+{
+	for (Item* item : items) {
+		if (item->canGrabItem(playerPos, playerSize)) {
+			cout << "Collecting item at position: (" << item->position.x << ", " << item->position.y << ")" << endl;
+			item->collect();
+			return item;
+		}
+	}
+	return nullptr;
+}
+
 
 bool TileMap::checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const
 {

@@ -7,6 +7,7 @@
 #include <vector>
 #include <unordered_set>
 #include "ChangeMap.h"
+#include "Item.h"
 #include <iostream>
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -48,7 +49,10 @@ public:
 	int getTileAt(int x, int y);
 	int getId() const { return id; }
 	int changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const;
+	bool checkItemCollision(const glm::ivec2& playerPos, const glm::ivec2& playerSize)const;
+	Item* getItemAt(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
 	void addEnemy(Enemy* enemy);
+	void addItem(Item* item) { items.push_back(item); }
 	void updateEnemies(int deltaTime, const glm::ivec2& playerPos);
 	std::unordered_set<int> getBlockTileIds() const { return tileIds;}
 
@@ -60,6 +64,7 @@ private:
 	void prepareArrays(const glm::vec2& minCoords, ShaderProgram& program);
 
 private:
+	vector<Item*> items;
 	vector<Enemy*> enemies;
 	int id;
 	vector<int> changeMapBorders; //index is border enum, vlaue is the new map id

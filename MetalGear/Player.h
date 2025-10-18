@@ -4,6 +4,8 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Item.h"
+#include <vector>
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -22,8 +24,20 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	int checkMap(glm::ivec2 &newPos);
 	void checkEnemies(int deltaTime);
+	void addItem(Item* item) { 
+		if (items.empty()) currentItem = 0;
+		if (item->getType() == ItemTypes::GUN)
+			gun = item;
+		items.push_back(item); 
+	}
 	
 private:
+	vector<Item*> items;
+	int currentItem;
+
+	Item* gun;
+	bool equippedGun;
+
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;
 	Sprite *sprite;

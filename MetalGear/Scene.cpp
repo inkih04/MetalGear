@@ -7,6 +7,7 @@
 #include "MeleEnemy.h"
 #include "RangeEnemy.h"
 #include "Guard.h"
+#include "Gun.h"
 
 
 #define SCREEN_X 0
@@ -74,6 +75,7 @@ TileMap* Scene::loadMap3()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3, {}, { 0, 0, 2, 4 });
 	map->addEnemy(new MeleEnemy(glm::ivec2(120, 32), texProgram, map, { 16, 16 }, Guard(), DOWN));
+	map->addItem(new Gun(glm::ivec2(210, 48), texProgram));
 	return map;
 }
 
