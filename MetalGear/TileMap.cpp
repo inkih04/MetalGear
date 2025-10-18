@@ -270,7 +270,7 @@ bool TileMap::checkCollisionEnemyPlayer(const glm::ivec2& playerPos, const glm::
 	return false;
 }
 
-bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const
+bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, bool isPlayer) const
 {
 	int x0 = pos.x / tileSize;
 	int x1 = (pos.x + size.x - 1) / tileSize;
@@ -285,7 +285,7 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) 
 		if (tileIds.count(currentTile))
 				return true;
 	}
-	if (this->checkCollisionEnemyPlayer(pos, size)) {
+	if (isPlayer && this->checkCollisionEnemyPlayer(pos, size)) {
 		return true;
 	}
 

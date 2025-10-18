@@ -90,7 +90,7 @@ void Player::update(int deltaTime)
 		if(sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= 2;
-		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
@@ -104,7 +104,7 @@ void Player::update(int deltaTime)
 
 		posPlayer.x += 2;
 		
-		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
@@ -117,7 +117,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(MOVE_UP);
 		posPlayer.y -= 2;
 
-		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
 			posPlayer.y += 2;
 			sprite->changeAnimation(STAND_UP);
@@ -130,7 +130,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(MOVE_DOWN);
 		posPlayer.y += 2;
 
-		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2)))
+		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
 			posPlayer.y -= 2;
 			sprite->changeAnimation(STAND_DOWN);

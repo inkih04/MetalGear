@@ -154,7 +154,7 @@ void MeleEnemy::retreat() {
         break;
     }
 
-    if (!map->checkTileCollision(retreatPos, size)) {
+    if (!map->checkTileCollision(retreatPos, size, false)) {
         posEnemy = retreatPos;
         lookingDirection = retreatDirection;
 
@@ -196,7 +196,7 @@ void MeleEnemy::retreat() {
                 break;
             }
 
-            if (!map->checkTileCollision(retreatPos, size)) {
+            if (!map->checkTileCollision(retreatPos, size, false)) {
                 posEnemy = retreatPos;
                 lookingDirection = dir;
                 retreated = true;
@@ -346,7 +346,7 @@ bool MeleEnemy::tryMove(int dir) {
     }
 
 
-    if (map->checkTileCollision(posEnemy, size)) {
+    if (map->checkTileCollision(posEnemy, size, false)) {
         posEnemy = oldPos;
 
         switch (dir) {
@@ -430,7 +430,7 @@ void MeleEnemy::patrol() {
         break;
     }
 
-    if (map->checkTileCollision(posEnemy, size)) {
+    if (map->checkTileCollision(posEnemy, size, false)) {
         posEnemy = oldPos;
         patrolState = (patrolState + 1) % 4;
         patrolProgress = 0;

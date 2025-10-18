@@ -54,6 +54,9 @@
     <ClInclude Include="Guard.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="RangeEnemy.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -93,6 +96,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="MenuScreen.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="RangeEnemy.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

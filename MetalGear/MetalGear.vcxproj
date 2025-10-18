@@ -26,6 +26,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RangeEnemy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
@@ -41,6 +42,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RangeEnemy.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />

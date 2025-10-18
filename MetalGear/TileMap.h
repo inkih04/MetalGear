@@ -43,7 +43,7 @@ public:
 	bool isOutRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool isOutTop(const glm::ivec2& pos) const;
 	bool isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const;
-	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size) const;
+	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, bool isPlayer) const;
 	bool checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const;
 	int getTileAt(int x, int y);
 	int getId() const { return id; }

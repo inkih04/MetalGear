@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "ChangeMap.h"
 #include "MeleEnemy.h"
+#include "RangeEnemy.h"
 #include "Guard.h"
 
 
@@ -58,7 +59,7 @@ void Scene::createMaps()
 TileMap* Scene::loadMap1()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN));
+	map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN));
 	return map;
 }
 
