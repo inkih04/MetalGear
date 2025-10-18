@@ -22,7 +22,6 @@ bool Game::update(int deltaTime)
 	MenuState currentState = menuScreen.getCurrentState();
 
 	if (currentState == MenuState::PLAYING) {
-		// Initialize scene only once when entering game
 		if (!sceneInitialized) {
 			scene.init();
 			sceneInitialized = true;
@@ -30,7 +29,6 @@ bool Game::update(int deltaTime)
 		scene.update(deltaTime);
 	}
 	else {
-		// Update menu with mouse position
 		menuScreen.update(deltaTime, mouseX, mouseY);
 	}
 
@@ -39,15 +37,19 @@ bool Game::update(int deltaTime)
 
 void Game::render(int width, int height)
 {
-	// Update window size for mouse coordinate conversion
 	windowWidth = width;
 	windowHeight = height;
 
-	glViewport(0, 0, width, height);
+	int squareSize = std::min(width, height);
+
+	int viewportX = (width - squareSize) / 2;
+	int viewportY = (height - squareSize) / 2;
+
+	glViewport(viewportX, viewportY, squareSize, squareSize);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	MenuState currentState = menuScreen.getCurrentState();
-
 	if (currentState == MenuState::PLAYING) {
 		scene.render();
 	}
@@ -59,7 +61,6 @@ void Game::render(int width, int height)
 void Game::keyPressed(int key)
 {
 	if (key == GLFW_KEY_ESCAPE) {
-		// If in game, go back to menu. If in menu, exit
 		if (menuScreen.getCurrentState() == MenuState::PLAYING) {
 			menuScreen.setCurrentState(MenuState::MAIN_MENU);
 		}
@@ -77,7 +78,6 @@ void Game::keyReleased(int key)
 
 void Game::mouseMove(int x, int y)
 {
-	// Convert window coordinates to game coordinates
 	float scaleX = float(SCREEN_WIDTH) / float(windowWidth);
 	float scaleY = float(SCREEN_HEIGHT) / float(windowHeight);
 
@@ -90,11 +90,9 @@ void Game::mousePress(int button)
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		MenuState currentState = menuScreen.getCurrentState();
 
-		// Handle menu clicks
 		if (currentState != MenuState::PLAYING) {
 			menuScreen.handleClick(mouseX, mouseY);
 
-			// Check if exit was requested
 			if (menuScreen.shouldExit()) {
 				bPlay = false;
 				menuScreen.resetExitRequest();
