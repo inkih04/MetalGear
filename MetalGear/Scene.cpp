@@ -57,7 +57,8 @@ void Scene::createMaps()
 TileMap* Scene::loadMap1()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
-	map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN));
+	map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN, player));
+	map->addItem(new Gun(glm::ivec2(64, 64), texProgram));
 	return map;
 }
 
@@ -162,9 +163,9 @@ TileMap* Scene::loadMap14()
 void Scene::init()
 {
 	initShaders();
-	createMaps();
 
 	player = new Player();
+	createMaps();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(), INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
 	player->setTileMap(maps[currentMapId]);

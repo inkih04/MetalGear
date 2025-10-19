@@ -18,9 +18,19 @@ enum PlayerAnims
 
 };
 
+void Player::takeDamage(int dmg)
+{
+	health -= dmg;
+	if (health < 0)
+		health = 0;
+	std::cout << "Player took " << dmg << " damage, health now: " << health << std::endl;
+}
+
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
+	health = 6;
+	cout << "Player initialized with health: " << health << std::endl;
 	equippedGun = false;
 	spritesheet.loadFromFile("images/metal.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(13.6, 27.2), glm::vec2(0.0556f, 0.5f), &spritesheet, &shaderProgram);

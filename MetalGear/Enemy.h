@@ -3,6 +3,7 @@
 
 #include "Sprite.h"
 #include <unordered_set>
+#include "FireBall.h"
 class TileMap;
 
 
@@ -19,7 +20,7 @@ public:
 	};
 
 	//comunes
-	void render();
+	virtual void render();
 	void setPosition(const glm::vec2& pos);
 	glm::ivec2 getPosition() const { return posEnemy; }
 	glm::ivec2 getSize() const { return size; }
@@ -34,7 +35,9 @@ protected:
 	glm::ivec2 posEnemy;
 	glm::ivec2 tileMapDispl;
 	glm::ivec2 size;
-	vector<int> patrolSquare; 
+	vector<int> patrolSquare;
+	vector<FireBall*> fireBalls;
+
 	int health;
 	int damage;
 	int speed;
@@ -43,6 +46,7 @@ protected:
 	Texture spritesheet;
 	Sprite* sprite;
 	TileMap* map;
+	ShaderProgram* s;
 	int lookingDirection;
 };
 #endif 

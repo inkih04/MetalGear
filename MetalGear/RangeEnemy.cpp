@@ -8,12 +8,15 @@
 
 
 
-RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction)
+RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction, Player* player)
 {
     posEnemy = position;
     health = 3;
     damage = 1;
     speed = 1;
+	fireRate = 1000;
+	lastShotTime = fireRate;
+	this->player = player;
 
     if (patrolSquare.size() > 0) this->patrolSquare = patrolSquare;
     else if (guard.guardPosition.size() > 0) {
@@ -31,6 +34,10 @@ RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram,
 
 }
 
+bool RangeEnemy::canShoot()
+{
+    return lastShotTime >= fireRate;
+}
 
 enum EnemyAnims
 {
@@ -39,7 +46,7 @@ enum EnemyAnims
 
 void RangeEnemy::init(ShaderProgram& shaderProgram)
 {
-
+	s = &shaderProgram;
     spritesheet.loadFromFile("images/charizard.png", TEXTURE_PIXEL_FORMAT_RGBA);
     sprite = Sprite::createSprite(size, glm::vec2(0.5f, 0.25f), &spritesheet, &shaderProgram);
     sprite->setNumberAnimations(8);
@@ -81,6 +88,16 @@ void RangeEnemy::init(ShaderProgram& shaderProgram)
     sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
 }
 
+void RangeEnemy::atack()
+{
+    if (!canShoot()) {
+        return;
+    }
+	FireBall* newFireBall = new FireBall(posEnemy, -1, map, *s, player);
+    fireBalls.push_back(newFireBall);
+	lastShotTime = 0;
+}
+
 void RangeEnemy::update(int deltaTime, const glm::ivec2& playerPos)
 {
     sprite->update(deltaTime);
@@ -88,6 +105,8 @@ void RangeEnemy::update(int deltaTime, const glm::ivec2& playerPos)
     if (this->seePlayer(playerPos)) {
         playerHasBeenDetected = true;
         this->move(playerPos);
+        this->atack();
+
     }
     else {
         if (patrolSquare.size() > 0)
@@ -103,7 +122,28 @@ void RangeEnemy::update(int deltaTime, const glm::ivec2& playerPos)
             this->guard();
         }
     }
+    lastShotTime += deltaTime;
 
+    for (auto it = fireBalls.begin(); it != fireBalls.end(); ) {
+        (*it)->update(deltaTime);
+
+        if (!(*it)->isActive()) {
+            delete* it;
+            it = fireBalls.erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+
+}
+
+void RangeEnemy::render()
+{
+    sprite->render();
+    for (auto& fireBall : fireBalls) {
+        fireBall->render();
+    }
 }
 
 

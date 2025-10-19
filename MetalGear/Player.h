@@ -24,6 +24,7 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	int checkMap(glm::ivec2 &newPos);
+	glm::ivec2 getPosition() const { return posPlayer; }
 	void checkEnemies(int deltaTime);
 	void addItem(Item* item) { 
 		if (items.empty()) currentItem = 0;
@@ -31,11 +32,12 @@ public:
 			gun = static_cast<Gun*>(item);
 		items.push_back(item); 
 	}
+	void takeDamage(int dmg);
 	
 private:
 	vector<Item*> items;
 	int currentItem;
-
+	int health;
 	Gun* gun;
 	bool equippedGun;
 

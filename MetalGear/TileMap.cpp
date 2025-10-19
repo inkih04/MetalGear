@@ -63,6 +63,7 @@ void TileMap::render() const
 
 	for (Enemy* enemy : enemies)
 		enemy->render();
+
 	for (Item* item : items)
 		item->render();
 
@@ -288,6 +289,7 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, 
 				return true;
 	}
 	if (isPlayer && this->checkCollisionEnemyPlayer(pos, size)) {
+		cout << "Collision with enemy detected in tile collision check." << endl;
 		return true;
 	}
 
