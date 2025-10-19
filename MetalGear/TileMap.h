@@ -47,6 +47,8 @@ public:
 	bool isOutBottom(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, bool isPlayer) const;
 	bool checkCollisionWithATile(const glm::ivec2& pos, const glm::ivec2& size, int tile) const;
+	bool canPunchEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
+	void doPunchDamageToEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize, int damage);
 	int getTileAt(int x, int y);
 	int getId() const { return id; }
 	int changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, glm::ivec2& newPos) const;

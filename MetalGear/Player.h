@@ -20,6 +20,7 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
+	bool canPunch();
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
@@ -40,6 +41,8 @@ private:
 	int health;
 	Gun* gun;
 	bool equippedGun;
+	int punchRate = 500;
+	int lastPunch = 500;
 
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;

@@ -11,7 +11,7 @@
 RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction, Player* player)
 {
     posEnemy = position;
-    this->health = 2;
+    this->health = 4;
 	cout << "RangeEnemy created at position (" << position.x << ", " << position.y << ") with health " << health << endl;
     damage = 1;
     speed = 1;

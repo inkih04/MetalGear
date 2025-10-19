@@ -138,6 +138,7 @@ void Player::update(int deltaTime)
 	if (gun != nullptr) {
 		gun->update(deltaTime);
 	}
+	lastPunch += deltaTime;
 
 	sprite->update(deltaTime);
 	if (Game::instance().getKey(GLFW_KEY_LEFT) || Game::instance().getKey(GLFW_KEY_A))
@@ -205,6 +206,10 @@ void Player::update(int deltaTime)
 			}
 			else if (sprite->animation() == STAND_DOWN || sprite->animation() == MOVE_DOWN) {
 				sprite->changeAnimation(PUNCH_DOWN);
+			}
+			if (map->canPunchEnemies(posPlayer, glm::ivec2(13.6, 27.2)) && canPunch()) {
+				map->doPunchDamageToEnemies(posPlayer, glm::ivec2(13.6, 27.2), 1);
+				lastPunch = 0;
 			}
 		}
 		else {
@@ -305,6 +310,10 @@ void Player::update(int deltaTime)
 	//cout << posPlayer.x << " , " << posPlayer.y << endl;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+bool Player::canPunch() {
+	return lastPunch >= punchRate;
 }
 
 int Player::checkMap(glm::ivec2 &newPos)

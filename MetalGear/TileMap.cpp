@@ -416,6 +416,61 @@ void TileMap::updateEnemies(int deltaTime, const glm::ivec2& playerPos)
 		enemy->update(deltaTime, playerPos);
 }
 
+// En TileMap.cpp
+
+bool TileMap::canPunchEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
+{
+	int punchRange = 20; 
+
+	glm::ivec2 expandedPos = playerPos - glm::ivec2(punchRange, punchRange);
+	glm::ivec2 expandedSize = playerSize + glm::ivec2(punchRange * 2, punchRange * 2);
+
+	for (Enemy* enemy : enemies) {
+		if (enemy->isDead()) continue; 
+
+		glm::ivec2 enemyPos = enemy->getPosition();
+		glm::ivec2 enemySize = enemy->getSize();
+
+		bool collisionX = expandedPos.x < enemyPos.x + enemySize.x &&
+			expandedPos.x + expandedSize.x > enemyPos.x;
+		bool collisionY = expandedPos.y < enemyPos.y + enemySize.y &&
+			expandedPos.y + expandedSize.y > enemyPos.y;
+
+		if (collisionX && collisionY) {
+			cout << "Enemy in punch range at position: (" << enemyPos.x << ", " << enemyPos.y << ")" << endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+void TileMap::doPunchDamageToEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize, int damage)
+{
+	int punchRange = 20; 
+
+	glm::ivec2 expandedPos = playerPos - glm::ivec2(punchRange, punchRange);
+	glm::ivec2 expandedSize = playerSize + glm::ivec2(punchRange * 2, punchRange * 2);
+
+	for (Enemy* enemy : enemies) {
+		if (enemy->isDead()) continue; 
+
+		glm::ivec2 enemyPos = enemy->getPosition();
+		glm::ivec2 enemySize = enemy->getSize();
+
+		bool collisionX = expandedPos.x < enemyPos.x + enemySize.x &&
+			expandedPos.x + expandedSize.x > enemyPos.x;
+		bool collisionY = expandedPos.y < enemyPos.y + enemySize.y &&
+			expandedPos.y + expandedSize.y > enemyPos.y;
+
+		if (collisionX && collisionY) {
+			cout << "Punching enemy! Health before: " << enemy->getHealth() << " damage: " << damage << endl;
+			enemy->takeDamage(damage);
+			cout << "Enemy at position: (" << enemyPos.x << ", " << enemyPos.y << ") took " << damage << " punch damage. Remaining health: " << enemy->getHealth() << endl;
+		}
+	}
+
+}
+
 
 
 
