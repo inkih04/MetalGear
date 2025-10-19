@@ -12,7 +12,7 @@ MeleEnemy::MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, T
 {
 	this->player = player;
 	posEnemy = position;
-	health = 1;
+	this->health = 1;
 	damage = 1;
 	speed = 1;
 

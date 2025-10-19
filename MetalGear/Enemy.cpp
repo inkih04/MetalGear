@@ -18,7 +18,6 @@ void Enemy::takeDamage(int dmg)
 {
 	health -= dmg;
 	if (health <= 0) {
-		health = 0;
 		dead = true;
 	}
 

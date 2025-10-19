@@ -11,6 +11,7 @@ public:
 	void init(ShaderProgram& shaderProgram) override;
 	bool canShoot();
 	void update(int deltaTime, const glm::ivec2& playerPos) override;
+	bool checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const override;
 	void move(const glm::ivec2& playerPos);
 	void atack();
 	void render() override;
@@ -22,7 +23,6 @@ private:
 
 	int lastShotTime;
 	int fireRate;
-	int health;
 	int patrolState;
 	int patrolProgress;
 	Guard guardPosition;

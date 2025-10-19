@@ -18,7 +18,6 @@ private:
 	void patrol();
 	void guard();
 
-	int health;
 	static const int RETREAT_COOLDOWN_TIME = 1000;
 	int retreatCooldown;
 	bool isRetreating;

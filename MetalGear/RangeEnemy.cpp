@@ -11,7 +11,7 @@
 RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction, Player* player)
 {
     posEnemy = position;
-    health = 200;
+    this->health = 2;
 	cout << "RangeEnemy created at position (" << position.x << ", " << position.y << ") with health " << health << endl;
     damage = 1;
     speed = 1;
@@ -33,6 +33,19 @@ RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram,
     this->map = map;
     this->init(shaderProgram);
 
+}
+
+bool RangeEnemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
+{
+    if (dead) return false;
+
+    bool collisionX = posEnemy.x < playerPos.x + playerSize.x &&
+        posEnemy.x + size.x > playerPos.x;
+
+    bool collisionY = posEnemy.y +8 < playerPos.y + playerSize.y &&
+        posEnemy.y + size.y > playerPos.y + 16;
+
+    return collisionX && collisionY;
 }
 
 bool RangeEnemy::canShoot()
@@ -94,7 +107,7 @@ void RangeEnemy::atack()
     if (!canShoot()) {
         return;
     }
-	FireBall* newFireBall = new FireBall(posEnemy, -1, map, *s, player);
+	FireBall* newFireBall = new FireBall(glm::ivec2(posEnemy.x, posEnemy.y + 17), -1, map, *s, player);
     fireBalls.push_back(newFireBall);
 	lastShotTime = 0;
 }
