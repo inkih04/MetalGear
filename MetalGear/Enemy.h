@@ -37,6 +37,7 @@ protected:
 	glm::ivec2 size;
 	vector<int> patrolSquare;
 	vector<FireBall*> fireBalls;
+	bool dead = false;
 
 	Player* player;
 	int health;

@@ -29,5 +29,10 @@ Bullet::~Bullet() {
 }
 
 void Bullet::hitTarget() {
-	cout << "Bullet hit target at position (" << position.x << ", " << position.y << ")" << endl;
+	if (!active) return;
+	if (tileMap->checkCollisionEnemyPlayer(position, size)) {
+		cout << "Bullet hit target at position (" << position.x << ", " << position.y << ")" << endl;
+		tileMap->doDamegeToEnemies(position, size, 1);
+		active = false;
+	}
 }

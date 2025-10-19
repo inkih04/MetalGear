@@ -273,6 +273,17 @@ bool TileMap::checkCollisionEnemyPlayer(const glm::ivec2& playerPos, const glm::
 	return false;
 }
 
+void TileMap::doDamegeToEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize, int damage)
+{
+	for (Enemy* enemy : enemies) {
+		if (enemy->checkCollisionWithPlayer(playerPos, playerSize)) {
+			cout << "Vida del enemigo " << enemy->getHealth()  << "  damage " << damage << endl;
+			enemy->takeDamage(damage);
+			cout << "Enemy at position: (" << enemy->getPosition().x << ", " << enemy->getPosition().y << ") took " << damage << " damage. Remaining health: " << enemy->getHealth() << endl;
+		}
+	}
+}
+
 bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, bool isPlayer) const
 {
 	int x0 = pos.x / tileSize;

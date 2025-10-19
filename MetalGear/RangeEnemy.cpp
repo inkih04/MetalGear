@@ -11,7 +11,8 @@
 RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction, Player* player)
 {
     posEnemy = position;
-    health = 3;
+    health = 200;
+	cout << "RangeEnemy created at position (" << position.x << ", " << position.y << ") with health " << health << endl;
     damage = 1;
     speed = 1;
 	fireRate = 1000;
@@ -140,7 +141,8 @@ void RangeEnemy::update(int deltaTime, const glm::ivec2& playerPos)
 
 void RangeEnemy::render()
 {
-    sprite->render();
+    if (!dead)
+        sprite->render();
     for (auto& fireBall : fireBalls) {
         fireBall->render();
     }

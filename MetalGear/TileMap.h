@@ -37,6 +37,7 @@ public:
 	glm::ivec2 getMapSize() const { return mapSize; }  
 
 	bool checkCollisionEnemyPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
+	void doDamegeToEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize, int damage);
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;

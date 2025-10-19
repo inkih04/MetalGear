@@ -3,7 +3,8 @@
 
 void Enemy::render()
 {
-	sprite->render();
+	if (!dead) 
+		sprite->render();
 }
 
 
@@ -16,12 +17,17 @@ void Enemy::setPosition(const glm::vec2& pos)
 void Enemy::takeDamage(int dmg)
 {
 	health -= dmg;
-	if (health < 0)
+	if (health <= 0) {
 		health = 0;
+		dead = true;
+	}
+
 }
 
 bool Enemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
 {
+	if (dead) return false;
+
 	bool collisionX = posEnemy.x < playerPos.x + playerSize.x &&
 		posEnemy.x + size.x > playerPos.x;
 
