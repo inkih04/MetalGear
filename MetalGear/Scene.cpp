@@ -65,14 +65,14 @@ TileMap* Scene::loadMap1()
 TileMap* Scene::loadMap2()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 2, {}, { 1, 0, 0, 3 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(64, 4), texProgram, map, {}, Guard({ RIGHT, DOWN }, 2000), RIGHT));
+	map->addEnemy(new MeleEnemy(glm::ivec2(64, 4), texProgram, map, {}, Guard({ RIGHT, DOWN }, 2000), RIGHT, player));
 	return map;
 }
 
 TileMap* Scene::loadMap3()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3, {}, { 0, 0, 2, 4 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(120, 32), texProgram, map, { 16, 16 }, Guard(), DOWN));
+	map->addEnemy(new MeleEnemy(glm::ivec2(120, 32), texProgram, map, { 16, 16 }, Guard(), DOWN, player));
 	map->addItem(new Gun(glm::ivec2(210, 48), texProgram));
 	return map;
 }

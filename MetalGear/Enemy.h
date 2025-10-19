@@ -38,6 +38,7 @@ protected:
 	vector<int> patrolSquare;
 	vector<FireBall*> fireBalls;
 
+	Player* player;
 	int health;
 	int damage;
 	int speed;

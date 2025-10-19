@@ -8,8 +8,9 @@
 
 
 
-MeleEnemy::MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction)
+MeleEnemy::MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction, Player* player)
 {
+	this->player = player;
 	posEnemy = position;
 	health = 3;
 	damage = 1;
@@ -106,6 +107,7 @@ void MeleEnemy::update(int deltaTime, const glm::ivec2& playerPos)
             this->move(playerPos);
         }
         else {
+			player->takeDamage(this->getDamage());
 			retreat();
             isRetreating = true;
             retreatCooldown = RETREAT_COOLDOWN_TIME;

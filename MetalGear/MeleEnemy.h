@@ -7,7 +7,7 @@
 class MeleEnemy : public Enemy
 {
 public:
-	MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction);
+	MeleEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, const vector<int>& patrolSquare, Guard guard, int direction, Player* player);
 	void init(ShaderProgram& shaderProgram) override;
 	void update(int deltaTime, const glm::ivec2& playerPos) override;
 	void move(const glm::ivec2& playerPos);

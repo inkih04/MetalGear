@@ -20,7 +20,6 @@ private:
 	void patrol();
 	void guard();
 
-	Player* player;
 	int lastShotTime;
 	int fireRate;
 	int health;
