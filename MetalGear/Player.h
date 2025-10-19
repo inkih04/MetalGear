@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "TileMap.h"
 #include "Item.h"
+#include "Gun.h"
 #include <vector>
 
 
@@ -27,7 +28,7 @@ public:
 	void addItem(Item* item) { 
 		if (items.empty()) currentItem = 0;
 		if (item->getType() == ItemTypes::GUN)
-			gun = item;
+			gun = static_cast<Gun*>(item);
 		items.push_back(item); 
 	}
 	
@@ -35,7 +36,7 @@ private:
 	vector<Item*> items;
 	int currentItem;
 
-	Item* gun;
+	Gun* gun;
 	bool equippedGun;
 
 	glm::ivec2 tileMapDispl, posPlayer;

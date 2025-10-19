@@ -125,6 +125,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Player::update(int deltaTime)
 {
+	if (gun != nullptr) {
+		gun->update(deltaTime);
+	}
+
 	sprite->update(deltaTime);
 	if (Game::instance().getKey(GLFW_KEY_LEFT) || Game::instance().getKey(GLFW_KEY_A))
 	{
@@ -194,7 +198,21 @@ void Player::update(int deltaTime)
 			}
 		}
 		else {
-			//todo: Shooting logic
+			int direction;
+			if (sprite->animation() == STAND_LEFT_GUN || sprite->animation() == MOVE_LEFT_GUN) {
+				direction = LEFT;
+			}
+			else if (sprite->animation() == STAND_RIGHT_GUN || sprite->animation() == MOVE_RIGHT_GUN) {
+				direction = RIGHT;
+			}
+			else if (sprite->animation() == STAND_UP_GUN || sprite->animation() == MOVE_UP_GUN) {
+				direction = UP;
+			}
+			else if (sprite->animation() == STAND_DOWN_GUN || sprite->animation() == MOVE_DOWN_GUN) {
+				direction = DOWN;
+			}
+
+			gun->shoot(posPlayer, direction, map);
 		}
 	}
 	else if (Game::instance().getKey(GLFW_KEY_E)) {
@@ -286,12 +304,15 @@ int Player::checkMap(glm::ivec2 &newPos)
 
 void Player::checkEnemies(int deltaTime)
 {
-	// Implement enemy collision check and health reduction if needed
 	map->updateEnemies(deltaTime, posPlayer);
 }
 
 void Player::render()
 {
+	if (gun != nullptr && equippedGun) {
+		gun->renderGun();
+	}
+
 	sprite->render();
 }
 

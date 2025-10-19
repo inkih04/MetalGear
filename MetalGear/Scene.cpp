@@ -16,10 +16,7 @@
 #define INIT_PLAYER_X_TILES 5 
 #define INIT_PLAYER_Y_TILES 4 
 
-enum LookingDirection
-{
-	DOWN, UP, LEFT, RIGHT
-};
+
 
 Scene::Scene()
 {

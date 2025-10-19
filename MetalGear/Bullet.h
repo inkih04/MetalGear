@@ -1,0 +1,10 @@
+#pragma once
+#include "Projectile.h"
+
+class Bullet : public Projectile {
+
+	public:
+		Bullet(const glm::ivec2& position, int direction, TileMap* currentMap, ShaderProgram& shaderProgram);
+		~Bullet();
+
+};

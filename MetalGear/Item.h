@@ -11,6 +11,7 @@ class Item
 public:
 	virtual ~Item() {}
 	virtual int getType() = 0;
+	virtual void update(int deltaTime) = 0;
 	void init(ShaderProgram& shaderProgram);
 	bool collisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
 	bool canGrabItem(const glm::ivec2& playerPos, const glm::ivec2& playerSize);
