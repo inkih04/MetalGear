@@ -331,12 +331,13 @@ void Player::update(int deltaTime)
 
 	if (xPressedNow && !xPressedLastFrame) {
 		if (!items.empty()) {
+			if (items[currentItem]->getType() == BULLETS && gun == nullptr) return;
 			items[currentItem]->use(this);
 			if (items[currentItem]->destroyAfterUse()) {
 				delete items[currentItem];
 				items.erase(items.begin() + currentItem);
 				if (items.empty()) {
-					currentItem = -1; 
+					currentItem = 0; 
 				}
 				else if (currentItem >= items.size()) {
 					currentItem = items.size() - 1; 

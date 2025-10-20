@@ -8,14 +8,14 @@ Gun::Gun(const glm::ivec2& position, ShaderProgram& shaderProgram) {
 	s = &shaderProgram;
 	this->position = position;
 	sprite->setPosition(position);
-	this->ammo = 100; 
+	this->ammo = 5; 
 	this->fireRate = 1000;
 	this->lastShotTime = fireRate;
 }
 
 bool Gun::canShoot()
 {
-	return lastShotTime >= fireRate;
+	return lastShotTime >= fireRate && ammo > 0;
 }
 
 void Gun::shoot(const glm::ivec2& playerPos, int direction, TileMap* currentMap)

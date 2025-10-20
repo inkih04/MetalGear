@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ammunition.h" />
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CaveEnemy.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ammunition.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CaveEnemy.cpp" />
     <ClCompile Include="FireBall.cpp" />

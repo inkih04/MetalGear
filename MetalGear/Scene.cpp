@@ -10,6 +10,7 @@
 #include "Gun.h"
 #include "CaveEnemy.h"
 #include "MedPack.h"
+#include "Ammunition.h"
 
 
 #define SCREEN_X 0
@@ -61,6 +62,7 @@ TileMap* Scene::loadMap1()
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
 	map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN, player));
 	map->addItem(new MedPack(glm::ivec2(64, 64), texProgram));
+	map->addItem(new Ammunition(glm::ivec2(64, 80), texProgram));
 	return map;
 }
 

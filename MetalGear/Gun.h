@@ -1,6 +1,7 @@
 #pragma once
 #include "Item.h"
 #include "Bullet.h"
+#include <iostream>
 
 
 
@@ -8,7 +9,7 @@ class Gun : public Item {
 public:
 	Gun(const glm::ivec2& position, ShaderProgram& shaderProgram);
 	int getAmmo() const { return ammo; }
-	void reload(int ammoCount) { ammo += ammoCount; }
+	void reload(int ammoCount) {cout << "Reloading" << endl; ammo += ammoCount; }
 	int getType() override;
 	bool canShoot();
 	void shoot(const glm::ivec2& playerPos, int direction, TileMap* currentMap);

@@ -36,6 +36,9 @@ public:
 		items.push_back(item); 
 	}
 	void takeDamage(int dmg);
+	void reloadGun(int ammoCount) {
+		if (gun != nullptr) gun->reload(ammoCount);
+	};
 	
 private:
 	vector<Item*> items;

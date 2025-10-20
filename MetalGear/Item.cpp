@@ -38,6 +38,7 @@ bool Item::collisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& pl
 }
 bool Item::canGrabItem(const glm::ivec2& playerPos, const glm::ivec2& playerSize)
 {
+	if (collected) return false;
 	int grabRange = 32;  
 
 	int itemCenterX = position.x + 8;   
