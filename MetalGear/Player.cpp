@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "Player.h"
 #include "Game.h"
+#include "Item.h"
 #include <GLFW/glfw3.h>
 
 
@@ -17,6 +18,16 @@ enum PlayerAnims
 	STAND_DOWN_GUN, STAND_UP_GUN, STAND_LEFT_GUN, STAND_RIGHT_GUN, MOVE_LEFT_GUN, MOVE_RIGHT_GUN, MOVE_UP_GUN, MOVE_DOWN_GUN
 
 };
+
+
+
+void Player::heal(int life)
+{
+	health += life;
+	if (health > 6)
+		health = 6;
+	std::cout << "Player healed, health now: " << health << std::endl;
+}
 
 void Player::takeDamage(int dmg)
 {
@@ -140,6 +151,10 @@ void Player::update(int deltaTime)
 	}
 	lastPunch += deltaTime;
 
+	static bool ePressedLastFrame = false;
+
+	bool ePressedNow = Game::instance().getKey(GLFW_KEY_E);
+
 	sprite->update(deltaTime);
 	if (Game::instance().getKey(GLFW_KEY_LEFT) || Game::instance().getKey(GLFW_KEY_A))
 	{
@@ -230,7 +245,7 @@ void Player::update(int deltaTime)
 			gun->shoot(posPlayer, direction, map);
 		}
 	}
-	else if (Game::instance().getKey(GLFW_KEY_E)) {
+	else if (ePressedNow && !ePressedLastFrame) {
 		if (map->checkItemCollision(posPlayer, glm::ivec2(13.6, 27.2))) {
 			addItem(map->getItemAt(posPlayer, glm::ivec2(13.6, 27.2)));
 			//todo: mostrar mensaje de item recogido
@@ -259,6 +274,8 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(STAND_DOWN_GUN);
 		}
 	}
+	ePressedLastFrame = ePressedNow;
+
 
 	static bool spacePressedLastFrame = false;
 
@@ -296,9 +313,10 @@ void Player::update(int deltaTime)
 
 	static bool cPressedLastFrame = false;
 
-	bool cPressedNow = Game::instance().getKey(GLFW_KEY_SPACE);
+	bool cPressedNow = Game::instance().getKey(GLFW_KEY_C);
 
 	if (cPressedNow && !cPressedLastFrame) {
+		cout << "Switching item" << endl;
 		if (!items.empty()) {
 			currentItem = (currentItem + 1) % items.size();
 			cout << "current item " << currentItem << endl;
@@ -307,7 +325,28 @@ void Player::update(int deltaTime)
 
 	cPressedLastFrame = cPressedNow;
 
-	//cout << posPlayer.x << " , " << posPlayer.y << endl;
+	static bool xPressedLastFrame = false;
+
+	bool xPressedNow = Game::instance().getKey(GLFW_KEY_X);
+
+	if (xPressedNow && !xPressedLastFrame) {
+		if (!items.empty()) {
+			items[currentItem]->use(this);
+			if (items[currentItem]->destroyAfterUse()) {
+				delete items[currentItem];
+				items.erase(items.begin() + currentItem);
+				if (items.empty()) {
+					currentItem = -1; 
+				}
+				else if (currentItem >= items.size()) {
+					currentItem = items.size() - 1; 
+				}
+			}
+
+		}
+	}
+
+	xPressedLastFrame = xPressedNow;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }

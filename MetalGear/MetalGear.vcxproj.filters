@@ -72,6 +72,12 @@
     <ClInclude Include="FireBall.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="CaveEnemy.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="MedPack.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -129,6 +135,12 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="FireBall.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CaveEnemy.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="MedPack.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

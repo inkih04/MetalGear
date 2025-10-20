@@ -32,7 +32,7 @@ public:
 	bool seePlayer(const glm::ivec2& playerPos) const;
 
 protected:
-	glm::ivec2 posEnemy;
+	glm::vec2 posEnemy;
 	glm::ivec2 tileMapDispl;
 	glm::ivec2 size;
 	vector<int> patrolSquare;
@@ -42,7 +42,7 @@ protected:
 	Player* player;
 	int health;
 	int damage;
-	int speed;
+	float speed;
 	bool playerHasBeenDetected;
 
 	Texture spritesheet;

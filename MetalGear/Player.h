@@ -4,7 +4,6 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
-#include "Item.h"
 #include "Gun.h"
 #include <vector>
 
@@ -12,6 +11,8 @@
 // Player is basically a Sprite that represents the player. As such it has
 // all properties it needs to track its movement, jumping, and collisions.
 
+
+class Item;
 
 class Player
 {
@@ -21,6 +22,7 @@ public:
 	void update(int deltaTime);
 	void render();
 	bool canPunch();
+	void heal(int life);
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);

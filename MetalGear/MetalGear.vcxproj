@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CaveEnemy.h" />
     <ClInclude Include="ChangeMap.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireBall.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="MedPack.h" />
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
@@ -41,9 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CaveEnemy.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="MedPack.cpp" />
     <ClCompile Include="MeleEnemy.cpp" />
     <ClCompile Include="MeleEnemy.h" />
     <ClCompile Include="Enemy.cpp" />
