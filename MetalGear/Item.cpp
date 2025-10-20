@@ -39,7 +39,7 @@ bool Item::collisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& pl
 bool Item::canGrabItem(const glm::ivec2& playerPos, const glm::ivec2& playerSize)
 {
 	if (collected) return false;
-	int grabRange = 32;  
+	int grabRange = 16;  
 
 	int itemCenterX = position.x + 8;   
 	int itemCenterY = position.y + 8;
@@ -48,7 +48,7 @@ bool Item::canGrabItem(const glm::ivec2& playerPos, const glm::ivec2& playerSize
 	int playerCenterY = playerPos.y + playerSize.y / 2;
 
 	int distX = abs(itemCenterX - playerCenterX);
-	int distY = abs(itemCenterY - playerCenterY);
+	int distY = abs(itemCenterY -8 - playerCenterY);
 
 	return distX <= grabRange && distY <= grabRange;
 }
