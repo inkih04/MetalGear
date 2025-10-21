@@ -384,7 +384,7 @@ void Player::update(int deltaTime)
 
 	xPressedLastFrame = xPressedNow;
 
-	//cout << "Player position: (" << posPlayer.x << ", " << posPlayer.y << ")" << endl;
+	cout << "Player position: (" << posPlayer.x << ", " << posPlayer.y << ")" << endl;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }

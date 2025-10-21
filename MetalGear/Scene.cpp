@@ -42,7 +42,7 @@ void Scene::createMaps()
 	float mapWidthPixels = 15 * 16;
 
 																											//LEFT RIGHT TOP BOTTOM  
-	currentMapId = 1;
+	currentMapId = 7;
 	maps[1] = loadMap1();
 	maps[2] = loadMap2();
 	maps[3] = loadMap3();
@@ -130,6 +130,12 @@ TileMap* Scene::loadMap7()
 	TileMap* map = TileMap::createTileMap("levels/mapa7.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 7,
 		{ ChangeMap({19,18,20},6, glm::ivec2(-1.f, 50.f)),
 		  ChangeMap({112},8, glm::ivec2(25.f, mapHeightPixels - 50.f)) }, {});
+
+	map->addItem(new Ammunition(glm::ivec2(50, 48), texProgram));
+	map->addEnemy(new CaveEnemy(glm::ivec2(162, 8), texProgram, map, {}, Guard(), DOWN, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(56, 74), texProgram, map, {}, Guard({ RIGHT, DOWN }, 1250), RIGHT, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(20, 124), texProgram, map, {}, Guard(), RIGHT, player));
+	map->addItem(new MedPack(glm::ivec2(16, 16), texProgram));
 	return map;
 }
 
@@ -140,6 +146,10 @@ TileMap* Scene::loadMap8()
 	TileMap* map = TileMap::createTileMap("levels/mapa8.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 8,
 		{ ChangeMap({172},7, glm::ivec2(mapWidthPixels - 30, 20)),
 		  ChangeMap({19,18,20},9, glm::ivec2(30, mapHeightPixels - 50)) }, {});
+
+	map->addItem(new Ammunition(glm::ivec2(17, 24), texProgram));
+	map->addEnemy(new CaveEnemy(glm::ivec2(143, 60), texProgram, map, {}, Guard({ RIGHT, UP, LEFT }, 1250), RIGHT, player));
+	map->addItem(new MedPack(glm::ivec2(191, 12), texProgram));
 	return map;
 }
 
@@ -150,6 +160,8 @@ TileMap* Scene::loadMap9()
 	TileMap* map = TileMap::createTileMap("levels/mapa9.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 9,
 		{ ChangeMap({163,164,162},8, glm::ivec2(mapWidthPixels - 55, 40)),
 		  ChangeMap({296,326},10, glm::ivec2(mapWidthPixels / 2.f, mapHeightPixels - 50)) }, {});
+
+	map->addEnemy(new MeleEnemy(glm::ivec2(85, 70), texProgram, map, { 24, 24 }, Guard(), UP, player));
 	return map;
 }
 
@@ -159,6 +171,7 @@ TileMap* Scene::loadMap10()
 	float mapWidthPixels = 15 * 16;
 	TileMap* map = TileMap::createTileMap("levels/mapa10-puerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
 		{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 0, 0 });
+	map->addEnemy(new RangeEnemy(glm::ivec2(110, 60), texProgram, map, {}, Guard(), DOWN, player));
 	return map;
 }
 

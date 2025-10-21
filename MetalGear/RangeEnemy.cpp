@@ -50,7 +50,7 @@ bool RangeEnemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm
 
 bool RangeEnemy::canShoot()
 {
-    return lastShotTime >= fireRate;
+    return lastShotTime >= fireRate && !dead;
 }
 
 enum EnemyAnims
@@ -177,7 +177,7 @@ void RangeEnemy::move(const glm::ivec2& playerPos) {
 
     float distance = sqrt(dx * dx + dy * dy);
     const float DESIRED_DISTANCE = 4.0f;
-    const float TOLERANCE = 0.5f; 
+    const float TOLERANCE = 0.5f;
 
     bool moved = false;
 
@@ -272,37 +272,51 @@ void RangeEnemy::move(const glm::ivec2& playerPos) {
 
 bool RangeEnemy::tryMove(int dir) {
     glm::ivec2 oldPos = posEnemy;
-
-    const char* dirName[] = { "DOWN", "UP", "LEFT", "RIGHT" };
+    glm::ivec2 newPos = posEnemy;
 
     lookingDirection = dir;
+
     switch (dir) {
     case LEFT:
         if (sprite->animation() != MOVE_LEFT)
             sprite->changeAnimation(MOVE_LEFT);
-        posEnemy.x -= speed;
+        newPos.x -= speed;
         break;
     case RIGHT:
         if (sprite->animation() != MOVE_RIGHT)
             sprite->changeAnimation(MOVE_RIGHT);
-        posEnemy.x += speed;
+        newPos.x += speed;
         break;
     case UP:
         if (sprite->animation() != MOVE_UP)
             sprite->changeAnimation(MOVE_UP);
-        posEnemy.y -= speed;
+        newPos.y -= speed;
         break;
     case DOWN:
         if (sprite->animation() != MOVE_DOWN)
             sprite->changeAnimation(MOVE_DOWN);
-        posEnemy.y += speed;
+        newPos.y += speed;
         break;
     }
 
+ 
+    bool outOfBounds = false;
 
-    if (map->checkTileCollision(posEnemy, size, false)) {
-        posEnemy = oldPos;
+    if (map->isOutLeft(newPos)) {
+        outOfBounds = true;
+    }
+    else if (map->isOutRight(newPos, size)) {
+        outOfBounds = true;
+    }
+    else if (map->isOutTop(newPos)) {
+        outOfBounds = true;
+    }
+    else if (map->isOutBottom(newPos, size)) {
+        outOfBounds = true;
+    }
 
+    if (outOfBounds || map->checkTileCollision(newPos, size, false)) {
+ 
         switch (dir) {
         case LEFT:
             sprite->changeAnimation(STAND_LEFT);
@@ -317,9 +331,10 @@ bool RangeEnemy::tryMove(int dir) {
             sprite->changeAnimation(STAND_DOWN);
             break;
         }
-
         return false;
     }
+
+    posEnemy = newPos;
     return true;
 }
 

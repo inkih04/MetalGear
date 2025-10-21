@@ -91,6 +91,8 @@ void MeleEnemy::init(ShaderProgram& shaderProgram)
 
 void MeleEnemy::update(int deltaTime, const glm::ivec2& playerPos)
 {
+    if (dead) return;
+
 	sprite->update(deltaTime);
     if (isRetreating) {
         retreatCooldown -= deltaTime;

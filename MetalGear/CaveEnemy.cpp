@@ -90,6 +90,8 @@ void CaveEnemy::init(ShaderProgram& shaderProgram)
 void CaveEnemy::update(int deltaTime, const glm::ivec2& playerPos)
 {
     sprite->update(deltaTime);
+    if (dead) return;
+
     if (isRetreating) {
         retreatCooldown -= deltaTime;
         if (retreatCooldown <= 0) {
