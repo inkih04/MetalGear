@@ -11,6 +11,8 @@
 #include "CaveEnemy.h"
 #include "MedPack.h"
 #include "Ammunition.h"
+#include "Key.h"
+#include "Player.h"
 
 
 #define SCREEN_X 0
@@ -55,6 +57,13 @@ void Scene::createMaps()
 	maps[12] = loadMap12();
 	maps[13] = loadMap13();
 	maps[14] = loadMap14();
+}
+
+void Scene::reloadMap10() {
+	float mapHeightPixels = 10 * 16;
+	float mapWidthPixels = 15 * 16;
+	maps[10] = TileMap::createTileMap("levels/mapa10-nopuerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
+		{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 14, 0 });
 }
 
 TileMap* Scene::loadMap1()
@@ -168,12 +177,13 @@ TileMap* Scene::loadMap12()
 TileMap* Scene::loadMap13()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa13.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 13, {}, { 0, 0, 0, 12 });
+	map->addItem(new Key(glm::ivec2(32,42), texProgram));
 	return map;
 }
 
 TileMap* Scene::loadMap14()
 {
-	TileMap* map = TileMap::createTileMap("levels/mapa14.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 14, {}, {});
+	TileMap* map = TileMap::createTileMap("levels/mapa14.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 14, {}, {0,0,0,10});
 	return map;
 }
 
@@ -184,7 +194,7 @@ void Scene::init()
 
 	player = new Player();
 	createMaps();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(), INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
 	player->setTileMap(maps[currentMapId]);
 

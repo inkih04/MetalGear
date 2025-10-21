@@ -5,13 +5,12 @@
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "TileMap.h"
-#include "Player.h"
 #include <map>
 
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
-
+class Player;
 
 class Scene
 {
@@ -23,6 +22,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void reloadMap10();
 
 private:
 	void initShaders();

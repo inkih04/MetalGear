@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "Item.h"
+#include "Scene.h"
 #include <GLFW/glfw3.h>
 
 
@@ -19,6 +20,10 @@ enum PlayerAnims
 
 };
 
+void Player::openDor()
+{
+	scene->reloadMap10();
+}
 
 
 void Player::heal(int life)
@@ -38,8 +43,9 @@ void Player::takeDamage(int dmg)
 }
 
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene)
 {
+	this->scene = scene;
 	health = 6;
 	cout << "Player initialized with health: " << health << std::endl;
 	equippedGun = false;

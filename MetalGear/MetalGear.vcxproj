@@ -30,6 +30,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="MedPack.h" />
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="Player.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="MedPack.cpp" />
     <ClCompile Include="MeleEnemy.cpp" />
     <ClCompile Include="MeleEnemy.h" />
