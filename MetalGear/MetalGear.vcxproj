@@ -29,6 +29,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="MedPack.h" />
@@ -49,10 +50,13 @@
     <ClCompile Include="CaveEnemy.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="MedPack.cpp" />
-    <ClCompile Include="MeleEnemy.cpp" />
+    <ClCompile Include="MeleEnemy.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="MeleEnemy.h" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />

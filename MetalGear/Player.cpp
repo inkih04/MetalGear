@@ -29,8 +29,8 @@ void Player::openDor()
 void Player::heal(int life)
 {
 	health += life;
-	if (health > 6)
-		health = 6;
+	if (health > 10)
+		health = 10;
 	std::cout << "Player healed, health now: " << health << std::endl;
 }
 
@@ -46,7 +46,7 @@ void Player::takeDamage(int dmg)
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene)
 {
 	this->scene = scene;
-	health = 6;
+	health = 10;
 	cout << "Player initialized with health: " << health << std::endl;
 	equippedGun = false;
 	spritesheet.loadFromFile("images/metal.png", TEXTURE_PIXEL_FORMAT_RGBA);
