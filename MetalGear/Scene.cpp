@@ -60,36 +60,45 @@ void Scene::createMaps()
 TileMap* Scene::loadMap1()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
-	map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN, player));
-	map->addItem(new MedPack(glm::ivec2(64, 64), texProgram));
-	map->addItem(new Ammunition(glm::ivec2(64, 80), texProgram));
+	//map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN, player));
+	map->addItem(new MedPack(glm::ivec2(48, 48), texProgram));
+	//map->addItem(new Ammunition(glm::ivec2(64, 80), texProgram));
 	return map;
 }
 
 TileMap* Scene::loadMap2()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 2, {}, { 1, 0, 0, 3 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(64, 4), texProgram, map, {}, Guard({ RIGHT, DOWN }, 2000), RIGHT, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(64, 4), texProgram, map, {}, Guard({ RIGHT, DOWN }, 1250), RIGHT, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(182, 48), texProgram, map, {}, Guard({ LEFT, UP }, 1250), LEFT, player));
+	map->addItem(new Ammunition(glm::ivec2(32, 128), texProgram));
 	return map;
 }
 
 TileMap* Scene::loadMap3()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3, {}, { 0, 0, 2, 4 });
-	map->addEnemy(new CaveEnemy(glm::ivec2(120, 32), texProgram, map, { 16, 16 }, Guard(), DOWN, player));
-	map->addItem(new Gun(glm::ivec2(210, 48), texProgram));
+	map->addEnemy(new MeleEnemy(glm::ivec2(120, 64), texProgram, map, { 24, 24 }, Guard(), DOWN, player));
+	map->addItem(new Gun(glm::ivec2(210, 48), texProgram)); //Assault Vest
+	map->addItem(new Ammunition(glm::ivec2(98, 108), texProgram));
 	return map;
 }
 
 TileMap* Scene::loadMap4()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa4.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 4, {}, { 5, 6, 3, 0 });
+	map->addItem(new MedPack(glm::ivec2(194, 32), texProgram));
+	map->addEnemy(new RangeEnemy(glm::ivec2(124, 46), texProgram, map, {32, 32}, Guard(), DOWN, player));
 	return map;
 }
 
 TileMap* Scene::loadMap5()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa5.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 5, {}, { 0, 4, 0, 0 });
+	map->addEnemy(new MeleEnemy(glm::ivec2(152, 44), texProgram, map, {}, Guard({ DOWN, LEFT}, 1250), DOWN, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(174, 100), texProgram, map, {}, Guard({ UP, RIGHT }, 1250), UP, player));
+	map->addItem(new Gun(glm::ivec2(80, 80), texProgram));
+	map->addEnemy(new RangeEnemy(glm::ivec2(40, 64), texProgram, map, {}, Guard(), RIGHT, player));
 	return map;
 }
 
@@ -98,6 +107,11 @@ TileMap* Scene::loadMap6()
 	float mapHeightPixels = 10 * 16;
 	TileMap* map = TileMap::createTileMap("levels/mapa6.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 6,
 		{ ChangeMap({100,70},7, glm::ivec2(-1.f, mapHeightPixels - 50.f)) }, { 4, 0, 0, 0 });
+
+	map->addItem(new Ammunition(glm::ivec2(160, 50), texProgram));
+	map->addEnemy(new CaveEnemy(glm::ivec2(192, 40), texProgram, map, {}, Guard(), DOWN, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(206, 80), texProgram, map, {}, Guard(), LEFT, player));
+	map->addItem(new MedPack(glm::ivec2(194, 126), texProgram));
 	return map;
 }
 
