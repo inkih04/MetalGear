@@ -13,6 +13,7 @@
 #include "Ammunition.h"
 #include "Key.h"
 #include "Player.h"
+#include "HUD.h"
 
 
 #define SCREEN_X 0
@@ -203,6 +204,9 @@ void Scene::init()
 
 	projection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
 	currentTime = 0.0f;
+
+	// Inicializar el HUD
+	hud.init(texProgram);
 }
 
 void Scene::update(int deltaTime)
@@ -232,14 +236,31 @@ void Scene::checkMapChange()
 void Scene::render()
 {
 	glm::mat4 modelview;
+
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+	// Renderizar el mapa y el jugador
 	maps[currentMapId]->render();
 	player->render();
+
+	// Configurar proyección fija para el HUD (siempre 240x160 sin importar el tamaño del mapa)
+	float mapWidthPixels = maps[currentMapId]->getMapSize().x * maps[currentMapId]->getTileSize();
+	float mapHeightPixels = maps[currentMapId]->getMapSize().y * maps[currentMapId]->getTileSize();
+	glm::mat4 hudProjection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
+
+	texProgram.setUniformMatrix4f("projection", hudProjection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+	// Renderizar el HUD encima de todo
+	hud.render(player->getHealth(), player);
+
+	// Restaurar la proyección original si es necesario
+	texProgram.setUniformMatrix4f("projection", projection);
 }
 
 void Scene::initShaders()
