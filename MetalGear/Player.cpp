@@ -147,6 +147,9 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Sc
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+
+	currentItemIt = items.end();  
+	gun = nullptr;
 	
 }
 
@@ -321,11 +324,18 @@ void Player::update(int deltaTime)
 
 	bool cPressedNow = Game::instance().getKey(GLFW_KEY_C);
 
-	if (cPressedNow && !cPressedLastFrame) {
+	if (cPressedNow && !cPressedLastFrame)
+	{
 		cout << "Switching item" << endl;
-		if (!items.empty()) {
-			currentItem = (currentItem + 1) % items.size();
-			cout << "current item " << currentItem << endl;
+		if (!items.empty())
+		{
+			++currentItemIt;
+			if (currentItemIt == items.end())
+			{
+				currentItemIt = items.begin();
+			}
+			cout << "Current item type: " << currentItemIt->first->getType()
+				<< " (quantity: " << currentItemIt->second << ")" << endl;
 		}
 	}
 
@@ -335,29 +345,77 @@ void Player::update(int deltaTime)
 
 	bool xPressedNow = Game::instance().getKey(GLFW_KEY_X);
 
-	if (xPressedNow && !xPressedLastFrame) {
-		if (!items.empty()) {
-			if (items[currentItem]->getType() == BULLETS && gun == nullptr) return;
-			items[currentItem]->use(this);
-			if (items[currentItem]->destroyAfterUse()) {
-				delete items[currentItem];
-				items.erase(items.begin() + currentItem);
-				if (items.empty()) {
-					currentItem = 0; 
-				}
-				else if (currentItem >= items.size()) {
-					currentItem = items.size() - 1; 
+	if (xPressedNow && !xPressedLastFrame)
+	{
+		if (!items.empty() && currentItemIt != items.end())
+		{
+			if (currentItemIt->first->getType() == BULLETS && gun == nullptr)
+				return;
+
+			currentItemIt->first->use(this);
+			if (currentItemIt->first->destroyAfterUse())
+			{
+				currentItemIt->second--;  
+				cout << "Item used. Remaining: " << currentItemIt->second << endl;
+				if (currentItemIt->second <= 0)
+				{
+					Item* itemToDelete = currentItemIt->first;
+					auto itemToErase = currentItemIt;
+					if (items.size() > 1)
+					{
+						++currentItemIt;
+						if (currentItemIt == items.end())
+						{
+							currentItemIt = items.begin();
+						}
+					}
+
+					items.erase(itemToErase);
+					delete itemToDelete;
+					if (items.empty())
+					{
+						currentItemIt = items.end();
+					}
+					cout << "Item depleted and removed from inventory" << endl;
 				}
 			}
-
 		}
 	}
 
 	xPressedLastFrame = xPressedNow;
 
-	cout << "Player position: (" << posPlayer.x << ", " << posPlayer.y << ")" << endl;
+	//cout << "Player position: (" << posPlayer.x << ", " << posPlayer.y << ")" << endl;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::addItem(Item* item)
+{
+	if (item->getType() == ItemTypes::GUN) {
+		gun = static_cast<Gun*>(item);
+		return;
+	}
+
+	Item* existingItem = nullptr;
+	for (auto& pair : items) {
+		if (pair.first->getType() == item->getType()) {
+			existingItem = pair.first;
+			break;
+		}
+	}
+
+	if (existingItem != nullptr) {
+		items[existingItem]++;
+		std::cout << "Item added. Total count: " << items[existingItem] << std::endl;
+		delete item; 
+	}
+	else {
+		items[item] = 1;
+		if (items.size() == 1) {
+			currentItemIt = items.begin();
+		}
+		std::cout << "New item type added to inventory" << std::endl;
+	}
 }
 
 bool Player::canPunch() {

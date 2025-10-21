@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "Gun.h"
 #include <vector>
+#include <map>
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -30,20 +31,15 @@ public:
 	void openDor();
 	glm::ivec2 getPosition() const { return posPlayer; }
 	void checkEnemies(int deltaTime);
-	void addItem(Item* item) { 
-		if (items.empty()) currentItem = 0;
-		if (item->getType() == ItemTypes::GUN)
-			gun = static_cast<Gun*>(item);
-		items.push_back(item); 
-	}
+	void addItem(Item* item);
 	void takeDamage(int dmg);
 	void reloadGun(int ammoCount) {
 		if (gun != nullptr) gun->reload(ammoCount);
 	};
 	
 private:
-	vector<Item*> items;
-	int currentItem;
+	map<Item*, int> items;
+	map<Item*, int>::iterator currentItemIt;
 	int health;
 	Gun* gun;
 	bool equippedGun;

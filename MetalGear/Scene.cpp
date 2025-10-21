@@ -88,7 +88,7 @@ TileMap* Scene::loadMap3()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3, {}, { 0, 0, 2, 4 });
 	map->addEnemy(new MeleEnemy(glm::ivec2(120, 64), texProgram, map, { 24, 24 }, Guard(), DOWN, player));
-	map->addItem(new Gun(glm::ivec2(210, 48), texProgram)); //Assault Vest
+	map->addItem(new MedPack(glm::ivec2(210, 48), texProgram)); //Assault Vest
 	map->addItem(new Ammunition(glm::ivec2(98, 108), texProgram));
 	return map;
 }
