@@ -43,7 +43,7 @@ void Scene::createMaps()
 	float mapWidthPixels = 15 * 16;
 
 																											//LEFT RIGHT TOP BOTTOM  
-	currentMapId = 7;
+	currentMapId = 1;
 	maps[1] = loadMap1();
 	maps[2] = loadMap2();
 	maps[3] = loadMap3();
@@ -179,12 +179,16 @@ TileMap* Scene::loadMap10()
 TileMap* Scene::loadMap11()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa11.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 11, {}, { 0, 10, 0, 0 });
+	map->addItem(new MedPack(glm::ivec2(194, 28), texProgram));
+	map->addEnemy(new CaveEnemy(glm::ivec2(16, 42), texProgram, map, {}, Guard(), LEFT, player));
+	map->addItem(new MedPack(glm::ivec2(48, 22), texProgram));
 	return map;
 }
 
 TileMap* Scene::loadMap12()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa12.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 12, {}, { 10, 0, 13, 0 });
+	map->addEnemy(new MeleEnemy(glm::ivec2(200, 95), texProgram, map, {}, Guard(), LEFT, player));
 	return map;
 }
 
@@ -192,6 +196,8 @@ TileMap* Scene::loadMap13()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa13.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 13, {}, { 0, 0, 0, 12 });
 	map->addItem(new Key(glm::ivec2(32,42), texProgram));
+	map->addItem(new Ammunition(glm::ivec2(210, 42), texProgram));
+	map->addItem(new MedPack(glm::ivec2(16, 124), texProgram));
 	return map;
 }
 
