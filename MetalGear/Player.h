@@ -53,6 +53,7 @@ public:
 
 private:
     float speed;
+    bool godMode;
     std::map<Item*, int> items;
     std::map<Item*, int>::iterator currentItemIt;
     int health;

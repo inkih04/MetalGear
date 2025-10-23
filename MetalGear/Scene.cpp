@@ -13,6 +13,7 @@
 #include "Ammunition.h"
 #include "Key.h"
 #include "Player.h"
+#include <GLFW/glfw3.h>
 #include "HUD.h"
 
 
@@ -237,6 +238,49 @@ void Scene::update(int deltaTime)
 	checkMapChange();
 	checkEnemies(deltaTime);
 	messageDisplay.update(deltaTime);
+
+	static bool iPressedLastFrame = false;
+	bool iPressedNow = Game::instance().getKey(GLFW_KEY_I);
+	if (iPressedNow && !iPressedLastFrame)
+	{
+		player->addItem(new MedPack(glm::ivec2(0, 0), texProgram));
+		player->addItem(new Ammunition(glm::ivec2(0, 0), texProgram));
+		player->addItem(new Key(glm::ivec2(0, 0), texProgram));
+		player->addItem(new Gun(glm::ivec2(0, 0), texProgram));
+	}
+	iPressedLastFrame = iPressedNow;
+
+	static bool kPressedLastFrame = false;
+	bool kPressedNow = Game::instance().getKey(GLFW_KEY_K);
+	if (kPressedNow && !kPressedLastFrame)
+	{
+		currentMapId = 7;
+		player->setTileMap(maps[currentMapId]);
+		player->setPosition(glm::vec2(16.f, 16.f));
+	}
+	kPressedLastFrame = kPressedNow;
+
+	static bool mPressedLastFrame = false;
+	bool mPressedNow = Game::instance().getKey(GLFW_KEY_M);
+	if (mPressedNow && !mPressedLastFrame)
+	{
+		currentMapId = 10;
+		player->setTileMap(maps[currentMapId]);
+		player->setPosition(glm::vec2(16.f*4, 16.f*4));
+	}
+	mPressedLastFrame = mPressedNow;
+
+	
+	static bool bPressedLastFrame = false;
+	bool bPressedNow = Game::instance().getKey(GLFW_KEY_B);
+	if (bPressedNow && !bPressedLastFrame)
+	{
+		currentMapId = 14;
+		player->setTileMap(maps[currentMapId]);
+		player->setPosition(glm::vec2(16.f * 4, 16.f * 4));
+	}
+	bPressedLastFrame = bPressedNow;
+
 }
 
 void Scene::checkEnemies(int deltaTime)

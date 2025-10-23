@@ -37,6 +37,7 @@ void Player::heal(int life)
 
 void Player::takeDamage(int dmg)
 {
+	if (godMode) return;
 	health -= dmg;
 	if (health < 0)
 		health = 0;
@@ -46,6 +47,7 @@ void Player::takeDamage(int dmg)
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene)
 {
+	godMode = false;
 	this->scene = scene;
 	speed = 1.5;
 	health = 10;
@@ -343,6 +345,33 @@ void Player::update(int deltaTime)
 
 	cPressedLastFrame = cPressedNow;
 
+	static bool hPressedLastFrame = false;
+
+	bool hPressedNow = Game::instance().getKey(GLFW_KEY_H);
+
+	if (hPressedNow && !hPressedLastFrame)
+	{
+		cout << "Healing player by 10" << endl;
+		heal(10);
+	}
+
+	hPressedLastFrame = hPressedNow;
+
+
+	static bool gPressedLastFrame = false;
+
+	bool gPressedNow = Game::instance().getKey(GLFW_KEY_G);
+
+	if (gPressedNow && !gPressedLastFrame)
+	{
+		cout << "Toggling god mode" << endl;
+		godMode = !godMode;
+	}
+
+	gPressedLastFrame = gPressedNow;
+
+
+
 	static bool xPressedLastFrame = false;
 
 	bool xPressedNow = Game::instance().getKey(GLFW_KEY_X);
@@ -386,7 +415,7 @@ void Player::update(int deltaTime)
 
 	xPressedLastFrame = xPressedNow;
 
-	cout << "Player position: (" << posPlayer.x << ", " << posPlayer.y << ")" << endl;
+	//cout << "Player position: (" << posPlayer.x << ", " << posPlayer.y << ")" << endl;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
