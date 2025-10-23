@@ -1,9 +1,8 @@
 #pragma once
 #include "Sprite.h"
 
-enum ItemTypes
-{
-	GUN, LIFE, BULLETS
+enum ItemTypes {
+    GUN, LIFE, BULLETS, KEY
 };
 
 class Player;
@@ -11,21 +10,20 @@ class Player;
 class Item
 {
 public:
-	virtual ~Item() {}
-	virtual int getType() = 0;
-	virtual void update(int deltaTime) { return; };
-	void init(ShaderProgram& shaderProgram);
-	bool collisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
-	bool canGrabItem(const glm::ivec2& playerPos, const glm::ivec2& playerSize);
-	virtual bool destroyAfterUse() { return false; };
-	virtual void use(Player* player) { return; };
-	void collect();
-	void render();
+    virtual ~Item() {}
+    virtual int getType() = 0;
+    virtual void update(int deltaTime) { return; };
+    void init(ShaderProgram& shaderProgram);
+    bool collisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
+    bool canGrabItem(const glm::ivec2& playerPos, const glm::ivec2& playerSize);
+    virtual bool destroyAfterUse() { return false; };
+    virtual void use(Player* player) { return; };
+    void collect();
+    void render();
 
-
-	glm::ivec2 position;
-	bool collected;
-	Sprite* sprite;
-	Sprite* HUDsprite;
-	Texture spritesheet;
+    glm::ivec2 position;
+    bool collected;
+    Sprite* sprite;
+    Sprite* HUDsprite;
+    Texture spritesheet;
 };
