@@ -226,6 +226,9 @@ void Scene::init()
 
 	// Inicializar el HUD
 	hud.init(texProgram);
+
+	// Inicializar el MessageDisplay
+	messageDisplay.init(texProgram);
 }
 
 void Scene::update(int deltaTime)
@@ -234,6 +237,7 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	checkMapChange();
 	checkEnemies(deltaTime);
+	messageDisplay.update(deltaTime);
 }
 
 void Scene::checkEnemies(int deltaTime)
@@ -277,6 +281,9 @@ void Scene::render()
 
 	// Renderizar el HUD encima de todo
 	hud.render(player->getHealth(), player);
+
+	// Renderizar mensajes encima de todo
+	messageDisplay.render();
 
 	// Restaurar la proyección original si es necesario
 	texProgram.setUniformMatrix4f("projection", projection);
