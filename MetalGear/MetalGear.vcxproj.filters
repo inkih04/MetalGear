@@ -90,6 +90,9 @@
     <ClInclude Include="MessageDisplay.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverScreen.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -165,6 +168,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="MessageDisplay.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScreen.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
