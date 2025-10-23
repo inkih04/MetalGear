@@ -7,7 +7,6 @@ void Projectile::update(int deltatime)
 {
     if (!active) return;
 
-    // Acumular tiempo transcurrido
     elapsedTime += deltatime;
 
     int stepsToAdvance = speed;
@@ -19,7 +18,7 @@ void Projectile::update(int deltatime)
             position = trajectoryPoints[currentStep];
             sprite->setPosition(glm::vec2(position.x, position.y));
 
-            if (elapsedTime >= 100 && tileMap->checkTileCollision(position, size, false)) {
+            if (currentStep >  4 && elapsedTime >= 100 && tileMap->checkTileCollision(position, size, false)) {
                 active = false;
                 return;
             }
@@ -68,7 +67,7 @@ void Projectile::calculateTrajectory() {
 
     int dx = endPos.x - startPos.x;
     int dy = endPos.y - startPos.y;
-    int N = std::max(std::abs(dx), std::abs(dy)) * 4;
+    int N = std::max(std::abs(dx), std::abs(dy)) * 6;
 
     if (N == 0) {
         trajectoryPoints.push_back(startPos);

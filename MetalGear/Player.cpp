@@ -52,7 +52,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Sc
 	cout << "Player initialized with health: " << health << std::endl;
 	equippedGun = false;
 	spritesheet.loadFromFile("images/metal.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(13.6, 27.2), glm::vec2(0.0556f, 0.5f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(13.6, 27), glm::vec2(0.0556f, 0.5f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(20);
 
 		sprite->setAnimationSpeed(STAND_DOWN, 6);

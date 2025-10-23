@@ -16,7 +16,7 @@ Bullet::Bullet(const glm::ivec2& position, int direction, TileMap* currentMap, S
 	currentStep = 0;
 	tileMap = currentMap;
 	active = true;
-	speed = 8;
+	speed = 10;
 	distanceTraveled = 0;
 	maxDistance = 21800;
 	calculateTrajectory();
@@ -32,7 +32,7 @@ void Bullet::hitTarget() {
 	if (!active) return;
 	if (tileMap->checkCollisionEnemyPlayer(position, size)) {
 		cout << "Bullet hit target at position (" << position.x << ", " << position.y << ")" << endl;
-		tileMap->doDamegeToEnemies(position, size, 4);
+		tileMap->doDamegeToEnemies(position, size, 3);
 		active = false;
 	}
 }
