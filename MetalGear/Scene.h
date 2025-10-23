@@ -19,7 +19,7 @@ public:
     void render();
     void reloadMap10();
     void showItemMessage(const std::string& itemImage) {
-        messageDisplay.showMessage(itemImage, 2000); // 2 segundos
+        messageDisplay.showMessage(itemImage, 1000); // 2 segundos
     }
 
 private:
