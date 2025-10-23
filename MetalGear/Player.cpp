@@ -23,6 +23,7 @@ enum PlayerAnims
 void Player::openDor()
 {
 	scene->reloadMap10();
+	map = scene->getCurrentMap();
 }
 
 
@@ -46,6 +47,7 @@ void Player::takeDamage(int dmg)
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Scene* scene)
 {
 	this->scene = scene;
+	speed = 1.5;
 	health = 10;
 	cout << "Player initialized with health: " << health << std::endl;
 	equippedGun = false;
@@ -170,11 +172,11 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != (equippedGun ? MOVE_LEFT_GUN : MOVE_LEFT))
 			sprite->changeAnimation(equippedGun ? MOVE_LEFT_GUN : MOVE_LEFT);
 
-		posPlayer.x -= 2;
+		posPlayer.x -= speed;
 
 		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
-			posPlayer.x += 2;
+			posPlayer.x += speed;
 			sprite->changeAnimation(equippedGun ? STAND_LEFT_GUN : STAND_LEFT);
 		}
 	}
@@ -183,11 +185,11 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != (equippedGun ? MOVE_RIGHT_GUN : MOVE_RIGHT))
 			sprite->changeAnimation(equippedGun ? MOVE_RIGHT_GUN : MOVE_RIGHT);
 
-		posPlayer.x += 2;
+		posPlayer.x += speed;
 
 		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
-			posPlayer.x -= 2;
+			posPlayer.x -= speed;
 			sprite->changeAnimation(equippedGun ? STAND_RIGHT_GUN : STAND_RIGHT);
 		}
 	}
@@ -196,11 +198,11 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != (equippedGun ? MOVE_UP_GUN : MOVE_UP))
 			sprite->changeAnimation(equippedGun ? MOVE_UP_GUN : MOVE_UP);
 
-		posPlayer.y -= 2;
+		posPlayer.y -= speed;
 
 		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
-			posPlayer.y += 2;
+			posPlayer.y += speed;
 			sprite->changeAnimation(equippedGun ? STAND_UP_GUN : STAND_UP);
 		}
 	}
@@ -209,11 +211,11 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != (equippedGun ? MOVE_DOWN_GUN : MOVE_DOWN))
 			sprite->changeAnimation(equippedGun ? MOVE_DOWN_GUN : MOVE_DOWN);
 
-		posPlayer.y += 2;
+		posPlayer.y += speed;
 
 		if (map->checkTileCollision(posPlayer, glm::ivec2(13.6, 27.2), true))
 		{
-			posPlayer.y -= 2;
+			posPlayer.y -= speed;
 			sprite->changeAnimation(equippedGun ? STAND_DOWN_GUN : STAND_DOWN);
 		}
 	}
@@ -391,7 +393,6 @@ void Player::update(int deltaTime)
 
 void Player::addItem(Item* item)
 {
-	// Determinar qué mensaje mostrar según el tipo de item
 	std::string messageName;
 
 	if (item->getType() == ItemTypes::GUN) {
@@ -430,7 +431,6 @@ void Player::addItem(Item* item)
 		std::cout << "New item type added to inventory" << std::endl;
 	}
 
-	// Mostrar el mensaje correspondiente
 	scene->showItemMessage(messageName);
 }
 

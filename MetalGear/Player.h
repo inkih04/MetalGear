@@ -52,6 +52,7 @@ public:
     }
 
 private:
+    float speed;
     std::map<Item*, int> items;
     std::map<Item*, int>::iterator currentItemIt;
     int health;
@@ -60,7 +61,8 @@ private:
     int punchRate = 500;
     int lastPunch = 500;
     Scene* scene;
-    glm::ivec2 tileMapDispl, posPlayer;
+    glm::ivec2 tileMapDispl;
+    glm::vec2 posPlayer;
     Texture spritesheet;
     Sprite* sprite;
     TileMap* map;

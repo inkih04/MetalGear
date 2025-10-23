@@ -63,6 +63,7 @@ void Scene::createMaps()
 void Scene::reloadMap10() {
 	float mapHeightPixels = 10 * 16;
 	float mapWidthPixels = 15 * 16;
+
 	maps[10] = TileMap::createTileMap("levels/mapa10-nopuerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
 		{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 14, 0 });
 }
@@ -224,10 +225,8 @@ void Scene::init()
 	projection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
 	currentTime = 0.0f;
 
-	// Inicializar el HUD
 	hud.init(texProgram);
 
-	// Inicializar el MessageDisplay
 	messageDisplay.init(texProgram);
 }
 
@@ -267,11 +266,9 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
-	// Renderizar el mapa y el jugador
 	maps[currentMapId]->render();
 	player->render();
 
-	// Configurar proyección fija para el HUD (siempre 240x160 sin importar el tamaño del mapa)
 	float mapWidthPixels = maps[currentMapId]->getMapSize().x * maps[currentMapId]->getTileSize();
 	float mapHeightPixels = maps[currentMapId]->getMapSize().y * maps[currentMapId]->getTileSize();
 	glm::mat4 hudProjection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
@@ -279,13 +276,10 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("projection", hudProjection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-	// Renderizar el HUD encima de todo
 	hud.render(player->getHealth(), player);
 
-	// Renderizar mensajes encima de todo
 	messageDisplay.render();
 
-	// Restaurar la proyección original si es necesario
 	texProgram.setUniformMatrix4f("projection", projection);
 }
 

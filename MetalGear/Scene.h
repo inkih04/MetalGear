@@ -18,6 +18,7 @@ public:
     void update(int deltaTime);
     void render();
     void reloadMap10();
+	TileMap* getCurrentMap() const { return maps.at(currentMapId); }
     void showItemMessage(const std::string& itemImage) {
         messageDisplay.showMessage(itemImage, 1000); // 2 segundos
     }

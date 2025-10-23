@@ -15,7 +15,7 @@ bool MedPack::destroyAfterUse() {
 	return true;
 }
 void MedPack::use(Player* player) {
-	player->heal(3);
+	player->heal(10);
 }
 int MedPack::getType() {
 	return LIFE;

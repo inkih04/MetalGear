@@ -373,7 +373,7 @@ int TileMap::changeMapIfNeeded(const glm::ivec2& pos, const glm::ivec2& size, gl
 		float mapHeightPixels = this->getMapSize().y * this->getTileSize();
 		cout << "Changing map to the TOP, new MAP: " << changeMapBorders[TOP] << endl;
 			cout << "POS " << pos.x <<"," << pos.y << endl;
-		newPos = glm::ivec2(pos.x, mapHeightPixels - 30);
+		newPos = glm::ivec2(pos.x, mapHeightPixels - 44);
 		return changeMapBorders[TOP];
 	}
 	else if (changeMapBorders[BOTTOM] != 0 && this->isOutBottom(pos, size)) {
