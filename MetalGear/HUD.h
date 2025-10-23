@@ -4,7 +4,6 @@
 #include "Sprite.h"
 #include "Texture.h"
 #include "ShaderProgram.h"
-#include <glm/glm.hpp>
 
 class Player;
 
@@ -19,23 +18,41 @@ private:
     void renderHearts(int health);
     void renderInventorySlots(Player* player);
     void renderAmmoCount(int ammo, float x, float y);
-
-    Texture hudTexture;
-    Texture heartTexture;
-    Texture fistTexture;
-    Texture gunTexture;
-    Texture numbersTexture;    
-
-    Sprite* hudSprite;
-    Sprite* heartSprite;
-    Sprite* fistSprite;
-    Sprite* gunSprite;
-    Sprite* numberSprite;      
+    void renderCurrentItem(Player* player);
+    void renderItemCount(int count, float x, float y);
 
     ShaderProgram* texProgram;
-
     glm::vec2 hudPosition;
     int maxHearts;
+
+    // HUD frame
+    Texture hudTexture;
+    Sprite* hudSprite;
+
+    // Hearts
+    Texture heartTexture;
+    Sprite* heartSprite;
+
+    // Weapons
+    Texture fistTexture;
+    Sprite* fistSprite;
+
+    Texture gunTexture;
+    Sprite* gunSprite;
+
+    // Numbers
+    Texture numbersTexture;
+    Sprite* numberSprite;
+
+    // Items
+    Texture cureTexture;
+    Sprite* cureSprite;
+
+    Texture ammoTexture;
+    Sprite* ammoSprite;
+
+    Texture keyTexture;
+    Sprite* keySprite;
 };
 
-#endif 
+#endif // _HUD_INCLUDE
