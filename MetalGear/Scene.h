@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "HUD.h"
+#include "MessageDisplay.h"
 
 class Scene
 {
@@ -17,6 +18,9 @@ public:
     void update(int deltaTime);
     void render();
     void reloadMap10();
+    void showItemMessage(const std::string& itemImage) {
+        messageDisplay.showMessage(itemImage, 2000); // 2 segundos
+    }
 
 private:
     void initShaders();
@@ -48,7 +52,8 @@ private:
     float currentTime;
     glm::mat4 projection;
 
-    HUD hud; 
+    HUD hud;
+    MessageDisplay messageDisplay;
 };
 
 #endif // _SCENE_INCLUDE

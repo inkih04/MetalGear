@@ -391,9 +391,22 @@ void Player::update(int deltaTime)
 
 void Player::addItem(Item* item)
 {
+	// Determinar qué mensaje mostrar según el tipo de item
+	std::string messageName;
+
 	if (item->getType() == ItemTypes::GUN) {
 		gun = static_cast<Gun*>(item);
+		scene->showItemMessage("got_firearm");
 		return;
+	}
+	else if (item->getType() == ItemTypes::LIFE) {
+		messageName = "got_heal";
+	}
+	else if (item->getType() == ItemTypes::BULLETS) {
+		messageName = "got_ammo";
+	}
+	else if (item->getType() == ItemTypes::KEY) {
+		messageName = "got_button";
 	}
 
 	Item* existingItem = nullptr;
@@ -407,7 +420,7 @@ void Player::addItem(Item* item)
 	if (existingItem != nullptr) {
 		items[existingItem]++;
 		std::cout << "Item added. Total count: " << items[existingItem] << std::endl;
-		delete item; 
+		delete item;
 	}
 	else {
 		items[item] = 1;
@@ -416,6 +429,9 @@ void Player::addItem(Item* item)
 		}
 		std::cout << "New item type added to inventory" << std::endl;
 	}
+
+	// Mostrar el mensaje correspondiente
+	scene->showItemMessage(messageName);
 }
 
 bool Player::canPunch() {
