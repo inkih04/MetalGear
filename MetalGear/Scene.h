@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "HUD.h"
 #include "MessageDisplay.h"
+#include "GameOverScreen.h"
 
 class Scene
 {
@@ -18,16 +19,23 @@ public:
     void update(int deltaTime);
     void render();
     void reloadMap10();
-	TileMap* getCurrentMap() const { return maps.at(currentMapId); }
+    void resetGame(); // Nueva función para reiniciar el juego
+
+    TileMap* getCurrentMap() const { return maps.at(currentMapId); }
+
     void showItemMessage(const std::string& itemImage) {
-        messageDisplay.showMessage(itemImage, 1000); // 2 segundos
+        messageDisplay.showMessage(itemImage, 1000);
     }
+
+    bool isGameOver() const { return gameOver; }
+    int handleMouseClick(int mouseX, int mouseY); // Para manejar clics en game over - retorna 1=continue, 2=exit, 0=nada
 
 private:
     void initShaders();
     void createMaps();
     void checkMapChange();
     void checkEnemies(int deltaTime);
+    void checkGameOver(); // Nueva función para verificar game over
 
     // Map loading functions
     TileMap* loadMap1();
@@ -52,9 +60,10 @@ private:
     ShaderProgram texProgram;
     float currentTime;
     glm::mat4 projection;
-
     HUD hud;
     MessageDisplay messageDisplay;
+    GameOverScreen gameOverScreen;
+    bool gameOver;
 };
 
 #endif // _SCENE_INCLUDE

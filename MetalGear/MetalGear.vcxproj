@@ -27,6 +27,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOverScreen.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="HUD.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CaveEnemy.cpp" />
     <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />

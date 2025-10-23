@@ -29,6 +29,7 @@ Scene::Scene()
 {
 	currentMapId = 1;
 	player = NULL;
+	gameOver = false;
 }
 
 Scene::~Scene()
@@ -43,7 +44,7 @@ void Scene::createMaps()
 	float mapHeightPixels = 10 * 16;
 	float mapWidthPixels = 15 * 16;
 
-																											//LEFT RIGHT TOP BOTTOM  
+	//LEFT RIGHT TOP BOTTOM  
 	currentMapId = 1;
 	maps[1] = loadMap1();
 	maps[2] = loadMap2();
@@ -100,14 +101,14 @@ TileMap* Scene::loadMap4()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa4.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 4, {}, { 5, 6, 3, 0 });
 	map->addItem(new MedPack(glm::ivec2(194, 32), texProgram));
-	map->addEnemy(new RangeEnemy(glm::ivec2(124, 46), texProgram, map, {32, 32}, Guard(), DOWN, player));
+	map->addEnemy(new RangeEnemy(glm::ivec2(124, 46), texProgram, map, { 32, 32 }, Guard(), DOWN, player));
 	return map;
 }
 
 TileMap* Scene::loadMap5()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa5.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 5, {}, { 0, 4, 0, 0 });
-	map->addEnemy(new MeleEnemy(glm::ivec2(152, 44), texProgram, map, {}, Guard({ DOWN, LEFT}, 1250), DOWN, player));
+	map->addEnemy(new MeleEnemy(glm::ivec2(152, 44), texProgram, map, {}, Guard({ DOWN, LEFT }, 1250), DOWN, player));
 	map->addEnemy(new MeleEnemy(glm::ivec2(174, 100), texProgram, map, {}, Guard({ UP, RIGHT }, 1250), UP, player));
 	map->addItem(new Gun(glm::ivec2(80, 80), texProgram));
 	map->addEnemy(new RangeEnemy(glm::ivec2(40, 64), texProgram, map, {}, Guard(), RIGHT, player));
@@ -197,7 +198,7 @@ TileMap* Scene::loadMap12()
 TileMap* Scene::loadMap13()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa13.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 13, {}, { 0, 0, 0, 12 });
-	map->addItem(new Key(glm::ivec2(32,42), texProgram));
+	map->addItem(new Key(glm::ivec2(32, 42), texProgram));
 	map->addItem(new Ammunition(glm::ivec2(210, 42), texProgram));
 	map->addItem(new MedPack(glm::ivec2(16, 124), texProgram));
 	return map;
@@ -205,7 +206,7 @@ TileMap* Scene::loadMap13()
 
 TileMap* Scene::loadMap14()
 {
-	TileMap* map = TileMap::createTileMap("levels/mapa14.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 14, {}, {0,0,0,10});
+	TileMap* map = TileMap::createTileMap("levels/mapa14.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 14, {}, { 0,0,0,10 });
 	return map;
 }
 
@@ -217,7 +218,8 @@ void Scene::init()
 	player = new Player();
 	createMaps();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(), INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(),
+		INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
 	player->setTileMap(maps[currentMapId]);
 
 	float mapWidthPixels = maps[currentMapId]->getMapSize().x * maps[currentMapId]->getTileSize();
@@ -227,17 +229,31 @@ void Scene::init()
 	currentTime = 0.0f;
 
 	hud.init(texProgram);
-
 	messageDisplay.init(texProgram);
+	gameOverScreen.init(texProgram);
+
+	gameOver = false;
 }
 
 void Scene::update(int deltaTime)
 {
+	if (gameOver)
+	{
+		// Obtener posición del mouse del Game
+		int mouseX, mouseY;
+		Game::instance().getMousePosition(mouseX, mouseY);
+
+		// Actualizar gameOverScreen con la posición del mouse
+		gameOverScreen.update(deltaTime, mouseX, mouseY);
+		return; // No actualizar el juego si está en game over
+	}
+
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	checkMapChange();
 	checkEnemies(deltaTime);
 	messageDisplay.update(deltaTime);
+	checkGameOver();
 
 	static bool iPressedLastFrame = false;
 	bool iPressedNow = Game::instance().getKey(GLFW_KEY_I);
@@ -266,11 +282,11 @@ void Scene::update(int deltaTime)
 	{
 		currentMapId = 10;
 		player->setTileMap(maps[currentMapId]);
-		player->setPosition(glm::vec2(16.f*4, 16.f*4));
+		player->setPosition(glm::vec2(16.f * 4, 16.f * 4));
 	}
 	mPressedLastFrame = mPressedNow;
 
-	
+
 	static bool bPressedLastFrame = false;
 	bool bPressedNow = Game::instance().getKey(GLFW_KEY_B);
 	if (bPressedNow && !bPressedLastFrame)
@@ -281,6 +297,15 @@ void Scene::update(int deltaTime)
 	}
 	bPressedLastFrame = bPressedNow;
 
+}
+
+void Scene::checkGameOver()
+{
+	if (player->getHealth() <= 0)
+	{
+		gameOver = true;
+		std::cout << "Game Over!" << std::endl;
+	}
 }
 
 void Scene::checkEnemies(int deltaTime)
@@ -304,6 +329,24 @@ void Scene::render()
 	glm::mat4 modelview;
 
 	texProgram.use();
+
+	if (gameOver)
+	{
+		// Renderizar pantalla de game over
+		float mapWidthPixels = 240.0f; // Tamaño estándar de tu juego
+		float mapHeightPixels = 160.0f;
+		glm::mat4 gameOverProjection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
+
+		texProgram.setUniformMatrix4f("projection", gameOverProjection);
+		modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+		// Renderizar con el shader program para el efecto hover
+		gameOverScreen.render(texProgram);
+		return;
+	}
+
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
@@ -325,6 +368,54 @@ void Scene::render()
 	messageDisplay.render();
 
 	texProgram.setUniformMatrix4f("projection", projection);
+}
+
+
+int Scene::handleMouseClick(int mouseX, int mouseY)
+{
+	if (!gameOver) return 0;
+
+	int result = gameOverScreen.checkButtonClick(mouseX, mouseY);
+
+	if (result == 1) // Continuar
+	{
+		resetGame();
+	}
+
+	return result; // Retorna 1 para continue, 2 para exit, 0 si no se clickeó nada
+}
+
+
+void Scene::resetGame()
+{
+	std::cout << "Resetting game..." << std::endl;
+
+	gameOver = false;
+
+	// Limpiar todos los mapas
+	for (auto& mapPair : maps)
+	{
+		if (mapPair.second != nullptr)
+			delete mapPair.second;
+	}
+	maps.clear();
+
+	// Limpiar el jugador
+	if (player != nullptr)
+		delete player;
+
+	// Reinicializar todo
+	player = new Player();
+	currentMapId = 1;
+	createMaps();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, this);
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(),
+		INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
+	player->setTileMap(maps[currentMapId]);
+
+	currentTime = 0.0f;
+
+	std::cout << "Game reset complete!" << std::endl;
 }
 
 void Scene::initShaders()
