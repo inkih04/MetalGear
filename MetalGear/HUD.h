@@ -18,17 +18,19 @@ public:
 private:
     void renderHearts(int health);
     void renderInventorySlots(Player* player);
-    void renderAmmoCount(int ammo, float x, float y);  
+    void renderAmmoCount(int ammo, float x, float y);
 
     Texture hudTexture;
     Texture heartTexture;
     Texture fistTexture;
-    Texture gunTexture;      
+    Texture gunTexture;
+    Texture numbersTexture;    
 
     Sprite* hudSprite;
     Sprite* heartSprite;
     Sprite* fistSprite;
-    Sprite* gunSprite;       
+    Sprite* gunSprite;
+    Sprite* numberSprite;      
 
     ShaderProgram* texProgram;
 
@@ -36,4 +38,4 @@ private:
     int maxHearts;
 };
 
-#endif // _HUD_INCLUDE
+#endif 
