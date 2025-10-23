@@ -38,13 +38,26 @@ void HUD::init(ShaderProgram& shaderProgram)
     fistSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     fistSprite->changeAnimation(0);
 
-    // Cargar textura de la pistola (NUEVO)
+    // Cargar textura de la pistola
     gunTexture.loadFromFile("hud/pistola.png", TEXTURE_PIXEL_FORMAT_RGBA);
     gunSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1.0f, 1.0f), &gunTexture, &shaderProgram);
     gunSprite->setNumberAnimations(1);
     gunSprite->setAnimationSpeed(0, 1);
     gunSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     gunSprite->changeAnimation(0);
+
+    // Cargar textura de números (NUEVO)
+    // La imagen tiene 10 dígitos (1,2,3,4,5,6,7,8,9,0) cada uno de 16x16
+    // Total de la imagen: 160x16 pixels
+    numbersTexture.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
+    numberSprite = Sprite::createSprite(glm::ivec2(8, 8), glm::vec2(0.1f, 1.0f), &numbersTexture, &shaderProgram);
+    numberSprite->setNumberAnimations(10);
+
+    // Configurar animación para cada dígito (1,2,3,4,5,6,7,8,9,0)
+    for (int i = 0; i < 10; i++) {
+        numberSprite->setAnimationSpeed(i, 1);
+        numberSprite->addKeyframe(i, glm::vec2(i * 0.1f, 0.0f));
+    }
 
     // Posición del HUD
     hudPosition = glm::vec2(0.0f, 0.0f);
@@ -103,11 +116,11 @@ void HUD::renderInventorySlots(Player* player)
         gunSprite->setPosition(glm::vec2(slot1X, slotY));
         gunSprite->render();
 
-        // Renderizar el número de balas (NUEVO)
+        // Renderizar el número de balas en la esquina inferior derecha
         renderAmmoCount(player->getAmmo(), slot1X, slotY);
     }
     else {
-        // Mostrar el sprite del puño
+        // Mostrar el sprite del puño (sin número)
         fistSprite->setPosition(glm::vec2(slot1X, slotY));
         fistSprite->render();
     }
@@ -115,26 +128,36 @@ void HUD::renderInventorySlots(Player* player)
 
 void HUD::renderAmmoCount(int ammo, float x, float y)
 {
-    // Por ahora, simplemente imprime en consola
-    // Para una implementación completa necesitarías un sistema de renderizado de texto
-    // o sprites numéricos
+    std::string ammoStr = std::to_string(ammo);
+    float digitSpacing = 6.0f;  // Espacio entre dígitos (ajusta si es necesario)
 
-    // Si quieres implementarlo con sprites:
-    // 1. Crea una textura "hud/numeros.png" con los dígitos 0-9
-    // 2. En init(), carga esa textura y crea un sprite para números
-    // 3. Aquí, convierte 'ammo' a string y renderiza cada dígito
+    // Posición fija para el dígito de las unidades (esquina inferior derecha del slot)
+    float unitsX = x + 9.0f;   // Ajusta para que esté en el borde derecho
+    float numberY = y + 8.0f;  // Ajusta para la parte inferior
 
-    // Ejemplo básico (requiere implementación adicional):
-    // std::string ammoStr = std::to_string(ammo);
-    // float currentX = x + 10.0f;
-    // for (char c : ammoStr) {
-    //     int digit = c - '0';
-    //     // Actualizar coordenadas de textura del sprite numérico
-    //     // numberSprite->setTexCoord(digit * 0.1f, 0.0f);  // Asumiendo 10 dígitos en fila
-    //     // numberSprite->setPosition(glm::vec2(currentX, y + 12.0f));
-    //     // numberSprite->render();
-    //     // currentX += 6.0f;  // Espacio entre dígitos
-    // }
+    // Renderizar de derecha a izquierda (desde las unidades hacia las decenas/centenas)
+    for (int i = ammoStr.length() - 1; i >= 0; i--) {
+        char c = ammoStr[i];
+        int digit;
+
+        // Mapear el carácter al índice de animación
+        // Tu imagen tiene: 1,2,3,4,5,6,7,8,9,0
+        if (c == '0') {
+            digit = 9;  // El 0 está en la última posición
+        }
+        else {
+            digit = c - '1';  // '1' -> 0, '2' -> 1, etc.
+        }
+
+        // Calcular posición: las unidades están en unitsX, las decenas a la izquierda, etc.
+        int digitIndex = ammoStr.length() - 1 - i;
+        float posX = unitsX - (digitIndex * digitSpacing);
+
+        // Cambiar a la animación del dígito correspondiente
+        numberSprite->changeAnimation(digit);
+        numberSprite->setPosition(glm::vec2(posX, numberY));
+        numberSprite->render();
+    }
 }
 
 void HUD::free()
@@ -147,4 +170,6 @@ void HUD::free()
         delete fistSprite;
     if (gunSprite != nullptr)
         delete gunSprite;
+    if (numberSprite != nullptr)
+        delete numberSprite;
 }
