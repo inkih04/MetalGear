@@ -34,6 +34,12 @@ bool Game::update(int deltaTime)
 			sceneInitialized = true;
 			// La música del mapa se iniciará en Scene::init()
 		}
+		else if (previousState != MenuState::PLAYING) {
+			// Si volvemos al juego desde el menú (sin reiniciar scene)
+			// restaurar la música del mapa actual
+			AudioManager::instance().updateMusicForMap(scene.getCurrentMapId());
+		}
+
 		scene.update(deltaTime);
 	}
 	else {
@@ -85,6 +91,8 @@ void Game::keyPressed(int key)
 
 		if (currentState == MenuState::PLAYING) {
 			menuScreen.setCurrentState(MenuState::MAIN_MENU);
+			// Reproducir música del menú al pausar
+			AudioManager::instance().playMusic("music_menu", true);
 		}
 		else {
 			bPlay = false;

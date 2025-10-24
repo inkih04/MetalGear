@@ -28,7 +28,8 @@ public:
     }
 
     bool isGameOver() const { return gameOver; }
-    int handleMouseClick(int mouseX, int mouseY); // Para manejar clics en game over - retorna 1=continue, 2=exit, 0=nada
+    int handleMouseClick(int mouseX, int mouseY);
+    int getCurrentMapId() const { return currentMapId; }
 
 private:
     void initShaders();
