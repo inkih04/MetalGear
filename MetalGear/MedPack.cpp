@@ -1,5 +1,6 @@
 #include "MedPack.h"
 #include "Player.h"
+#include "AudioManager.h"
 
 MedPack::MedPack(const glm::ivec2& position, ShaderProgram& shaderProgram) {
 	init(shaderProgram);
@@ -15,6 +16,7 @@ bool MedPack::destroyAfterUse() {
 	return true;
 }
 void MedPack::use(Player* player) {
+	AudioManager::instance().playSound("sound_heal", 20.0);
 	player->heal(5);
 }
 int MedPack::getType() {

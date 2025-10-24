@@ -66,6 +66,9 @@ void AudioManager::loadAudioPaths()
     soundPaths["sound_geodude"] = "music/sound_geodude.mp3";
     soundPaths["sound_charizard"] = "music/sound_charizard.mp3";
     soundPaths["sound_fireball"] = "music/sound_fireball.mp3";
+    soundPaths["sound_reload"] = "music/sound_reload.mp3";
+    soundPaths["sound_heal"] = "music/sound_heal.mp3";
+    soundPaths["sound_button"] = "music/sound_button.mp3";
 }
 
 void AudioManager::playMusic(const std::string& musicName, bool loop)
