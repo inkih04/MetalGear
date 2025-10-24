@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Game.h"
 #include <GLFW/glfw3.h>
+#include "AudioManager.h"
 
 
 
@@ -51,6 +52,22 @@ bool RangeEnemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm
 bool RangeEnemy::canShoot()
 {
     return lastShotTime >= fireRate && !dead;
+}
+
+void RangeEnemy::takeDamage(int dmg)
+{
+    if (dead) return;
+
+    health -= dmg;
+
+    // Reproducir sonido de Charizard
+    AudioManager::instance().playSound("sound_charizard");
+
+    if (health <= 0) {
+        health = 0;
+        dead = true;
+        std::cout << "RangeEnemy (Charizard) defeated!" << std::endl;
+    }
 }
 
 enum EnemyAnims
@@ -107,6 +124,7 @@ void RangeEnemy::atack()
     if (!canShoot()) {
         return;
     }
+    AudioManager::instance().playSound("sound_fireball");
 	FireBall* newFireBall = new FireBall(glm::ivec2(posEnemy.x, posEnemy.y + 17), -1, map, *s, player);
     fireBalls.push_back(newFireBall);
 	lastShotTime = 0;

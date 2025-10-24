@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Game.h"
+#include "AudioManager.h"
 
 void Game::init()
 {
@@ -13,24 +14,38 @@ void Game::init()
 
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
+	AudioManager::instance().init();
+
 	// Initialize menu screen
 	menuScreen.init();
+
+	AudioManager::instance().playMusic("music_menu", true);
 }
 
 bool Game::update(int deltaTime)
 {
 	MenuState currentState = menuScreen.getCurrentState();
 
+	static MenuState previousState = MenuState::MAIN_MENU;
+
 	if (currentState == MenuState::PLAYING) {
 		if (!sceneInitialized) {
 			scene.init();
 			sceneInitialized = true;
+			// La música del mapa se iniciará en Scene::init()
 		}
 		scene.update(deltaTime);
 	}
 	else {
+		// Si volvemos al menú desde el juego, reproducir música del menú
+		if (previousState == MenuState::PLAYING && currentState != MenuState::PLAYING) {
+			AudioManager::instance().playMusic("music_menu", true);
+		}
+
 		menuScreen.update(deltaTime, mouseX, mouseY);
 	}
+
+	previousState = currentState;
 
 	return bPlay;
 }
@@ -98,41 +113,36 @@ void Game::mousePress(int button)
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		MenuState currentState = menuScreen.getCurrentState();
 
-		// Si estamos jugando, verificar si es game over
 		if (currentState == MenuState::PLAYING) {
 			if (scene.isGameOver()) {
-				// Escalar las coordenadas del mouse al tamaño del juego (240x160)
-				// El juego usa 240x160, así que escalamos desde SCREEN_WIDTH/HEIGHT
 				float scaleX = 240.0f / float(SCREEN_WIDTH);
 				float scaleY = 160.0f / float(SCREEN_HEIGHT);
 
 				int gameMouseX = int(mouseX * scaleX);
 				int gameMouseY = int(mouseY * scaleY);
 
-				std::cout << "Game Over click - Screen coords: (" << mouseX << ", " << mouseY
-					<< ") -> Game coords: (" << gameMouseX << ", " << gameMouseY << ")" << std::endl;
-
-				// Manejar clic en la pantalla de game over con coordenadas escaladas
 				int result = scene.handleMouseClick(gameMouseX, gameMouseY);
 
 				if (result == 1) {
-					// Continue - el juego ya se reinició en handleMouseClick
+					// Continue - la música se reiniciará en Scene::resetGame()
 					std::cout << "Restarting game..." << std::endl;
 				}
 				else if (result == 2) {
 					// Exit - volver al menú principal
 					std::cout << "Returning to main menu..." << std::endl;
 					menuScreen.setCurrentState(MenuState::MAIN_MENU);
-					sceneInitialized = false; // Para reinicializar cuando vuelvan a jugar
+					sceneInitialized = false;
+
+					// Reproducir música del menú
+					AudioManager::instance().playMusic("music_menu", true);
 				}
 			}
-			// Si no es game over, no hacer nada (el juego maneja sus propios clics)
 		}
-		// Si no estamos jugando, manejar clics del menú
 		else {
 			menuScreen.handleClick(mouseX, mouseY);
 			if (menuScreen.shouldExit()) {
 				bPlay = false;
+				AudioManager::instance().cleanup();
 				menuScreen.resetExitRequest();
 			}
 		}

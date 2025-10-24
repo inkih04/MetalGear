@@ -25,7 +25,7 @@ public:
 	glm::ivec2 getPosition() const { return posEnemy; }
 	glm::ivec2 getSize() const { return size; }
 	virtual bool checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const;
-	void takeDamage(int dmg);
+	virtual void takeDamage(int dmg);
 	bool isDead() const { return health <= 0; }
 	int getHealth() const { return health; }
 	int getDamage() const { return damage; }

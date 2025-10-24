@@ -1,5 +1,6 @@
 #include "Gun.h"
 #include <iostream>
+#include "AudioManager.h"
 
 
 
@@ -23,6 +24,7 @@ void Gun::shoot(const glm::ivec2& playerPos, int direction, TileMap* currentMap)
 	if (!canShoot())
 		return;
 
+	AudioManager::instance().playSound("sound_shot");
 	Bullet* newBullet = new Bullet(playerPos, direction, currentMap, *s);
 	bullets.push_back(newBullet);
 

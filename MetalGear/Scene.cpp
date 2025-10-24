@@ -15,6 +15,7 @@
 #include "Player.h"
 #include <GLFW/glfw3.h>
 #include "HUD.h"
+#include "AudioManager.h"
 
 
 #define SCREEN_X 0
@@ -233,6 +234,8 @@ void Scene::init()
 	gameOverScreen.init(texProgram);
 
 	gameOver = false;
+
+	AudioManager::instance().updateMusicForMap(currentMapId);
 }
 
 void Scene::update(int deltaTime)
@@ -301,10 +304,12 @@ void Scene::update(int deltaTime)
 
 void Scene::checkGameOver()
 {
-	if (player->getHealth() <= 0)
+	if (player->getHealth() <= 0 && !gameOver)
 	{
 		gameOver = true;
 		std::cout << "Game Over!" << std::endl;
+
+		AudioManager::instance().playMusic("music_gameover", true);
 	}
 }
 
@@ -321,6 +326,8 @@ void Scene::checkMapChange()
 		currentMapId = mapId;
 		player->setTileMap(maps[currentMapId]);
 		player->setPosition(glm::vec2(float(newPos.x), float(newPos.y)));
+
+		AudioManager::instance().updateMusicForMap(currentMapId);
 	}
 }
 
@@ -416,6 +423,8 @@ void Scene::resetGame()
 	currentTime = 0.0f;
 
 	std::cout << "Game reset complete!" << std::endl;
+
+	AudioManager::instance().updateMusicForMap(currentMapId);
 }
 
 void Scene::initShaders()
