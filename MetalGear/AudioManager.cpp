@@ -6,8 +6,8 @@ AudioManager::AudioManager()
     engine = nullptr;
     currentMusic = nullptr;
     currentMusicName = "";
-    musicVolume = 0.7f;
-    soundVolume = 0.8f;
+    musicVolume = 0.05f;
+    soundVolume = 0.05f;
 }
 
 AudioManager::~AudioManager()
