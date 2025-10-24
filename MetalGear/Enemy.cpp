@@ -1,5 +1,6 @@
 ﻿#include "Enemy.h"
 #include "TileMap.h"
+#include "AudioManager.h"
 
 void Enemy::render()
 {

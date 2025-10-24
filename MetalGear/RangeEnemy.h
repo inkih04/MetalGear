@@ -15,6 +15,7 @@ public:
 	void move(const glm::ivec2& playerPos);
 	void atack();
 	void render() override;
+	void takeDamage(int dmg) override;
 
 private:
 	bool tryMove(int dir);

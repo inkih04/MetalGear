@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Game.h"
 #include <GLFW/glfw3.h>
+#include "AudioManager.h"
 
 
 
@@ -470,4 +471,20 @@ void MeleEnemy::guard() {
     }
 
     sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
+}
+
+void MeleEnemy::takeDamage(int dmg)
+{
+    if (dead) return;
+
+    health -= dmg;
+
+    // Reproducir sonido de Pikachu
+    AudioManager::instance().playSound("sound_pikachu");
+
+    if (health <= 0) {
+        health = 0;
+        dead = true;
+        std::cout << "MeleEnemy (Pikachu) defeated!" << std::endl;
+    }
 }

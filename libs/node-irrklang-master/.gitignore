@@ -1,0 +1,9 @@
+lib/irrklang.node
+build/*
+gmon.out
+.lock-wscript
+build/.DS_Store
+build/.wafpickle-7
+build/config.log
+build/default/node-irrklang.node
+

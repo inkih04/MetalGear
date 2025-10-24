@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Game.h"
 #include <GLFW/glfw3.h>
+#include "AudioManager.h"
 
 
 
@@ -468,4 +469,20 @@ void CaveEnemy::guard() {
     }
 
     sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
+}
+
+void CaveEnemy::takeDamage(int dmg)
+{
+    if (dead) return;
+
+    health -= dmg;
+
+    // Reproducir sonido de Geodude
+    AudioManager::instance().playSound("sound_geodude");
+
+    if (health <= 0) {
+        health = 0;
+        dead = true;
+        std::cout << "CaveEnemy (Geodude) defeated!" << std::endl;
+    }
 }

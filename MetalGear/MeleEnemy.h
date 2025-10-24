@@ -11,6 +11,7 @@ public:
 	void init(ShaderProgram& shaderProgram) override;
 	void update(int deltaTime, const glm::ivec2& playerPos) override;
 	void move(const glm::ivec2& playerPos);
+	void takeDamage(int dmg) override;
 
 private:
 	bool tryMove(int dir);
