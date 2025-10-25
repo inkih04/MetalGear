@@ -18,6 +18,7 @@ private:
 	void retreat();
 	void patrol();
 	void guard();
+	bool checkRetreatPath(glm::ivec2 start, glm::ivec2 end);
 
 	static const int RETREAT_COOLDOWN_TIME = 1000;
 	int retreatCooldown;

@@ -11,6 +11,7 @@
 #include "CaveEnemy.h"
 #include "MedPack.h"
 #include "Ammunition.h"
+#include "Boss.h"
 #include "Key.h"
 #include "Player.h"
 #include <GLFW/glfw3.h>
@@ -208,6 +209,7 @@ TileMap* Scene::loadMap13()
 TileMap* Scene::loadMap14()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa14.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 14, {}, { 0,0,0,10 });
+	map->addEnemy(new Boss(glm::ivec2(112, 41), texProgram, map, DOWN, player));
 	return map;
 }
 

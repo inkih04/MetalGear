@@ -29,7 +29,7 @@ public:
 	bool isDead() const { return health <= 0; }
 	int getHealth() const { return health; }
 	int getDamage() const { return damage; }
-	bool seePlayer(const glm::ivec2& playerPos) const;
+	virtual bool seePlayer(const glm::ivec2& playerPos) const;
 
 protected:
 	glm::vec2 posEnemy;

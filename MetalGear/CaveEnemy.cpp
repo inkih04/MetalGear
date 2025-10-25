@@ -27,7 +27,7 @@ CaveEnemy::CaveEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram, T
 
     this->direction = direction;
 
-    size = glm::ivec2(16, 16);
+    size = glm::ivec2(32, 16);
     playerHasBeenDetected = false;
     playerHasBeenDetected = false;
     isRetreating = false;
@@ -157,10 +157,11 @@ void CaveEnemy::retreat() {
         break;
     }
 
-    if (!map->checkTileCollision(retreatPos, size, false)) {
+    bool pathClear = checkRetreatPath(posEnemy, retreatPos);
+
+    if (pathClear && !map->checkTileCollision(retreatPos, size, false)) {
         posEnemy = retreatPos;
         lookingDirection = retreatDirection;
-
         switch (retreatDirection) {
         case LEFT:
             sprite->changeAnimation(STAND_LEFT);
@@ -169,7 +170,7 @@ void CaveEnemy::retreat() {
             sprite->changeAnimation(STAND_RIGHT);
             break;
         case UP:
-			sprite->changeAnimation(STAND_UP);
+            sprite->changeAnimation(STAND_UP);
             break;
         case DOWN:
             sprite->changeAnimation(STAND_DOWN);
@@ -178,11 +179,9 @@ void CaveEnemy::retreat() {
     }
     else {
         bool retreated = false;
-
         std::vector<int> directions = { LEFT, RIGHT, UP, DOWN };
         for (int dir : directions) {
             if (dir == lookingDirection) continue;
-
             retreatPos = posEnemy;
             switch (dir) {
             case LEFT:
@@ -199,11 +198,12 @@ void CaveEnemy::retreat() {
                 break;
             }
 
-            if (!map->checkTileCollision(retreatPos, size, false)) {
+            pathClear = checkRetreatPath(posEnemy, retreatPos);
+
+            if (pathClear && !map->checkTileCollision(retreatPos, size, false)) {
                 posEnemy = retreatPos;
                 lookingDirection = dir;
                 retreated = true;
-
                 switch (dir) {
                 case LEFT:
                     sprite->changeAnimation(STAND_LEFT);
@@ -221,7 +221,6 @@ void CaveEnemy::retreat() {
                 break;
             }
         }
-
         if (!retreated) {
             switch (lookingDirection) {
             case LEFT:
@@ -239,8 +238,32 @@ void CaveEnemy::retreat() {
             }
         }
     }
-
     sprite->setPosition(glm::vec2(float(posEnemy.x), float(posEnemy.y)));
+}
+
+
+bool CaveEnemy::checkRetreatPath(glm::ivec2 start, glm::ivec2 end) {
+    int tileSize = map->getTileSize();
+
+    glm::ivec2 direction;
+    if (end.x != start.x) {
+        direction = glm::ivec2((end.x > start.x) ? 1 : -1, 0);
+    }
+    else {
+        direction = glm::ivec2(0, (end.y > start.y) ? 1 : -1);
+    }
+
+    glm::ivec2 currentPos = start;
+    while (currentPos != end) {
+        currentPos.x += direction.x * tileSize;
+        currentPos.y += direction.y * tileSize;
+
+        if (map->checkTileCollision(currentPos, size, false)) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void CaveEnemy::move(const glm::ivec2& playerPos) {
@@ -477,7 +500,6 @@ void CaveEnemy::takeDamage(int dmg)
 
     health -= dmg;
 
-    // Reproducir sonido de Geodude
     AudioManager::instance().playSound("sound_geodude");
 
     if (health <= 0) {

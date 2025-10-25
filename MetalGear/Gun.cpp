@@ -27,7 +27,7 @@ void Gun::shoot(const glm::ivec2& playerPos, int direction, TileMap* currentMap)
 	AudioManager::instance().playSound("sound_shot");
 	Bullet* newBullet = new Bullet(playerPos, direction, currentMap, *s);
 	bullets.push_back(newBullet);
-
+	--ammo;
 	lastShotTime = 0;
 }
 

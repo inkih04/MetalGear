@@ -16,7 +16,7 @@ RangeEnemy::RangeEnemy(const glm::ivec2& position, ShaderProgram& shaderProgram,
 	cout << "RangeEnemy created at position (" << position.x << ", " << position.y << ") with health " << health << endl;
     damage = 1;
     speed = 1;
-	fireRate = 1000;
+	fireRate = 1500;
 	lastShotTime = fireRate;
 	this->player = player;
 
@@ -60,7 +60,6 @@ void RangeEnemy::takeDamage(int dmg)
 
     health -= dmg;
 
-    // Reproducir sonido de Charizard
     AudioManager::instance().playSound("sound_charizard");
 
     if (health <= 0) {

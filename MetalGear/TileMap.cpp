@@ -294,8 +294,10 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, 
 	for (int x = x0; x <= x1; x++)
 	{
 		int currentTile = map[y * mapSize.x + x];
-		if (tileIds.count(currentTile))
-				return true;
+		if (tileIds.count(currentTile)) {
+			cout << "Collision with tile ID " << currentTile << " detected in tile collision check." << endl;
+			return true;
+		}
 	}
 	if (isPlayer && this->checkCollisionEnemyPlayer(pos, size)) {
 		cout << "Collision with enemy detected in tile collision check." << endl;
@@ -312,6 +314,8 @@ bool TileMap::checkTileCollision(const glm::ivec2& pos, const glm::ivec2& size, 
 
 	return false;
 }
+
+
 
 bool TileMap::checkItemCollision(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
 {
