@@ -11,6 +11,7 @@ FireBall::FireBall(const glm::ivec2& position, int direction, TileMap* currentMa
 	sprite->changeAnimation(0);
 	sprite->setPosition(glm::vec2(position.x, position.y));
 
+	this->hitBoxOfsset = 0;
 	this->player = player;
 	this->playerPosition = player->getPosition();
 	this->position = position;

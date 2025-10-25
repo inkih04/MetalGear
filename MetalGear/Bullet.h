@@ -4,7 +4,7 @@
 class Bullet : public Projectile {
 
 	public:
-		Bullet(const glm::ivec2& position, int direction, TileMap* currentMap, ShaderProgram& shaderProgram);
+		Bullet(int hitBoxOffset, const glm::ivec2& position, int direction, TileMap* currentMap, ShaderProgram& shaderProgram);
 		bool getUser() override { return true; }
 		void hitTarget() override;
 		~Bullet();

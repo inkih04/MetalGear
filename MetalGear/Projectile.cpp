@@ -17,8 +17,9 @@ void Projectile::update(int deltatime)
         if (currentStep < trajectoryPoints.size()) {
             position = trajectoryPoints[currentStep];
             sprite->setPosition(glm::vec2(position.x, position.y));
+            
 
-            if (currentStep >  100 && elapsedTime >= 100 && tileMap->checkTileCollision(position, size, false)) {
+            if (currentStep >  100 && elapsedTime >= 100 && tileMap->checkTileCollision(glm::vec2(position.x, position.y + hitBoxOfsset), size, false)) {
                 active = false;
                 return;
             }
@@ -84,7 +85,7 @@ void Projectile::calculateTrajectory() {
 
         trajectoryPoints.push_back(point);
 
-        if (step > 100 && tileMap->checkTileCollision(position, size, false)) {
+        if (step > 100 && tileMap->checkTileCollision(glm::vec2(position.x, position.y + hitBoxOfsset), size, false)) {
             maxDistance = step * speed;
             break;
         }

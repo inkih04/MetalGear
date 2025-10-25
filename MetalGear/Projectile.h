@@ -24,6 +24,7 @@ public:
 
 protected:
 	glm::ivec2 position;
+	int hitBoxOfsset;
 	glm::ivec2 playerPosition;
 
 	glm::ivec2 size;

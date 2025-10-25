@@ -1,7 +1,7 @@
 #include "TileMap.h"
 #include "Bullet.h"
 
-Bullet::Bullet(const glm::ivec2& position, int direction, TileMap* currentMap, ShaderProgram& shaderProgram) {
+Bullet::Bullet(int hitBoxOffset,const glm::ivec2& position, int direction, TileMap* currentMap, ShaderProgram& shaderProgram) {
 	spritesheet.loadFromFile("images/bala2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::vec2(16, 16), glm::vec2(1, 1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
@@ -9,7 +9,8 @@ Bullet::Bullet(const glm::ivec2& position, int direction, TileMap* currentMap, S
 	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
 	sprite->changeAnimation(0);
 	sprite->setPosition(glm::vec2(position.x, position.y));
-
+	
+	this->hitBoxOfsset = hitBoxOffset;
 	this->position = position;
 	this->direction = direction;
 	currentStep = 0;
