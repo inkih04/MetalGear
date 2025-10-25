@@ -1,6 +1,5 @@
 #ifndef _SCENE_INCLUDE
 #define _SCENE_INCLUDE
-
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "TileMap.h"
@@ -8,26 +7,24 @@
 #include "HUD.h"
 #include "MessageDisplay.h"
 #include "GameOverScreen.h"
+#include "WinScreen.h"
 
 class Scene
 {
 public:
     Scene();
     ~Scene();
-
     void init();
     void update(int deltaTime);
     void render();
     void reloadMap10();
-    void resetGame(); 
-
+    void resetGame();
     TileMap* getCurrentMap() const { return maps.at(currentMapId); }
-
     void showItemMessage(const std::string& itemImage) {
         messageDisplay.showMessage(itemImage, 1000);
     }
-
     bool isGameOver() const { return gameOver; }
+    bool isGameWon() const { return gameWon; }
     int handleMouseClick(int mouseX, int mouseY);
     int getCurrentMapId() const { return currentMapId; }
 
@@ -36,9 +33,9 @@ private:
     void createMaps();
     void checkMapChange();
     void checkEnemies(int deltaTime);
-    void checkGameOver(); 
+    void checkGameOver();
+    void checkGameWon();  
 
-    
     TileMap* loadMap1();
     TileMap* loadMap2();
     TileMap* loadMap3();
@@ -64,7 +61,8 @@ private:
     HUD hud;
     MessageDisplay messageDisplay;
     GameOverScreen gameOverScreen;
+    WinScreen winScreen;
     bool gameOver;
+    bool gameWon;
 };
-
 #endif // _SCENE_INCLUDE

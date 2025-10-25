@@ -53,6 +53,7 @@ void AudioManager::loadAudioPaths()
     musicPaths["music_mansion"] = "music/music_mansion.mp3";
     musicPaths["music_boss"] = "music/music_boss.mp3";
     musicPaths["music_gameover"] = "music/music_gameover.mp3";
+    musicPaths["music_win"] = "music/music_win.mp3";
 
     soundPaths["sound_punch"] = "music/sound_punch.mp3";
     soundPaths["sound_gothit"] = "music/sound_gothit.mp3";
@@ -67,6 +68,8 @@ void AudioManager::loadAudioPaths()
     soundPaths["sound_reload"] = "music/sound_reload.mp3";
     soundPaths["sound_heal"] = "music/sound_heal.mp3";
     soundPaths["sound_button"] = "music/sound_button.mp3";
+    soundPaths["sound_mewtwo"] = "music/sound_mewtwo.mp3";
+    soundPaths["sound_psibomb"] = "music/sound_psibomb.mp3";
 }
 
 void AudioManager::playMusic(const std::string& musicName, bool loop)

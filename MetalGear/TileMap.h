@@ -58,6 +58,7 @@ public:
 	void addItem(Item* item) { items.push_back(item); }
 	void updateEnemies(int deltaTime, const glm::ivec2& playerPos);
 	std::unordered_set<int> getBlockTileIds() const { return tileIds;}
+	const std::vector<Enemy*>& getEnemies() const { return enemies; }
 
 
 

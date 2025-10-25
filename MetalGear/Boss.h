@@ -16,6 +16,8 @@ public:
 	void render() override;
 	void takeDamage(int dmg) override;
 	bool seePlayer(const glm::ivec2& playerPos) const override;
+	static bool bossWasDefeated;  // Variable estática para rastrear la victoria
+	static void resetBossDefeat() { bossWasDefeated = false; }  // Método para resetear
 
 private:
 	void teleport();

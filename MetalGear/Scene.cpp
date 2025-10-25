@@ -17,6 +17,7 @@
 #include <GLFW/glfw3.h>
 #include "HUD.h"
 #include "AudioManager.h"
+#include "Boss.h"
 
 
 #define SCREEN_X 0
@@ -32,6 +33,7 @@ Scene::Scene()
 	currentMapId = 1;
 	player = NULL;
 	gameOver = false;
+	gameWon = false;
 }
 
 Scene::~Scene()
@@ -233,11 +235,21 @@ void Scene::init()
 
 	hud.init(texProgram);
 	messageDisplay.init(texProgram);
+
+	std::cout << "DEBUG: Initializing GameOverScreen..." << std::endl;
 	gameOverScreen.init(texProgram);
 
+	std::cout << "DEBUG: Initializing WinScreen..." << std::endl;
+	winScreen.init(texProgram);
+	std::cout << "DEBUG: WinScreen init completed" << std::endl;
+
 	gameOver = false;
+	gameWon = false;
+	Boss::resetBossDefeat();
 
 	AudioManager::instance().updateMusicForMap(currentMapId);
+
+	std::cout << "DEBUG: Scene::init() completed" << std::endl;
 }
 
 void Scene::update(int deltaTime)
@@ -251,12 +263,21 @@ void Scene::update(int deltaTime)
 		return; 
 	}
 
+	if (gameWon)
+	{
+		int mouseX, mouseY;
+		Game::instance().getMousePosition(mouseX, mouseY);
+		winScreen.update(deltaTime, mouseX, mouseY);
+		return;
+	}
+
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	checkMapChange();
 	checkEnemies(deltaTime);
 	messageDisplay.update(deltaTime);
 	checkGameOver();
+	checkGameWon();
 
 	static bool iPressedLastFrame = false;
 	bool iPressedNow = Game::instance().getKey(GLFW_KEY_I);
@@ -313,6 +334,16 @@ void Scene::checkGameOver()
 	}
 }
 
+void Scene::checkGameWon()
+{
+	if (currentMapId == 14 && !gameWon && Boss::bossWasDefeated)
+	{
+		gameWon = true;
+		std::cout << "Victory! Boss defeated!" << std::endl;
+		AudioManager::instance().playMusic("music_win", true);
+	}
+}
+
 void Scene::checkEnemies(int deltaTime)
 {
 	player->checkEnemies(deltaTime);
@@ -337,10 +368,29 @@ void Scene::render()
 
 	texProgram.use();
 
+	// IMPORTANTE: Verificar gameWon ANTES de gameOver
+	if (gameWon)
+	{
+		std::cout << "DEBUG: Rendering WinScreen" << std::endl;
+
+		float mapWidthPixels = 240.0f;
+		float mapHeightPixels = 160.0f;
+		glm::mat4 winProjection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
+
+		texProgram.setUniformMatrix4f("projection", winProjection);
+		modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+		winScreen.render(texProgram);
+		return;
+	}
+
 	if (gameOver)
 	{
+		std::cout << "DEBUG: Rendering GameOverScreen" << std::endl;
 
-		float mapWidthPixels = 240.0f; 
+		float mapWidthPixels = 240.0f;
 		float mapHeightPixels = 160.0f;
 		glm::mat4 gameOverProjection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
 
@@ -348,7 +398,6 @@ void Scene::render()
 		modelview = glm::mat4(1.0f);
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-
 
 		gameOverScreen.render(texProgram);
 		return;
@@ -380,16 +429,29 @@ void Scene::render()
 
 int Scene::handleMouseClick(int mouseX, int mouseY)
 {
-	if (!gameOver) return 0;
-
-	int result = gameOverScreen.checkButtonClick(mouseX, mouseY);
-
-	if (result == 1) 
+	if (gameOver)
 	{
-		resetGame();
+		int result = gameOverScreen.checkButtonClick(mouseX, mouseY);
+		if (result == 1)
+		{
+			resetGame();
+		}
+		return result;
 	}
 
-	return result; 
+	// AÑADIR ESTA SECCIÓN NUEVA:
+	if (gameWon)
+	{
+		int result = winScreen.checkButtonClick(mouseX, mouseY);
+		if (result == 1) // New Game
+		{
+			resetGame();
+		}
+		// result == 2 se maneja en Game.cpp para volver al menú
+		return result;
+	}
+
+	return 0;
 }
 
 
@@ -398,6 +460,7 @@ void Scene::resetGame()
 	std::cout << "Resetting game..." << std::endl;
 
 	gameOver = false;
+	gameWon = false;
 
 
 	for (auto& mapPair : maps)
@@ -419,6 +482,7 @@ void Scene::resetGame()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * maps[currentMapId]->getTileSize(),
 		INIT_PLAYER_Y_TILES * maps[currentMapId]->getTileSize()));
 	player->setTileMap(maps[currentMapId]);
+	Boss::resetBossDefeat();
 
 	currentTime = 0.0f;
 
