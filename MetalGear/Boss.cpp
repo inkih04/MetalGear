@@ -7,7 +7,7 @@
 #include "AudioManager.h"
 
 
-
+bool Boss::bossWasDefeated = false;
 
 Boss::Boss(const glm::ivec2& position, ShaderProgram& shaderProgram, TileMap* map, int direction, Player* player)
 {
@@ -70,7 +70,7 @@ void Boss::takeDamage(int dmg)
     int healthLost = lastHealthCheck - health;
     damageCounter += dmg;
 
-    AudioManager::instance().playSound("sound_charizard");
+    AudioManager::instance().playSound("sound_mewtwo");
 
     if (damageCounter >= damageThreshold) {
         std::cout << "Boss received " << damageCounter << " damage! Teleporting..." << std::endl;
@@ -83,6 +83,7 @@ void Boss::takeDamage(int dmg)
     if (health <= 0) {
         health = 0;
         dead = true;
+        bossWasDefeated = true;  
         std::cout << "Boss (Mewtwo) defeated!" << std::endl;
     }
 }
@@ -176,7 +177,7 @@ void Boss::atack()
     if (!canShoot()) {
         return;
     }
-    AudioManager::instance().playSound("sound_fireball");
+    AudioManager::instance().playSound("sound_psibomb");
     FireBall* newFireBall = new FireBall(glm::ivec2(posEnemy.x, posEnemy.y + 17), -1, map, *s, player);
     fireBalls.push_back(newFireBall);
     lastShotTime = 0;

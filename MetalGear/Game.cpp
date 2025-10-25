@@ -78,7 +78,8 @@ void Game::keyPressed(int key)
 	if (key == GLFW_KEY_ESCAPE) {
 		MenuState currentState = menuScreen.getCurrentState();
 
-		if (currentState == MenuState::PLAYING && scene.isGameOver()) {
+		// MODIFICAR ESTA LÍNEA para incluir gameWon:
+		if (currentState == MenuState::PLAYING && (scene.isGameOver() || scene.isGameWon())) {
 			return;
 		}
 
@@ -90,7 +91,6 @@ void Game::keyPressed(int key)
 			bPlay = false;
 		}
 	}
-
 	keys[key] = true;
 }
 
@@ -114,10 +114,11 @@ void Game::mousePress(int button)
 		MenuState currentState = menuScreen.getCurrentState();
 
 		if (currentState == MenuState::PLAYING) {
-			if (scene.isGameOver()) {
+			// MODIFICAR ESTA SECCIÓN para incluir gameWon:
+			if (scene.isGameOver() || scene.isGameWon())
+			{
 				float scaleX = 240.0f / float(SCREEN_WIDTH);
 				float scaleY = 160.0f / float(SCREEN_HEIGHT);
-
 				int gameMouseX = int(mouseX * scaleX);
 				int gameMouseY = int(mouseY * scaleY);
 
@@ -130,7 +131,6 @@ void Game::mousePress(int button)
 					std::cout << "Returning to main menu..." << std::endl;
 					menuScreen.setCurrentState(MenuState::MAIN_MENU);
 					sceneInitialized = false;
-
 					AudioManager::instance().playMusic("music_menu", true);
 				}
 			}
