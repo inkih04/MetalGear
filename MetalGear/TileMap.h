@@ -70,8 +70,8 @@ private:
 	vector<Item*> items;
 	vector<Enemy*> enemies;
 	int id;
-	vector<int> changeMapBorders; //index is border enum, vlaue is the new map id
-	vector<ChangeMap> changeMapTile; //idTile, position to place the player in the new map, idMap to be positioned
+	vector<int> changeMapBorders; 
+	vector<ChangeMap> changeMapTile; 
 	std::unordered_set<int> tileIds;
 	GLuint vao;
 	GLuint vbo;

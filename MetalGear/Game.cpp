@@ -16,7 +16,6 @@ void Game::init()
 
 	AudioManager::instance().init();
 
-	// Initialize menu screen
 	menuScreen.init();
 
 	AudioManager::instance().playMusic("music_menu", true);
@@ -32,18 +31,14 @@ bool Game::update(int deltaTime)
 		if (!sceneInitialized) {
 			scene.init();
 			sceneInitialized = true;
-			// La música del mapa se iniciará en Scene::init()
 		}
 		else if (previousState != MenuState::PLAYING) {
-			// Si volvemos al juego desde el menú (sin reiniciar scene)
-			// restaurar la música del mapa actual
 			AudioManager::instance().updateMusicForMap(scene.getCurrentMapId());
 		}
 
 		scene.update(deltaTime);
 	}
 	else {
-		// Si volvemos al menú desde el juego, reproducir música del menú
 		if (previousState == MenuState::PLAYING && currentState != MenuState::PLAYING) {
 			AudioManager::instance().playMusic("music_menu", true);
 		}
@@ -83,15 +78,12 @@ void Game::keyPressed(int key)
 	if (key == GLFW_KEY_ESCAPE) {
 		MenuState currentState = menuScreen.getCurrentState();
 
-		// Si estamos en game over, no hacer nada con ESC
 		if (currentState == MenuState::PLAYING && scene.isGameOver()) {
-			// No permitir salir con ESC durante game over
 			return;
 		}
 
 		if (currentState == MenuState::PLAYING) {
 			menuScreen.setCurrentState(MenuState::MAIN_MENU);
-			// Reproducir música del menú al pausar
 			AudioManager::instance().playMusic("music_menu", true);
 		}
 		else {
@@ -132,16 +124,13 @@ void Game::mousePress(int button)
 				int result = scene.handleMouseClick(gameMouseX, gameMouseY);
 
 				if (result == 1) {
-					// Continue - la música se reiniciará en Scene::resetGame()
 					std::cout << "Restarting game..." << std::endl;
 				}
 				else if (result == 2) {
-					// Exit - volver al menú principal
 					std::cout << "Returning to main menu..." << std::endl;
 					menuScreen.setCurrentState(MenuState::MAIN_MENU);
 					sceneInitialized = false;
 
-					// Reproducir música del menú
 					AudioManager::instance().playMusic("music_menu", true);
 				}
 			}
@@ -168,7 +157,6 @@ bool Game::getKey(int key) const
 
 void Game::getMousePosition(int& x, int& y) const
 {
-	// Escalar las coordenadas del mouse al tamaño del juego (240x160)
 	float scaleX = 240.0f / float(SCREEN_WIDTH);
 	float scaleY = 160.0f / float(SCREEN_HEIGHT);
 

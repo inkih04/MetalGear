@@ -15,7 +15,6 @@ public:
     void update(int deltaTime);
     void render();
 
-    // Muestra un mensaje por un tiempo determinado (en milisegundos)
     void showMessage(const std::string& imageName, int duration = 1000);
 
     bool isShowingMessage() const { return showing; }

@@ -49,7 +49,7 @@ private:
     glm::mat4 projection;
     bool exitRequested;
 
-    // Backgrounds
+  
     Texture backgroundTexture;
     Sprite* backgroundSprite;
 
@@ -59,20 +59,20 @@ private:
     Texture creditsTexture;
     Sprite* creditsSprite;
 
-    // Button textures
+    
     Texture startTexture;
     Texture controlsTexBtn;
     Texture creditsTexBtn;
     Texture exitTexture;
     Texture backTexture;
 
-    // Buttons for main menu
+    
     MenuButton startButton;
     MenuButton controlsButton;
     MenuButton creditsButtonMenu;
     MenuButton exitButton;
 
-    // Back button (for controls and credits screens)
+    
     MenuButton backButton;
 };
 

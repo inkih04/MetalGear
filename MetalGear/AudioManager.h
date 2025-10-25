@@ -19,18 +19,16 @@ public:
     void init();
     void cleanup();
 
-    // Control de música
     void playMusic(const std::string& musicName, bool loop = true);
     void stopMusic();
     void pauseMusic();
     void resumeMusic();
-    void setMusicVolume(float volume); // 0.0f a 1.0f
+    void setMusicVolume(float volume); 
 
-    // Control de efectos de sonido
     void playSound(const std::string& soundName, float volume = 1.0f);
-    void setSoundVolume(float volume); // 0.0f a 1.0f
+    void setSoundVolume(float volume); 
 
-    // Cambio de música según el mapa
+    
     void updateMusicForMap(int mapId);
 
 private:

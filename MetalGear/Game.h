@@ -29,7 +29,7 @@ public:
 	void mouseRelease(int button);
 
 	bool getKey(int key) const;
-	void getMousePosition(int& x, int& y) const; // Nuevo método
+	void getMousePosition(int& x, int& y) const; 
 	void setWindowSize(int width, int height);
 
 private:

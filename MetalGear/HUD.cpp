@@ -9,7 +9,7 @@ void HUD::init(ShaderProgram& shaderProgram)
     texProgram = &shaderProgram;
     maxHearts = 5;
 
-    // Cargar textura del marco del HUD
+
     hudTexture.loadFromFile("hud/hud.png", TEXTURE_PIXEL_FORMAT_RGBA);
     hudSprite = Sprite::createSprite(glm::ivec2(240, 160), glm::vec2(1.0f, 1.0f), &hudTexture, &shaderProgram);
     hudSprite->setNumberAnimations(1);
@@ -17,20 +17,19 @@ void HUD::init(ShaderProgram& shaderProgram)
     hudSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     hudSprite->changeAnimation(0);
 
-    // Cargar textura de corazones
+
     heartTexture.loadFromFile("hud/corazon.png", TEXTURE_PIXEL_FORMAT_RGBA);
     heartSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25f, 1.0f), &heartTexture, &shaderProgram);
     heartSprite->setNumberAnimations(2);
 
-    // Animación corazón completo
+  
     heartSprite->setAnimationSpeed(0, 1);
     heartSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
 
-    // Animación medio corazón
+   
     heartSprite->setAnimationSpeed(1, 1);
     heartSprite->addKeyframe(1, glm::vec2(0.25f, 0.0f));
 
-    // Cargar textura del puño
     fistTexture.loadFromFile("hud/puño.png", TEXTURE_PIXEL_FORMAT_RGBA);
     fistSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1.0f, 1.0f), &fistTexture, &shaderProgram);
     fistSprite->setNumberAnimations(1);
@@ -38,7 +37,7 @@ void HUD::init(ShaderProgram& shaderProgram)
     fistSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     fistSprite->changeAnimation(0);
 
-    // Cargar textura de la pistola
+
     gunTexture.loadFromFile("hud/pistola.png", TEXTURE_PIXEL_FORMAT_RGBA);
     gunSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1.0f, 1.0f), &gunTexture, &shaderProgram);
     gunSprite->setNumberAnimations(1);
@@ -46,18 +45,18 @@ void HUD::init(ShaderProgram& shaderProgram)
     gunSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     gunSprite->changeAnimation(0);
 
-    // Cargar textura de números
+   
     numbersTexture.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
     numberSprite = Sprite::createSprite(glm::ivec2(8, 8), glm::vec2(0.1f, 1.0f), &numbersTexture, &shaderProgram);
     numberSprite->setNumberAnimations(10);
 
-    // Configurar animación para cada dígito (1,2,3,4,5,6,7,8,9,0)
+
     for (int i = 0; i < 10; i++) {
         numberSprite->setAnimationSpeed(i, 1);
         numberSprite->addKeyframe(i, glm::vec2(i * 0.1f, 0.0f));
     }
 
-    // Cargar textura de cura
+
     cureTexture.loadFromFile("hud/cura.png", TEXTURE_PIXEL_FORMAT_RGBA);
     cureSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1.0f, 1.0f), &cureTexture, &shaderProgram);
     cureSprite->setNumberAnimations(1);
@@ -65,7 +64,6 @@ void HUD::init(ShaderProgram& shaderProgram)
     cureSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     cureSprite->changeAnimation(0);
 
-    // Cargar textura de munición
     ammoTexture.loadFromFile("hud/ammo.png", TEXTURE_PIXEL_FORMAT_RGBA);
     ammoSprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1.0f, 1.0f), &ammoTexture, &shaderProgram);
     ammoSprite->setNumberAnimations(1);
@@ -73,7 +71,6 @@ void HUD::init(ShaderProgram& shaderProgram)
     ammoSprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     ammoSprite->changeAnimation(0);
 
-    // Cargar textura de llave
     keyTexture.loadFromFile("hud/button.png", TEXTURE_PIXEL_FORMAT_RGBA);
     keySprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(1.0f, 1.0f), &keyTexture, &shaderProgram);
     keySprite->setNumberAnimations(1);
@@ -81,7 +78,6 @@ void HUD::init(ShaderProgram& shaderProgram)
     keySprite->addKeyframe(0, glm::vec2(0.0f, 0.0f));
     keySprite->changeAnimation(0);
 
-    // Posición del HUD
     hudPosition = glm::vec2(0.0f, 0.0f);
 
     std::cout << "HUD initialized successfully" << std::endl;
@@ -89,14 +85,11 @@ void HUD::init(ShaderProgram& shaderProgram)
 
 void HUD::render(int playerHealth, Player* player)
 {
-    // Renderizar el marco del HUD
     hudSprite->setPosition(hudPosition);
     hudSprite->render();
 
-    // Renderizar los corazones
     renderHearts(playerHealth);
 
-    // Renderizar los slots de inventario
     renderInventorySlots(player);
 }
 
@@ -128,7 +121,7 @@ void HUD::renderInventorySlots(Player* player)
     float slot1X = 183.5f;
     float slotY = 7.5f;
 
-    // SLOT 1: Arma (pistola o puño)
+
     bool hasGun = player->hasGun();
     bool isGunEquipped = player->isGunEquipped();
 
@@ -142,7 +135,6 @@ void HUD::renderInventorySlots(Player* player)
         fistSprite->render();
     }
 
-    // SLOT 2: Item actual del inventario
     renderCurrentItem(player);
 }
 
@@ -179,7 +171,6 @@ void HUD::renderCurrentItem(Player* player)
     float slot2X = 208.0f;
     float slotY = 7.1f;
 
-    // Si no hay items, no renderizar nada
     if (player->getCurrentItem() == nullptr) {
         return;
     }
@@ -187,25 +178,19 @@ void HUD::renderCurrentItem(Player* player)
     Item* currentItem = player->getCurrentItem();
     int itemType = currentItem->getType();
 
-    // Renderizar el sprite correspondiente según el tipo de item
     if (itemType == LIFE) {
-        // Renderizar sprite de cura
         cureSprite->setPosition(glm::vec2(slot2X, slotY));
         cureSprite->render();
 
-        // Renderizar cantidad
         renderItemCount(player->getItemCount(currentItem), slot2X, slotY);
     }
     else if (itemType == BULLETS) {
-        // Renderizar sprite de munición
         ammoSprite->setPosition(glm::vec2(slot2X, slotY));
         ammoSprite->render();
 
-        // Renderizar cantidad
         renderItemCount(player->getItemCount(currentItem), slot2X, slotY);
     }
     else if (itemType == KEY) {
-        // Renderizar sprite de llave (sin cantidad)
         keySprite->setPosition(glm::vec2(slot2X, slotY));
         keySprite->render();
     }

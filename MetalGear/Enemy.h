@@ -11,7 +11,7 @@ class Enemy{
 public:
 	virtual ~Enemy() {}
 
-	// Métodos abstractos
+	
 	virtual void init(ShaderProgram& shaderProgram) = 0;
 	virtual void update(int deltaTime, const glm::ivec2& playerPos) = 0;
 	enum LookingDirection
@@ -19,7 +19,7 @@ public:
 		DOWN, UP, LEFT, RIGHT
 	};
 
-	//comunes
+	
 	virtual void render();
 	void setPosition(const glm::vec2& pos);
 	glm::ivec2 getPosition() const { return posEnemy; }

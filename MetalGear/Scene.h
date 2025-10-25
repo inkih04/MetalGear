@@ -19,7 +19,7 @@ public:
     void update(int deltaTime);
     void render();
     void reloadMap10();
-    void resetGame(); // Nueva función para reiniciar el juego
+    void resetGame(); 
 
     TileMap* getCurrentMap() const { return maps.at(currentMapId); }
 
@@ -36,9 +36,9 @@ private:
     void createMaps();
     void checkMapChange();
     void checkEnemies(int deltaTime);
-    void checkGameOver(); // Nueva función para verificar game over
+    void checkGameOver(); 
 
-    // Map loading functions
+    
     TileMap* loadMap1();
     TileMap* loadMap2();
     TileMap* loadMap3();

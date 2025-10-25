@@ -18,7 +18,6 @@ MessageDisplay::~MessageDisplay()
 void MessageDisplay::init(ShaderProgram& shaderProgram)
 {
     program = &shaderProgram;
-    // Creamos un sprite que ocupa toda la pantalla (240x160)
     sprite = Sprite::createSprite(glm::ivec2(240, 160), glm::vec2(1.f, 1.f), &texture, &shaderProgram);
     sprite->setNumberAnimations(1);
     sprite->setAnimationSpeed(0, 1);
@@ -52,11 +51,11 @@ void MessageDisplay::showMessage(const std::string& imageName, int duration)
 {
     if (currentImage != imageName)
     {
-        // Cargar nueva textura solo si es diferente
+
         std::string path = "images/" + imageName + ".png";
         texture.loadFromFile(path, TEXTURE_PIXEL_FORMAT_RGBA);
 
-        // Recrear sprite con la nueva textura
+
         if (sprite != nullptr)
             delete sprite;
 

@@ -13,8 +13,8 @@ public:
     ~GameOverScreen();
 
     void init(ShaderProgram& shaderProgram);
-    void update(int deltaTime, int mouseX, int mouseY); // Actualizado para recibir mouse
-    void render(ShaderProgram& shaderProgram); // Actualizado para recibir shader
+    void update(int deltaTime, int mouseX, int mouseY); 
+    void render(ShaderProgram& shaderProgram); 
 
     bool isMouseOverContinue(int mouseX, int mouseY);
     bool isMouseOverExit(int mouseX, int mouseY);

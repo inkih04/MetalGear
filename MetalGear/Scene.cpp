@@ -242,13 +242,11 @@ void Scene::update(int deltaTime)
 {
 	if (gameOver)
 	{
-		// Obtener posición del mouse del Game
 		int mouseX, mouseY;
 		Game::instance().getMousePosition(mouseX, mouseY);
 
-		// Actualizar gameOverScreen con la posición del mouse
 		gameOverScreen.update(deltaTime, mouseX, mouseY);
-		return; // No actualizar el juego si está en game over
+		return; 
 	}
 
 	currentTime += deltaTime;
@@ -339,8 +337,8 @@ void Scene::render()
 
 	if (gameOver)
 	{
-		// Renderizar pantalla de game over
-		float mapWidthPixels = 240.0f; // Tamaño estándar de tu juego
+
+		float mapWidthPixels = 240.0f; 
 		float mapHeightPixels = 160.0f;
 		glm::mat4 gameOverProjection = glm::ortho(0.f, mapWidthPixels, mapHeightPixels, 0.f);
 
@@ -349,7 +347,7 @@ void Scene::render()
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
-		// Renderizar con el shader program para el efecto hover
+
 		gameOverScreen.render(texProgram);
 		return;
 	}
@@ -384,12 +382,12 @@ int Scene::handleMouseClick(int mouseX, int mouseY)
 
 	int result = gameOverScreen.checkButtonClick(mouseX, mouseY);
 
-	if (result == 1) // Continuar
+	if (result == 1) 
 	{
 		resetGame();
 	}
 
-	return result; // Retorna 1 para continue, 2 para exit, 0 si no se clickeó nada
+	return result; 
 }
 
 
@@ -399,7 +397,7 @@ void Scene::resetGame()
 
 	gameOver = false;
 
-	// Limpiar todos los mapas
+
 	for (auto& mapPair : maps)
 	{
 		if (mapPair.second != nullptr)
@@ -407,11 +405,11 @@ void Scene::resetGame()
 	}
 	maps.clear();
 
-	// Limpiar el jugador
+	
 	if (player != nullptr)
 		delete player;
 
-	// Reinicializar todo
+	
 	player = new Player();
 	currentMapId = 1;
 	createMaps();

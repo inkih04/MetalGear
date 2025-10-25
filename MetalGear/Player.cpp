@@ -43,7 +43,6 @@ void Player::takeDamage(int dmg)
 	if (health < 0)
 		health = 0;
 
-	// Reproducir sonido de recibir daño
 	AudioManager::instance().playSound("sound_gothit");
 
 	std::cout << "Player took " << dmg << " damage, health now: " << health << std::endl;
@@ -241,7 +240,6 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(PUNCH_DOWN);
 			}
 			if (map->canPunchEnemies(posPlayer, glm::ivec2(13.6, 27.2)) && canPunch()) {
-				// Reproducir sonido de puñetazo
 				AudioManager::instance().playSound("sound_punch");
 
 				map->doPunchDamageToEnemies(posPlayer, glm::ivec2(13.6, 27.2), 1);
@@ -269,7 +267,6 @@ void Player::update(int deltaTime)
 	else if (ePressedNow && !ePressedLastFrame) {
 		if (map->checkItemCollision(posPlayer, glm::ivec2(13.6, 27.2))) {
 			addItem(map->getItemAt(posPlayer, glm::ivec2(13.6, 27.2)));
-			//todo: mostrar mensaje de item recogido
 		}
 	}
 	else
@@ -307,7 +304,7 @@ void Player::update(int deltaTime)
 			equippedGun = !equippedGun;
 			cout << (equippedGun ? "Gun equipped" : "Gun unequipped") << endl;
 
-			// Reproducir sonido según si equipa o desequipa la pistola
+
 			if (equippedGun) {
 				AudioManager::instance().playSound("sound_pistol");
 			}

@@ -3,7 +3,6 @@
 
 Bullet::Bullet(const glm::ivec2& position, int direction, TileMap* currentMap, ShaderProgram& shaderProgram) {
 	spritesheet.loadFromFile("images/bala2.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	//sprite = Sprite::createSprite(glm::vec2(16, 16), glm::vec2(1 / 3.f, 0.5f), &spritesheet, &shaderProgram);
 	sprite = Sprite::createSprite(glm::vec2(16, 16), glm::vec2(1, 1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 	sprite->setAnimationSpeed(0, 3);

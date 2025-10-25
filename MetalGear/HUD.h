@@ -25,26 +25,25 @@ private:
     glm::vec2 hudPosition;
     int maxHearts;
 
-    // HUD frame
+    
     Texture hudTexture;
     Sprite* hudSprite;
 
-    // Hearts
+    
     Texture heartTexture;
     Sprite* heartSprite;
 
-    // Weapons
+    
     Texture fistTexture;
     Sprite* fistSprite;
 
     Texture gunTexture;
     Sprite* gunSprite;
 
-    // Numbers
+    
     Texture numbersTexture;
     Sprite* numberSprite;
 
-    // Items
     Texture cureTexture;
     Sprite* cureSprite;
 

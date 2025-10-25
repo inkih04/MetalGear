@@ -181,9 +181,7 @@ void TileMap::prepareArrays(const glm::vec2& minCoords, ShaderProgram& program)
 
 
 
-// Collision tests for axis aligned bounding boxes.
-// Method collisionMoveDown also corrects Y coordinate if the box is
-// already intersecting a tile below.
+
 
 bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
@@ -416,7 +414,7 @@ void TileMap::updateEnemies(int deltaTime, const glm::ivec2& playerPos)
 		enemy->update(deltaTime, playerPos);
 }
 
-// En TileMap.cpp
+
 
 bool TileMap::canPunchEnemies(const glm::ivec2& playerPos, const glm::ivec2& playerSize) const
 {

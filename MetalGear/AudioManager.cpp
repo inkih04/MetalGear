@@ -47,7 +47,6 @@ void AudioManager::cleanup()
 
 void AudioManager::loadAudioPaths()
 {
-    // Rutas de música
     musicPaths["music_menu"] = "music/music_menu.mp3";
     musicPaths["music_overworld"] = "music/music_overworld.mp3";
     musicPaths["music_cave"] = "music/music_cave.mp3";
@@ -55,7 +54,6 @@ void AudioManager::loadAudioPaths()
     musicPaths["music_boss"] = "music/music_boss.mp3";
     musicPaths["music_gameover"] = "music/music_gameover.mp3";
 
-    // Rutas de efectos de sonido
     soundPaths["sound_punch"] = "music/sound_punch.mp3";
     soundPaths["sound_gothit"] = "music/sound_gothit.mp3";
     soundPaths["sound_pistol"] = "music/sound_pistol.mp3";
@@ -75,11 +73,10 @@ void AudioManager::playMusic(const std::string& musicName, bool loop)
 {
     if (!engine) return;
 
-    // Si ya está sonando esta música, no hacer nada
     if (currentMusicName == musicName && currentMusic && !currentMusic->isFinished())
         return;
 
-    // Detener música actual
+
     if (currentMusic)
     {
         currentMusic->stop();
@@ -87,7 +84,7 @@ void AudioManager::playMusic(const std::string& musicName, bool loop)
         currentMusic = nullptr;
     }
 
-    // Reproducir nueva música
+
     if (musicPaths.find(musicName) != musicPaths.end())
     {
         currentMusic = engine->play2D(musicPaths[musicName].c_str(), loop, false, true);
@@ -163,7 +160,6 @@ void AudioManager::updateMusicForMap(int mapId)
 
     std::string newMusic = "";
 
-    // Determinar qué música debe sonar según el mapa
     if (mapId >= 1 && mapId <= 6 || mapId == 9)
     {
         newMusic = "music_overworld";
@@ -181,7 +177,6 @@ void AudioManager::updateMusicForMap(int mapId)
         newMusic = "music_boss";
     }
 
-    // Solo cambiar si es diferente a la música actual
     if (!newMusic.empty() && newMusic != currentMusicName)
     {
         playMusic(newMusic, true);

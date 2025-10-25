@@ -59,19 +59,18 @@ void MenuScreen::initShaders() {
 }
 
 void MenuScreen::loadTextures() {
-    // Load background
     backgroundTexture.loadFromFile("screens/titulo_provisional.png", TEXTURE_PIXEL_FORMAT_RGBA);
     backgroundSprite = Sprite::createSprite(glm::ivec2(SCREEN_WIDTH, SCREEN_HEIGHT),
         glm::vec2(1.f, 1.f), &backgroundTexture, &texProgram);
     backgroundSprite->setPosition(glm::vec2(0.f, 0.f));
 
-    // Load controls screen
+
     controlsTexture.loadFromFile("screens/controls_screen.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
     controlsSprite = Sprite::createSprite(glm::ivec2(SCREEN_WIDTH, SCREEN_HEIGHT),
         glm::vec2(1.f, 1.f), &controlsTexture, &texProgram);
     controlsSprite->setPosition(glm::vec2(0.f, 0.f));
 
-    // Load credits screen
+  
     creditsTexture.loadFromFile("screens/credits_screen.jpg", TEXTURE_PIXEL_FORMAT_RGBA);
     creditsSprite = Sprite::createSprite(glm::ivec2(SCREEN_WIDTH, SCREEN_HEIGHT),
         glm::vec2(1.f, 1.f), &creditsTexture, &texProgram);
@@ -79,46 +78,46 @@ void MenuScreen::loadTextures() {
 }
 
 void MenuScreen::createButtons() {
-    // Positions (centered, stacked vertically)
+
     float centerX = SCREEN_WIDTH / 2.f;
     float startY = SCREEN_HEIGHT / 2.f;
 
-    // Load button textures
+ 
     startTexture.loadFromFile("labels/start_game.png", TEXTURE_PIXEL_FORMAT_RGBA);
     controlsTexBtn.loadFromFile("labels/controls.png", TEXTURE_PIXEL_FORMAT_RGBA);
     creditsTexBtn.loadFromFile("labels/credits.png", TEXTURE_PIXEL_FORMAT_RGBA);
     exitTexture.loadFromFile("labels/exit_game.png", TEXTURE_PIXEL_FORMAT_RGBA);
     backTexture.loadFromFile("labels/back.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
-    // Start Game button (medium-large)
+
     startButton.sprite = Sprite::createSprite(glm::ivec2(200, 60), glm::vec2(1.f, 1.f),
         &startTexture, &texProgram);
     startButton.position = glm::vec2(centerX - 100, startY);
     startButton.size = glm::vec2(200, 60);
     startButton.hovered = false;
 
-    // Controls button (medium)
+
     controlsButton.sprite = Sprite::createSprite(glm::ivec2(180, 50), glm::vec2(1.f, 1.f),
         &controlsTexBtn, &texProgram);
     controlsButton.position = glm::vec2(centerX - 90, startY + 70);
     controlsButton.size = glm::vec2(180, 50);
     controlsButton.hovered = false;
 
-    // Credits button (medium)
+
     creditsButtonMenu.sprite = Sprite::createSprite(glm::ivec2(180, 50), glm::vec2(1.f, 1.f),
         &creditsTexBtn, &texProgram);
     creditsButtonMenu.position = glm::vec2(centerX - 90, startY + 130);
     creditsButtonMenu.size = glm::vec2(180, 50);
     creditsButtonMenu.hovered = false;
 
-    // Exit button (small)
+ 
     exitButton.sprite = Sprite::createSprite(glm::ivec2(120, 40), glm::vec2(1.f, 1.f),
         &exitTexture, &texProgram);
     exitButton.position = glm::vec2(centerX - 60, startY + 190);
     exitButton.size = glm::vec2(120, 40);
     exitButton.hovered = false;
 
-    // Back button (for controls and credits)
+  
     backButton.sprite = Sprite::createSprite(glm::ivec2(150, 45), glm::vec2(1.f, 1.f),
         &backTexture, &texProgram);
     backButton.position = glm::vec2(centerX - 75, SCREEN_HEIGHT - 45);
@@ -127,7 +126,6 @@ void MenuScreen::createButtons() {
 }
 
 void MenuScreen::update(int deltaTime, int mouseX, int mouseY) {
-    // Update hover state for buttons based on mouse position
     if (currentState == MenuState::MAIN_MENU) {
         startButton.hovered = isPointInButton(mouseX, mouseY, startButton);
         controlsButton.hovered = isPointInButton(mouseX, mouseY, controlsButton);
@@ -168,7 +166,7 @@ void MenuScreen::renderBackground() {
 
 void MenuScreen::renderButtons() {
     if (currentState == MenuState::MAIN_MENU) {
-        // Render with highlight if hovered
+
         texProgram.setUniform4f("color", startButton.hovered ? 1.2f : 1.0f,
             startButton.hovered ? 1.2f : 1.0f,
             startButton.hovered ? 1.2f : 1.0f, 1.0f);
