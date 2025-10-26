@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Game.h"
 #include <GLFW/glfw3.h>
+
 #include "AudioManager.h"
 
 
@@ -178,8 +179,8 @@ void Boss::atack()
         return;
     }
     AudioManager::instance().playSound("sound_psibomb");
-    FireBall* newFireBall = new FireBall(glm::ivec2(posEnemy.x, posEnemy.y + 17), -1, map, *s, player);
-    fireBalls.push_back(newFireBall);
+    BossAtack* newBossAtack = new BossAtack(glm::ivec2(posEnemy.x, posEnemy.y + 17), -1, map, *s, player);
+    bossAtacks.push_back(newBossAtack);
     lastShotTime = 0;
 }
 
@@ -207,12 +208,12 @@ void Boss::update(int deltaTime, const glm::ivec2& playerPos)
         }
     }
 
-    for (auto it = fireBalls.begin(); it != fireBalls.end(); ) {
+    for (auto it = bossAtacks.begin(); it != bossAtacks.end(); ) {
         (*it)->update(deltaTime);
 
         if (!(*it)->isActive()) {
             delete* it;
-            it = fireBalls.erase(it);
+            it = bossAtacks.erase(it);
         }
         else {
             ++it;
@@ -225,8 +226,8 @@ void Boss::render()
 {
     if (!dead)
         sprite->render();
-    for (auto& fireBall : fireBalls) {
-        fireBall->render();
+    for (auto& BossAtack : bossAtacks) {
+        BossAtack->render();
     }
 }
 

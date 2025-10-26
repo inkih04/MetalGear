@@ -102,6 +102,9 @@
     <ClInclude Include="WinScreen.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="BossAtack.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -189,6 +192,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="WinScreen.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAtack.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

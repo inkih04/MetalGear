@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include <unordered_set>
 #include "FireBall.h"
+#include "BossAtack.h"
 class TileMap;
 
 
@@ -37,6 +38,7 @@ protected:
 	glm::ivec2 size;
 	vector<int> patrolSquare;
 	vector<FireBall*> fireBalls;
+	vector<BossAtack*> bossAtacks;
 	bool dead = false;
 
 	Player* player;

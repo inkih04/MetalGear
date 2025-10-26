@@ -23,6 +23,7 @@
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossAtack.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CaveEnemy.h" />
     <ClInclude Include="ChangeMap.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Ammunition.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossAtack.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CaveEnemy.cpp" />
     <ClCompile Include="FireBall.cpp" />
