@@ -44,7 +44,7 @@ bool Enemy::seePlayer(const glm::ivec2& playerPos)
 	if (playerHasBeenDetected) {
 	
 		if (firstTime) {
-			// Play alert sound only the first time the player is detected
+			AudioManager::instance().playSound("sound_exclamation", 10);
 			firstTime = false;
 		}
 		return true;

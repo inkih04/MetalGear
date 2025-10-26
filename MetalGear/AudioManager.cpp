@@ -70,6 +70,7 @@ void AudioManager::loadAudioPaths()
     soundPaths["sound_button"] = "music/sound_button.mp3";
     soundPaths["sound_mewtwo"] = "music/sound_mewtwo.mp3";
     soundPaths["sound_psibomb"] = "music/sound_psibomb.mp3";
+    soundPaths["sound_exclamation"] = "music/sound_exclamation.mp3";
 }
 
 void AudioManager::playMusic(const std::string& musicName, bool loop)
