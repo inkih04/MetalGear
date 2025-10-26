@@ -20,7 +20,7 @@ private:
 	void guard();
 	bool checkRetreatPath(glm::ivec2 start, glm::ivec2 end);
 
-	static const int RETREAT_COOLDOWN_TIME = 1000;
+	static const int RETREAT_COOLDOWN_TIME = 250;
 	int retreatCooldown;
 	bool isRetreating;
 	int patrolState;  
