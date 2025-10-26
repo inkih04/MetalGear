@@ -37,11 +37,18 @@ bool Enemy::checkCollisionWithPlayer(const glm::ivec2& playerPos, const glm::ive
 	return collisionX && collisionY;
 }
 
-bool Enemy::seePlayer(const glm::ivec2& playerPos) const
+bool Enemy::seePlayer(const glm::ivec2& playerPos) 
 {
 	if (map == nullptr)
 		return false;
-	if (playerHasBeenDetected) return true;
+	if (playerHasBeenDetected) {
+	
+		if (firstTime) {
+			// Play alert sound only the first time the player is detected
+			firstTime = false;
+		}
+		return true;
+	}
 
 	int tileSize = map->getTileSize();
 	int enemyTileX = (posEnemy.x + size.x / 2) / tileSize;

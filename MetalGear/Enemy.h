@@ -30,7 +30,7 @@ public:
 	bool isDead() const { return health <= 0; }
 	int getHealth() const { return health; }
 	int getDamage() const { return damage; }
-	virtual bool seePlayer(const glm::ivec2& playerPos) const;
+	virtual bool seePlayer(const glm::ivec2& playerPos);
 	bool isAlive() const { return !dead; }
 
 protected:
@@ -47,6 +47,7 @@ protected:
 	int damage;
 	float speed;
 	bool playerHasBeenDetected;
+	bool firstTime = true;
 
 	Texture spritesheet;
 	Sprite* sprite;
