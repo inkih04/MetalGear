@@ -231,14 +231,28 @@ void Boss::render()
     }
 }
 
-bool Boss::seePlayer(const glm::ivec2& playerPos) const
+bool Boss::seePlayer(const glm::ivec2& playerPos) 
 {
     if (map == nullptr)
         return false;
 
-    if (playerHasBeenDetected)
+    if (playerHasBeenDetected) {
+
+        if (firstTime) {
+            // Play alert sound only the first time the player is detected
+            firstTime = false;
+        }
         return true;
-	if (health < 21) return true;
+    }
+    if (health < 21) {
+        
+        if (firstTime) {
+            // Play alert sound only the first time the player is detected
+            firstTime = false;
+        }
+        return true; 
+    
+    }
 
     glm::ivec2 mapSize = map->getMapSize();
     int tileSize = map->getTileSize();

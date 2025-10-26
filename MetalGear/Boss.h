@@ -15,7 +15,7 @@ public:
 	void atack();
 	void render() override;
 	void takeDamage(int dmg) override;
-	bool seePlayer(const glm::ivec2& playerPos) const override;
+	bool seePlayer(const glm::ivec2& playerPos) override;
 	static bool bossWasDefeated;  
 	static void resetBossDefeat() { bossWasDefeated = false; }  
 
