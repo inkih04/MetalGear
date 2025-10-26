@@ -4,13 +4,11 @@
 #define GAME_WIDTH 240.0f
 #define GAME_HEIGHT 160.0f
 
-// Posiciones de los botones - ajusta estos valores según necesites
 #define NEW_GAME_BUTTON_X 0.0f
 #define NEW_GAME_BUTTON_Y 60.0f
 #define EXIT_BUTTON_X 150.0f
 #define EXIT_BUTTON_Y 60.0f
 
-// Tamaños de los botones - ajusta estos valores según necesites
 #define NEW_GAME_BUTTON_WIDTH 90.0f
 #define NEW_GAME_BUTTON_HEIGHT 30.0f
 #define EXIT_BUTTON_WIDTH 90.0f
@@ -39,12 +37,10 @@ void WinScreen::init(ShaderProgram& shaderProgram)
 {
     std::cout << "WinScreen::init() START" << std::endl;
 
-    // Cargar texturas
     std::cout << "Loading win_screen.jpg..." << std::endl;
     if (!backgroundTexture.loadFromFile("screens/win_screen.jpg", TEXTURE_PIXEL_FORMAT_RGBA))
     {
         std::cout << "ERROR: Failed to load screens/win_screen.jpg" << std::endl;
-        // Intenta cargar como PNG si JPG falla
         if (!backgroundTexture.loadFromFile("screens/win_screen.png", TEXTURE_PIXEL_FORMAT_RGBA))
         {
             std::cout << "ERROR: Failed to load screens/win_screen.png too!" << std::endl;
@@ -83,7 +79,6 @@ void WinScreen::init(ShaderProgram& shaderProgram)
     }
 
     std::cout << "Creating background sprite..." << std::endl;
-    // Crear sprite de fondo
     backgroundSprite = Sprite::createSprite(glm::ivec2(GAME_WIDTH, GAME_HEIGHT),
         glm::vec2(1.0f, 1.0f),
         &backgroundTexture, &shaderProgram);
@@ -97,12 +92,10 @@ void WinScreen::init(ShaderProgram& shaderProgram)
     backgroundSprite->setPosition(glm::vec2(0.0f, 0.0f));
     std::cout << "Background sprite created successfully" << std::endl;
 
-    // Configurar tamaños de botones
     newGameButtonSize = glm::vec2(NEW_GAME_BUTTON_WIDTH, NEW_GAME_BUTTON_HEIGHT);
     exitButtonSize = glm::vec2(EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
 
     std::cout << "Creating new game sprite..." << std::endl;
-    // Crear sprite de New Game
     newGameSprite = Sprite::createSprite(newGameButtonSize,
         glm::vec2(1.0f, 1.0f),
         &newGameTexture, &shaderProgram);
@@ -118,7 +111,6 @@ void WinScreen::init(ShaderProgram& shaderProgram)
     std::cout << "New game sprite created successfully" << std::endl;
 
     std::cout << "Creating exit sprite..." << std::endl;
-    // Crear sprite de Exit
     exitSprite = Sprite::createSprite(exitButtonSize,
         glm::vec2(1.0f, 1.0f),
         &exitTexture, &shaderProgram);
@@ -147,25 +139,21 @@ void WinScreen::init(ShaderProgram& shaderProgram)
 
 void WinScreen::update(int deltaTime, int mouseX, int mouseY)
 {
-    // Actualizar estados de hover
     newGameHovered = isMouseOverNewGame(mouseX, mouseY);
     exitHovered = isMouseOverExit(mouseX, mouseY);
 }
 
 void WinScreen::render(ShaderProgram& shaderProgram)
 {
-    // Verificar que los sprites estén inicializados antes de renderizar
     if (backgroundSprite == nullptr || newGameSprite == nullptr || exitSprite == nullptr)
     {
         std::cout << "ERROR: WinScreen sprites not initialized!" << std::endl;
         return;
     }
 
-    // Renderizar fondo
     shaderProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
     backgroundSprite->render();
 
-    // Renderizar botón New Game con efecto hover
     shaderProgram.setUniform4f("color",
         newGameHovered ? 1.2f : 1.0f,
         newGameHovered ? 1.2f : 1.0f,
@@ -173,7 +161,6 @@ void WinScreen::render(ShaderProgram& shaderProgram)
         1.0f);
     newGameSprite->render();
 
-    // Renderizar botón Exit con efecto hover
     shaderProgram.setUniform4f("color",
         exitHovered ? 1.2f : 1.0f,
         exitHovered ? 1.2f : 1.0f,
@@ -205,13 +192,13 @@ int WinScreen::checkButtonClick(int mouseX, int mouseY)
     if (isMouseOverNewGame(mouseX, mouseY))
     {
         std::cout << "New Game button clicked!" << std::endl;
-        return 1; // Código para reiniciar juego
+        return 1; 
     }
     else if (isMouseOverExit(mouseX, mouseY))
     {
         std::cout << "Exit button clicked!" << std::endl;
-        return 2; // Código para volver al menú principal
+        return 2; 
     }
 
-    return 0; // No se hizo clic en ningún botón
+    return 0; 
 }

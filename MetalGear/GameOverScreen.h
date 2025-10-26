@@ -34,7 +34,7 @@ private:
     glm::vec2 exitButtonPos;
     glm::vec2 exitButtonSize;
 
-    // Estados de hover
+
     bool continueHovered;
     bool exitHovered;
 };

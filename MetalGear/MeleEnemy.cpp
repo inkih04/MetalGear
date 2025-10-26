@@ -502,7 +502,6 @@ void MeleEnemy::takeDamage(int dmg)
 
     health -= dmg;
 
-    // Reproducir sonido de Pikachu
     AudioManager::instance().playSound("sound_pikachu");
 
     if (health <= 0) {

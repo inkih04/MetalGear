@@ -78,7 +78,6 @@ void Game::keyPressed(int key)
 	if (key == GLFW_KEY_ESCAPE) {
 		MenuState currentState = menuScreen.getCurrentState();
 
-		// MODIFICAR ESTA LÍNEA para incluir gameWon:
 		if (currentState == MenuState::PLAYING && (scene.isGameOver() || scene.isGameWon())) {
 			return;
 		}
@@ -114,7 +113,6 @@ void Game::mousePress(int button)
 		MenuState currentState = menuScreen.getCurrentState();
 
 		if (currentState == MenuState::PLAYING) {
-			// MODIFICAR ESTA SECCIÓN para incluir gameWon:
 			if (scene.isGameOver() || scene.isGameWon())
 			{
 				float scaleX = 240.0f / float(SCREEN_WIDTH);

@@ -77,9 +77,7 @@ void Scene::reloadMap10() {
 TileMap* Scene::loadMap1()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa1.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 1, {}, { 0, 2, 0, 0 });
-	//map->addEnemy(new RangeEnemy(glm::ivec2(120, 80), texProgram, map, {}, Guard(), DOWN, player));
 	map->addItem(new MedPack(glm::ivec2(48, 48), texProgram));
-	//map->addItem(new Ammunition(glm::ivec2(64, 80), texProgram));
 	return map;
 }
 
@@ -96,7 +94,7 @@ TileMap* Scene::loadMap3()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa3.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 3, {}, { 0, 0, 2, 4 });
 	map->addEnemy(new MeleEnemy(glm::ivec2(120, 64), texProgram, map, { 24, 24 }, Guard(), DOWN, player));
-	map->addItem(new MedPack(glm::ivec2(210, 48), texProgram)); //Assault Vest
+	map->addItem(new MedPack(glm::ivec2(210, 48), texProgram)); 
 	map->addItem(new Ammunition(glm::ivec2(98, 108), texProgram));
 	return map;
 }
@@ -368,7 +366,6 @@ void Scene::render()
 
 	texProgram.use();
 
-	// IMPORTANTE: Verificar gameWon ANTES de gameOver
 	if (gameWon)
 	{
 		std::cout << "DEBUG: Rendering WinScreen" << std::endl;
@@ -439,15 +436,13 @@ int Scene::handleMouseClick(int mouseX, int mouseY)
 		return result;
 	}
 
-	// AÑADIR ESTA SECCIÓN NUEVA:
 	if (gameWon)
 	{
 		int result = winScreen.checkButtonClick(mouseX, mouseY);
-		if (result == 1) // New Game
+		if (result == 1) 
 		{
 			resetGame();
 		}
-		// result == 2 se maneja en Game.cpp para volver al menú
 		return result;
 	}
 
