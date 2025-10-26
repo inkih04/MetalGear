@@ -295,6 +295,7 @@ void Scene::update(int deltaTime)
 		currentMapId = 7;
 		player->setTileMap(maps[currentMapId]);
 		player->setPosition(glm::vec2(16.f, 16.f));
+		AudioManager::instance().updateMusicForMap(currentMapId);
 	}
 	kPressedLastFrame = kPressedNow;
 
@@ -305,6 +306,7 @@ void Scene::update(int deltaTime)
 		currentMapId = 10;
 		player->setTileMap(maps[currentMapId]);
 		player->setPosition(glm::vec2(16.f * 4, 16.f * 4));
+		AudioManager::instance().updateMusicForMap(currentMapId);
 	}
 	mPressedLastFrame = mPressedNow;
 
@@ -315,7 +317,8 @@ void Scene::update(int deltaTime)
 	{
 		currentMapId = 14;
 		player->setTileMap(maps[currentMapId]);
-		player->setPosition(glm::vec2(16.f * 4, 16.f * 4));
+		player->setPosition(glm::vec2(16.f * 7, 16.f * 7));
+		AudioManager::instance().updateMusicForMap(currentMapId);
 	}
 	bPressedLastFrame = bPressedNow;
 
