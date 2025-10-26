@@ -15,7 +15,7 @@ public:
     void update(int deltaTime);
     void render();
 
-    void showMessage(const std::string& imageName, int duration = 1000);
+    void showMessage(const std::string& imageName, int duration = 1500);
 
     bool isShowingMessage() const { return showing; }
 

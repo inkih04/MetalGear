@@ -21,7 +21,7 @@ public:
     void resetGame();
     TileMap* getCurrentMap() const { return maps.at(currentMapId); }
     void showItemMessage(const std::string& itemImage) {
-        messageDisplay.showMessage(itemImage, 1000);
+        messageDisplay.showMessage(itemImage, 1500);
     }
     bool isGameOver() const { return gameOver; }
     bool isGameWon() const { return gameWon; }

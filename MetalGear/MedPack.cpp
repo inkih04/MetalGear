@@ -16,7 +16,7 @@ bool MedPack::destroyAfterUse() {
 	return true;
 }
 void MedPack::use(Player* player) {
-	AudioManager::instance().playSound("sound_heal", 20.0);
+	AudioManager::instance().playSound("sound_heal", 10.0);
 	player->heal(5);
 }
 int MedPack::getType() {

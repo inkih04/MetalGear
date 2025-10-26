@@ -306,10 +306,10 @@ void Player::update(int deltaTime)
 
 
 			if (equippedGun) {
-				AudioManager::instance().playSound("sound_pistol");
+				AudioManager::instance().playSound("sound_pistol", 7.5);
 			}
 			else {
-				AudioManager::instance().playSound("sound_nopistol");
+				AudioManager::instance().playSound("sound_nopistol", 7.5);
 			}
 
 			if (!equippedGun) {
@@ -438,7 +438,7 @@ void Player::addItem(Item* item)
 {
 	std::string messageName;
 
-	AudioManager::instance().playSound("sound_get_item");
+	AudioManager::instance().playSound("sound_get_item", 2.5);
 
 	if (item->getType() == ItemTypes::GUN) {
 		gun = static_cast<Gun*>(item);
