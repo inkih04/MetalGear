@@ -50,6 +50,16 @@ TileMap::~TileMap()
 		delete map;
 }
 
+ bool TileMap::enemiesAlive() const
+{
+	for (Enemy* enemy : enemies) {
+		if (enemy->isAlive()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 
 void TileMap::render() const
 {

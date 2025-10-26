@@ -70,8 +70,16 @@ void Scene::reloadMap10() {
 	float mapHeightPixels = 10 * 16;
 	float mapWidthPixels = 15 * 16;
 
-	maps[10] = TileMap::createTileMap("levels/mapa10-nopuerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
-		{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 14, 0 });
+	if (maps[10]->enemiesAlive()) {
+		maps[10] = TileMap::createTileMap("levels/mapa10-nopuerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
+			{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 14, 0 });
+		maps[10]->addEnemy(new RangeEnemy(glm::ivec2(110, 60), texProgram, maps[10], {}, Guard(), DOWN, player));
+	
+	}
+	else {
+		maps[10] = TileMap::createTileMap("levels/mapa10-nopuerta.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 10,
+			{ ChangeMap({274,213,342,343},9, glm::ivec2(mapWidthPixels * 0.75 - 8, mapHeightPixels * 0.35f)) }, { 11, 12, 14, 0 });
+	}
 }
 
 TileMap* Scene::loadMap1()

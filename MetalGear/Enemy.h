@@ -31,6 +31,7 @@ public:
 	int getHealth() const { return health; }
 	int getDamage() const { return damage; }
 	virtual bool seePlayer(const glm::ivec2& playerPos) const;
+	bool isAlive() const { return !dead; }
 
 protected:
 	glm::vec2 posEnemy;
