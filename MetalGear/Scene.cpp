@@ -111,7 +111,7 @@ TileMap* Scene::loadMap4()
 {
 	TileMap* map = TileMap::createTileMap("levels/mapa4.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram, 4, {}, { 5, 6, 3, 0 });
 	map->addItem(new MedPack(glm::ivec2(194, 32), texProgram));
-	map->addEnemy(new RangeEnemy(glm::ivec2(124, 46), texProgram, map, { 32, 32 }, Guard(), DOWN, player));
+	map->addEnemy(new RangeEnemy(glm::ivec2(124, 46), texProgram, map, {}, Guard({RIGHT, DOWN,LEFT, UP},1250), DOWN, player));
 	return map;
 }
 
