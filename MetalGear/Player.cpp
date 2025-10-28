@@ -367,6 +367,7 @@ void Player::update(int deltaTime)
 	{
 		cout << "Healing player by 10" << endl;
 		heal(10);
+		AudioManager::instance().playSound("sound_heal");
 	}
 
 	hPressedLastFrame = hPressedNow;
@@ -380,6 +381,8 @@ void Player::update(int deltaTime)
 	{
 		cout << "Toggling god mode" << endl;
 		godMode = !godMode;
+		if (godMode) scene->showItemMessage("god_on");
+		else  scene->showItemMessage("god_off");
 	}
 
 	gPressedLastFrame = gPressedNow;
