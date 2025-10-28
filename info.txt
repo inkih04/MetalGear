@@ -1,0 +1,37 @@
+Nom i cognoms dels integrants del grup:
+- Víctor Díez Serrano
+- David Mas Escudé
+
+Funcionalitats implementades:
+- Menú principal amb opcions de Jugar, Instruccions i Crèdits.
+- Moviment de Solid Snake en quatre direccions amb WASD o tecles de fletxa.
+- Atac cos a cos amb la tecla Z i disparar amb l'arma un cop aconseguida.
+- Sistema de detecció d’enemics amb patrulles i visió frontal.
+- Tres tipus d’enemics: Pikachu (el gos del joc original), Charizard (enemic a distància), Geodude (enemic bàsic robust).
+- Sistema de vida per a Snake i per als enemics.
+- Objectes: arma, beguda isotònica (medpack), munició i clau. Tots són consumibles o equipables.
+- Totes les entitats tenen interactivitat.
+- Canvi d’objecte amb la tecla C i ús amb la tecla X.
+- Boss final amb mecàniques pròpies.
+- Un total de 7 pantalles exteriors i 6 sis interiors repartides entre la cova i la mansió i una adicional de la arena del boss.
+- Interfície gràfica amb vida i objectes equipats.
+- Funcions de test: 
+  - God Mode (G)
+  - Heal (H)
+  - Items (I)
+  - Teleport Interior Cova (K)
+  - Teleport Interior Mansió (M)
+  - Teleport Boss (B)
+- Sons de fons i efectes especials.
+- Animacions i transicions suaus entre estats.
+- Si Solid Snake perd tota la vida, anirà a la pantalla de game over, on es podrà reiniciar el joc o sortir al menú principal.
+
+Instruccions del joc:
+- Mou-te amb WASD o les fletxes del teclat.
+- Ataca amb Z.
+- Canvia d’objecte amb C i utilitza’l amb X.
+- Evita ser detectat pels enemics o et perseguiran.
+- Recull objectes per millorar el teu equip o recuperar vida.
+- Derrota el boss final per completar la missió.
+- Prem ESC per tornar al menú principal.
+
