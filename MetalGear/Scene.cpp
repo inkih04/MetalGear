@@ -293,6 +293,7 @@ void Scene::update(int deltaTime)
 		player->addItem(new Ammunition(glm::ivec2(0, 0), texProgram));
 		player->addItem(new Key(glm::ivec2(0, 0), texProgram));
 		player->addItem(new Gun(glm::ivec2(0, 0), texProgram));
+		messageDisplay.showMessage("got_all", 1500);
 	}
 	iPressedLastFrame = iPressedNow;
 
