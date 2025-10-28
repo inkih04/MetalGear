@@ -123,18 +123,7 @@ void WinScreen::init(ShaderProgram& shaderProgram)
 
     exitButtonPos = glm::vec2(EXIT_BUTTON_X, EXIT_BUTTON_Y);
     exitSprite->setPosition(exitButtonPos);
-    std::cout << "Exit sprite created successfully" << std::endl;
-
-    std::cout << "========================================" << std::endl;
-    std::cout << "WinScreen initialized SUCCESSFULLY" << std::endl;
-    std::cout << "Background sprite: " << (backgroundSprite != nullptr ? "OK" : "NULL") << std::endl;
-    std::cout << "NewGame sprite: " << (newGameSprite != nullptr ? "OK" : "NULL") << std::endl;
-    std::cout << "Exit sprite: " << (exitSprite != nullptr ? "OK" : "NULL") << std::endl;
-    std::cout << "New Game button at: (" << newGameButtonPos.x << ", " << newGameButtonPos.y
-        << ") size: (" << newGameButtonSize.x << ", " << newGameButtonSize.y << ")" << std::endl;
-    std::cout << "Exit button at: (" << exitButtonPos.x << ", " << exitButtonPos.y
-        << ") size: (" << exitButtonSize.x << ", " << exitButtonSize.y << ")" << std::endl;
-    std::cout << "========================================" << std::endl;
+    
 }
 
 void WinScreen::update(int deltaTime, int mouseX, int mouseY)
