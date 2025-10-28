@@ -162,7 +162,7 @@ TileMap* Scene::loadMap8()
 		  ChangeMap({19,18,20},9, glm::ivec2(30, mapHeightPixels - 50)) }, {});
 
 	map->addItem(new Ammunition(glm::ivec2(17, 24), texProgram));
-	map->addEnemy(new CaveEnemy(glm::ivec2(143, 60), texProgram, map, {}, Guard({ RIGHT, UP, LEFT }, 1250), RIGHT, player));
+	map->addEnemy(new CaveEnemy(glm::ivec2(143, 40), texProgram, map, {}, Guard({ RIGHT, UP, LEFT }, 1250), RIGHT, player));
 	map->addItem(new MedPack(glm::ivec2(191, 12), texProgram));
 	return map;
 }
@@ -314,7 +314,7 @@ void Scene::update(int deltaTime)
 	{
 		currentMapId = 10;
 		player->setTileMap(maps[currentMapId]);
-		player->setPosition(glm::vec2(16.f * 4, 16.f * 4));
+		player->setPosition(glm::vec2(12.f * 4, 12.f * 4));
 		AudioManager::instance().updateMusicForMap(currentMapId);
 	}
 	mPressedLastFrame = mPressedNow;
