@@ -27,11 +27,14 @@ Funcionalitats implementades:
 - Si Solid Snake perd tota la vida, anirà a la pantalla de game over, on es podrà reiniciar el joc o sortir al menú principal.
 
 Instruccions del joc:
+- Mou-te pel menú amb el ratoli
 - Mou-te amb WASD o les fletxes del teclat.
 - Ataca amb Z.
 - Canvia d’objecte amb C i utilitza’l amb X.
+- Carrega la pistola selecionant les bales amb c i consumint-les amb x
 - Evita ser detectat pels enemics o et perseguiran.
 - Recull objectes per millorar el teu equip o recuperar vida.
+- Recull el botó per obrir la porta al boss
 - Derrota el boss final per completar la missió.
 - Prem ESC per tornar al menú principal.
 
