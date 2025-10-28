@@ -367,7 +367,7 @@ void Player::update(int deltaTime)
 	{
 		cout << "Healing player by 10" << endl;
 		heal(10);
-		AudioManager::instance().playSound("sound_heal");
+		AudioManager::instance().playSound("sound_heal", 10.0);
 	}
 
 	hPressedLastFrame = hPressedNow;

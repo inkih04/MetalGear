@@ -36,5 +36,5 @@ Instruccions del joc:
 - Recull objectes per millorar el teu equip o recuperar vida.
 - Recull el botó per obrir la porta al boss
 - Derrota el boss final per completar la missió.
-- Prem ESC per tornar al menú principal.
+- Prem ESC per pausar el joc i tornar al menú principal.
 
