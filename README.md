@@ -2,9 +2,9 @@
 
 <div align="center">
 
-![Metal Gear Banner](URL_DE_TU_BANNER_AQUI)
+![Menu](img/Menu.png)
 
-**A recreation of the classic stealth infiltration game**
+**A recreation of the classic stealth infiltration game with Pokémon aesthetics**
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)]()
@@ -20,16 +20,60 @@
 
 Metal Gear is a recreation of the iconic stealth game that revolutionized the genre. This project captures the essence of the original game while incorporating a unique visual style using Pokémon tilesets, creating a distinctive aesthetic that blends tactical espionage with classic RPG visuals.
 
-![Gameplay Preview](URL_DE_TU_SCREENSHOT_PRINCIPAL_AQUI)
+The game features 7 exterior screens and 6 interior screens distributed between a cave and a mansion, plus an additional boss arena screen, offering a complete infiltration experience.
+
+![Gameplay](img/Start.png)
 
 ## Features
 
-- **Classic Stealth Mechanics** - Strategic infiltration and tactical gameplay
-- **Unique Visual Style** - Pokémon-inspired tilesets creating a distinctive aesthetic
-- **Original Soundtrack** - Iconic Metal Gear music
-- **Intuitive Controls** - Easy to learn, challenging to master
-- **Save System** - Save your progress at any time
-- **Challenges and Achievements** - Multiple ways to complete missions
+### Core Gameplay
+- **Main Menu** with Play, Instructions, and Credits options
+- **Four-directional movement** for Solid Snake using WASD or arrow keys
+- **Combat System**: Melee attack with Z key and ranged shooting once weapon is acquired
+- **Enemy Detection System** with patrols and frontal vision mechanics
+
+### Enemy Types
+- **Pikachu** - The dog from the original game
+- **Charizard** - Ranged enemy
+- **Geodude** - Basic robust enemy
+
+### Health and Items System
+- Health system for both Snake and enemies
+- **Collectible Items**: 
+  - Weapon (equipable)
+  - Isotonic drink / Medpack (consumable)
+  - Ammunition (consumable)
+  - Key (equipable)
+- All entities have full interactivity
+- Item switching with C key and use with X key
+- Weapon reload: select bullets with C and consume with X
+
+### Level Design
+- **7 exterior screens**
+- **6 interior screens** (cave and mansion)
+- **1 boss arena**
+- Smooth transitions between areas
+
+### Boss Fight
+- Final boss with unique mechanics
+- Button collection required to open boss door
+
+### Interface and Audio
+- Graphical interface showing health and equipped items
+- Background music and special sound effects
+- Smooth animations and state transitions
+
+### Debug/Test Functions
+- God Mode (G)
+- Heal (H)
+- Get All Items (I)
+- Teleport to Cave Interior (K)
+- Teleport to Mansion Interior (M)
+- Teleport to Boss (B)
+
+### Game Over System
+- Game Over screen when Snake loses all health
+- Options to restart or return to main menu
 
 ## Installation
 
@@ -61,6 +105,7 @@ MetalGear/
 │   ├── assets/           # Game resources (graphics, sounds)
 │   └── data/             # Configuration data
 │
+├── img/                   # Screenshots for README
 ├── src/                   # Source code
 ├── libs/                  # Development libraries
 ├── docs/                  # Documentation
@@ -76,50 +121,94 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 
 ## How to Play
 
-### Basic Controls
+### Controls
+
+![Controls](img/Controls.png)
 
 | Action | Key |
 |--------|-----|
-| Movement | Arrow Keys |
-| Attack | `Z` |
-| Use Item | `X` |
-| Inventory | `C` |
-| Pause | `ESC` |
+| Movement | WASD or Arrow Keys |
+| Melee Attack | `Z` |
+| Switch Item | `C` |
+| Use/Equip Item | `X` |
+| Pause/Menu | `ESC` |
+
+**Menu Navigation**: Use mouse to navigate through menu options
+
+### Gameplay Instructions
+
+1. **Movement**: Navigate through the levels using WASD or arrow keys
+2. **Stealth**: Avoid being detected by enemies or they will chase you
+3. **Combat**: 
+   - Use Z for melee attacks
+   - Collect the weapon to enable ranged combat
+   - Load the pistol by selecting bullets with C and consuming them with X
+4. **Items**: Collect items to improve your equipment or recover health
+5. **Boss Access**: Collect the button to open the door to the boss fight
+6. **Victory**: Defeat the final boss to complete the mission
+7. **Pause**: Press ESC to pause the game and return to main menu
 
 ### Gameplay Tips
 
-- **Stay in the shadows** - Stealth is your primary weapon
-- **Observe patterns** - Enemies have predictable routines
-- **Use the environment** - Boxes and corners are your allies
-- **Manage your inventory** - Resources are limited
-- **Experiment** - There are multiple ways to complete each mission
+- **Stay undetected** - Enemies have frontal vision and patrol patterns
+- **Manage your resources** - Ammunition and health items are limited
+- **Explore thoroughly** - Items are scattered throughout the levels
+- **Learn enemy patterns** - Each enemy type has different behaviors
+- **Use melee wisely** - Save ammunition for critical situations
 
 ## Gallery
 
-### Gameplay Screenshots
+### Main Menu & Start Screen
 
 <div align="center">
 
-![Screenshot 1](URL_SCREENSHOT_1_AQUI)
-*Screenshot description 1*
+![Menu](img/Menu.png)
+*Main Menu*
 
-![Screenshot 2](URL_SCREENSHOT_2_AQUI)
-*Screenshot description 2*
-
-![Screenshot 3](URL_SCREENSHOT_3_AQUI)
-*Screenshot description 3*
+![Start](img/Start.png)
+*Game Start*
 
 </div>
 
-### Menus and Interface
+### Level Exploration
 
 <div align="center">
 
-![Main Menu](URL_MENU_PRINCIPAL_AQUI)
-*Main Menu*
+![Map 1](img/Map1.png)
+*Exterior Area 1*
 
-![Inventory](URL_INVENTARIO_AQUI)
-*Inventory System*
+![Map 2](img/Map2.png)
+*Exterior Area 2*
+
+![Map 3](img/Map3.png)
+*Interior Cave*
+
+![Map 4](img/Map4.png)
+*Mansion Entrance*
+
+![Map 5](img/Map5.png)
+*Interior Mansion*
+
+![Map 6](img/Map6.png)
+*Advanced Area*
+
+</div>
+
+### Boss Fight
+
+<div align="center">
+
+![Boss](img/Boss.png)
+*Final Boss Arena*
+
+</div>
+
+### Controls Reference
+
+<div align="center">
+
+![Controls](img/Controls.png)
+*In-game Controls*
 
 </div>
 
@@ -139,14 +228,22 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 ### Game won't start
 - Ensure DirectX and Visual C++ Redistributables are installed
 - Run `Game.exe` as administrator
+- Check that all DLL files are present in the Play folder
 
 ### Performance issues
 - Close background applications
 - Update your graphics drivers
+- Disable unnecessary visual effects in Windows
 
 ### No audio
-- Verify speakers are connected
+- Verify speakers/headphones are connected
 - Check Windows audio settings
+- Ensure audio drivers are up to date
+
+### Controls not responding
+- Check keyboard layout settings
+- Ensure no other application is capturing keyboard input
+- Try running the game in compatibility mode
 
 ## Contributing
 
@@ -164,17 +261,17 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Authors
 
-**inkih04**
+**Víctor Díez Serrano (inkih04)**
 - GitHub: [@inkih04](https://github.com/inkih04)
 
-**PatoPro121**
+**David Mas Escudé (PatoPro121)**
 - GitHub: [@PatoPro121](https://github.com/PatoPro121)
 
 ## Acknowledgments
 
 - Hideo Kojima for creating the original Metal Gear franchise
-- The indie developer community
 - Nintendo and Game Freak for the Pokémon visual assets used in this project
+- The indie developer community
 - All testers and contributors
 
 ---
@@ -183,6 +280,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 **Enjoyed the project? Give it a ⭐ on GitHub**
 
-Made by [inkih04](https://github.com/inkih04) and [PatoPro121](https://github.com/PatoPro121)
+Made with passion by [Víctor Díez Serrano](https://github.com/inkih04) and [David Mas Escudé](https://github.com/PatoPro121)
 
 </div>
