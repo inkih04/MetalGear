@@ -175,22 +175,22 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 <div align="center">
 
 ![Map 1](img/Map1.png)
-*Exterior Area 1*
+
 
 ![Map 2](img/Map2.png)
-*Exterior Area 2*
+
 
 ![Map 3](img/Map3.png)
-*Interior Cave*
+
 
 ![Map 4](img/Map4.png)
 *Mansion Entrance*
 
 ![Map 5](img/Map5.png)
-*Interior Mansion*
+
 
 ![Map 6](img/Map6.png)
-*Advanced Area*
+
 
 </div>
 
@@ -199,7 +199,7 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 <div align="center">
 
 ![Boss](img/Boss.png)
-*Final Boss Arena*
+
 
 </div>
 
@@ -208,7 +208,7 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 <div align="center">
 
 ![Controls](img/Controls.png)
-*In-game Controls*
+
 
 </div>
 
