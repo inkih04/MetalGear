@@ -163,10 +163,8 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 <div align="center">
 
 ![Menu](img/Menu.png)
-*Main Menu*
 
 ![Start](img/Start.png)
-*Game Start*
 
 </div>
 
@@ -184,7 +182,6 @@ This project features a distinctive visual approach by utilizing **Pokémon tile
 
 
 ![Map 4](img/Map4.png)
-*Mansion Entrance*
 
 ![Map 5](img/Map5.png)
 
