@@ -9,6 +9,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)]()
 [![Status](https://img.shields.io/badge/status-Active-success.svg)]()
+[![Grade](https://img.shields.io/badge/grade-9%2F10-brightgreen.svg)]()
 
 [Download](#installation) • [Features](#features) • [How to Play](#how-to-play) • [Gallery](#gallery)
 
@@ -19,6 +20,8 @@
 ## About the Project
 
 Metal Gear is a recreation of the iconic stealth game that revolutionized the genre. This project captures the essence of the original game while incorporating a unique visual style using Pokémon tilesets, creating a distinctive aesthetic that blends tactical espionage with classic RPG visuals.
+
+**Academic Project**: Developed as a project for the Video Games course at FIB UPC (Facultat d'Informàtica de Barcelona, Universitat Politècnica de Catalunya) during Fall 2025. The project received a grade of **9/10**.
 
 The game features 7 exterior screens and 6 interior screens distributed between a cave and a mansion, plus an additional boss arena screen, offering a complete infiltration experience.
 
@@ -266,6 +269,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Acknowledgments
 
+- **FIB UPC** - Video Games course, Fall 2025
 - Hideo Kojima for creating the original Metal Gear franchise
 - Nintendo and Game Freak for the Pokémon visual assets used in this project
 - The indie developer community
@@ -278,5 +282,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 **Enjoyed the project? Give it a ⭐ on GitHub**
 
 Made with passion by [Víctor Díez Serrano](https://github.com/inkih04) and [David Mas Escudé](https://github.com/PatoPro121)
+
+*Academic Project - FIB UPC - Fall 2025 - Grade: 9/10*
 
 </div>
